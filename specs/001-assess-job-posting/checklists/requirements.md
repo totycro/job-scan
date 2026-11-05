@@ -21,7 +21,7 @@
 - [x] Success criteria are technology-agnostic (no implementation details)
 - [x] All acceptance scenarios are defined
 - [x] Edge cases are identified
-- [x] Scope is clearly bounded
+- [ ] Scope is clearly bounded
 - [x] Dependencies and assumptions identified
 
 ## Feature Readiness
@@ -33,12 +33,11 @@
 
 ## Notes
 
-- Initial validation: 16/16 requirements-quality criteria satisfied. FR-001–FR-009 reference behavioral acceptance scenarios; FR-010–FR-011 are covered by the golden-case requirements and SC-001–SC-005.
-- “Feature meets measurable outcomes” means that the specified behavior supports the stated outcomes. No software or assessment has been evaluated; the outcomes remain to be demonstrated during implementation verification.
-- The owner's actual work-arrangement preferences replaced the need for a criteria clarification marker. No additional criterion or hard exclusion was invented.
-- Draft review tightened three boundaries: office-day wording does not imply an unstated workweek (Story 2.4); on-site work does not invent a rejection rule (Story 1.3); unspecified arrangement is distinct from failed retrieval (Story 3.3).
-- Proposed defaults and acceptance targets remain proposals. In particular, terminal-only output, absence of scoring/overall recommendations, and the handling of restricted remote work need owner review.
-- Golden cases do not yet exist. The spec says “Concrete examples remain to be supplied and reviewed”; that is an explicit verification dependency, not a completed validation claim.
-- Constitution compliance was reviewed at specification level. Technical obligations remain for the plan and implementation; there are no known unresolved violations at this stage.
-- No extension configuration or before/after-specify hooks are present. No branch was created or changed.
-- Next: owner reviews the draft, then `$speckit-clarify`; do not begin technical planning automatically.
+- Revised after owner feedback: the draft separates assessment from fetching and accepts HTML without requiring plain-text input. It retains the owner's work-arrangement preferences.
+- Review result: 15/16 requirements-quality checks satisfied. Scope remains unchecked because replacing URL input with a saved HTML file and deferring fetching is a proposed change awaiting owner confirmation. The proposed boundary is explicit in the spec's “Proposed Scope Change and Defaults” section.
+- FR-001–FR-007 map to the six acceptance scenarios. SC-001–SC-004 define assessment-quality and usability expectations, including a structure-sensitive paired HTML case.
+- Checked “Feature meets measurable outcomes” refers to specification coverage of those outcomes, not observed software performance. Golden cases and implementation do not yet exist; no model evaluation has run.
+- The document intentionally keeps agreed requirements separate from proposed interface/scope choices. No criteria, hard exclusions, or source findings were invented.
+- Constitution compliance was reviewed at specification level. Planning and implementation obligations remain; no constitutional violation has been identified.
+- No before/after-specify hooks are configured. The active feature directory remains `specs/001-assess-job-posting`.
+- Next: owner reviews the revised boundary, then `$speckit-clarify`. Do not begin planning automatically.
