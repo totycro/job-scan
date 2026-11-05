@@ -8,3 +8,8 @@ It includes typical aspects such as a match about what the role would be like, w
 It can also check commute times (if it's not remote).
 
 In this early iteration, it's not clear yet how the workflow will be for managing the outputs over the course of a job search.
+
+
+## Development
+
+Development should be guided by manually created examples that serve as golden dataset and guardrail.
