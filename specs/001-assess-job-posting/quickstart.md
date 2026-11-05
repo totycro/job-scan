@@ -1,0 +1,53 @@
+# Quickstart Validation Guide
+
+**Status**: Planned commands for the implementation stage. Only design documents exist today; these commands have not been run and will not work until the package, fixtures, and evaluation runner are implemented.
+
+## Prerequisites
+
+Python 3.14, uv, a terminal on Linux/macOS, and a browser on the host for ChatGPT sign-in. Live runs require account eligibility and granted plan permission; they use subscription allowance. Ordinary tests need neither a real account nor network access.
+
+## Install and deterministic checks (after implementation)
+
+From the repository root, using the committed lockfile:
+
+```bash
+uv sync --locked
+uv run --locked ruff check src tests evaluations
+uv run --locked ruff format --check src tests evaluations
+uv run --locked ty check src tests evaluations
+uv run --locked pytest --strict-markers --disable-socket --cov=job_scan --cov-branch --cov-fail-under=90
+uv run --locked job-scan --help
+```
+
+Expected: lint, formatting, and strict type checking pass; network-blocked unit/system tests pass with at least 90% combined statement-and-branch coverage. Real CLI internals consume recorded inference streams through the HTTP transport boundary. Test-only OAuth fixtures use synthetic identities/tokens. Unknown requests fail instead of going live.
+
+## Sign in and assess (explicit live operation)
+
+```bash
+uv run --locked job-scan auth login
+uv run --locked job-scan auth status
+uv run --locked job-scan models
+uv run --locked job-scan assess evaluations/cases/hybrid-allowance/posting.html
+```
+
+The `hybrid-allowance` fixture path is planned; its HTML and expectations still need to be manually authored/reviewed. Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
+
+Expected: remote/hybrid facts and schedule details are distinguishable from fit judgments; quoted HTML and locations support claims; allowances are not reported as required schedules. See [CLI contract](contracts/cli.md) for output/exit codes and [data model](data-model.md) for evidence validation.
+
+## Live golden evaluation (separate from code coverage)
+
+After the owner reviews all HTML/expectation pairs:
+
+```bash
+uv run --locked python evaluations/run.py --live --output .local/evaluations/latest.json
+```
+
+The implementation must ignore `.local/` in Git. This explicit command uses real ChatGPT requests and writes a developer evaluation report, not saved-assessment product functionality. Compare against every mandatory expectation from SC-001–SC-004, including changed HTML associations with unchanged words. The runner checks structured expectations/provenance; the owner reviews whether evidence actually supports findings and records the result. It returns unsuccessful if a mandatory check fails or manual review remains pending.
+
+Record model/configuration, prompt/schema and case hashes, Git revision, results, manual evidence review, and limitations. Do not claim semantic validation passed on the strength of fixture replay or coverage. Never generate expected answers by copying model output.
+
+## Failure checks
+
+Try a nonexistent file, empty input, a loading-only HTML snapshot, absent arrangement details, and contradictory schedule statements. Invalid/unusable input must fail clearly; missing/conflicting arrangement details must remain explicit uncertainty in an otherwise valid assessment. System fixtures additionally cover refusal, usage limits, interrupted streams, and invalid evidence. None of these checks should fetch a job URL.
+
+For sign-out, use `uv run --locked job-scan auth logout`; verify local secrets are removed and the command distinguishes confirmed from unconfirmed remote revocation.

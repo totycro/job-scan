@@ -3,7 +3,7 @@
 **Feature Branch**: `main`
 **Feature Directory**: `specs/001-assess-job-posting`
 **Created**: 2026-11-05
-**Status**: Owner-reviewed specification — clarification complete; technical planning not started
+**Status**: Owner-reviewed specification — clarification complete; technical plan drafted for review
 
 **Input**: Assess one saved HTML posting against the owner's work-arrangement criteria, with source evidence and explicit uncertainty. Preserve meaningful HTML structure. URL fetching is deferred to a later feature.
 
@@ -78,7 +78,7 @@ Golden cases must cover remote, hybrid allowances and expectations, missing sche
 
 ### Agreed Scope and Defaults
 
-- Evaluate one saved HTML file first, replacing URL input for this increment. Fetching, browser rendering, authentication, and extraction from live sites are deferred. The eventual URL-based product goal remains unchanged.
+- Evaluate one saved HTML file first, replacing URL input for this increment. Fetching, browser rendering, website authentication, and extraction from live sites are deferred. The eventual URL-based product goal remains unchanged.
 - Output is terminal-only, with no numeric score or overall apply/reject recommendation.
 - Supplied HTML is the sole factual source. The optional URL records provenance; it is not additional evidence.
 
@@ -90,4 +90,4 @@ Clarification review on 2026-11-05 found no critical ambiguities requiring addit
 
 Requirements-quality checklist: 15/16 → 16/16 passing after owner acceptance resolved the scope boundary; no regressions or unchecked items remain. Its existing review notes describe the earlier draft review.
 
-Next action: owner reviews the clarification outcome, then `$speckit-plan`. No plan, tasks, implementation, or model evaluation has run.
+Planning draft: [plan.md](plan.md) and its supporting design artifacts are available for review. The owner selected Python and subscription-based ChatGPT access, with `../fyntok/src/fyntok/ai.py` as the integration reference. Concrete manually authored HTML/expectation pairs remain required before the plan is finalized. Review the plan before `$speckit-tasks`; no tasks, implementation, or model evaluation has run.
