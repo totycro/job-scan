@@ -1,50 +1,79 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# job-scan Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Keep it simple
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+This is a small project for personal use, not an enterprise software that needs to support a massive amount of concurrent users. If in doubt, choose the simpler solution.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Evidence and Explicit Uncertainty
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Factual claims about a posting, company, reviews, or commute MUST be traceable to retrieved
+source material. Assessments MUST distinguish source facts from inferred fit judgments and
+identify unavailable or conflicting information. Missing evidence MUST NOT be converted into
+an invented fact or a confident conclusion.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Job criteria
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+There are a number of criteria by which job postings are evaluated. Keep criterion-specific logic separate so changing one criterion does not require modifying unrelated criteria. Runtime configuration of criteria is not necessary.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Development practices
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+The technical plan MUST select strict linting and type-checking settings and define a coverage target. Required checks MUST pass before feature completion.
+Prefer TDD and Imperative shell/functional core architecture.
+Maintain a small set of end-to-end tests covering the primary CLI workflows. Exercise real internal components; the technical plan MUST define which external services use recorded responses or live calls.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. UI
+
+Main UI is CLI for now. Something more fancy might follow.
+
+### VI. Validation
+
+We keep a number of manually authored cases as golden dataset. 
+
+
+## Product Boundaries
+
+job-scan helps a user understand job postings against their own criteria. Role fit, company
+information, technology interests, satisfaction data, and commute information are candidate
+capabilities; this list does not require them all in the first release.
+
+Each feature spec MUST define its supported inputs, information sources, output behavior,
+failure handling, and exclusions. Managing assessments over a job search remains an open
+product decision until addressed by a feature spec. Language, framework, model provider, and
+storage choices belong in technical plans and are not fixed by this constitution.
+
+## Development Workflow
+
+1. Define the feature's user outcomes, scope, acceptance scenarios, and open questions with
+   Spec Kit's specify step. Resolve material ambiguities before technical planning.
+2. Produce a technical plan that checks compliance with every core principle and records
+   design choices and their rationale.
+3. Break the plan into tasks that include relevant curated examples and verification work.
+4. Implement against the spec and plan. Update those artifacts when an intentional behavior
+   change alters their requirements or design.
+5. Verify deterministic behavior with appropriate automated tests. Evaluate LLM findings
+   against the relevant golden examples using feature-defined acceptance criteria; document
+   the model and configuration used, results, and remaining limitations.
+6. Run the convergence step to identify gaps between the implementation, spec, plan, and tasks.
+   Do not describe a feature as complete while required behavior or verification is missing.
+
+Changes that do not affect assessment behavior require checks appropriate to their impact;
+they do not require an unrelated full LLM evaluation run.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution governs feature specs, technical plans, tasks, and implementation reviews.
+Each feature review MUST check compliance and record unresolved violations. A conflict MUST
+be resolved by changing the work or explicitly amending the constitution; it MUST NOT be
+silently ignored.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Amendments MUST state the reason, affected principles, and impact on existing artifacts or
+behavior. The project owner reviews amendments before adoption. Amendments MUST update the
+version and last-amended date while preserving the original ratification date.
+
+Use semantic versioning: MAJOR for incompatible changes to or removal of existing principles,
+MINOR for new principles or materially expanded guidance, and PATCH for clarifications that do
+not change obligations. This initial adoption establishes version 1.0.0.
+
+**Version**: 1.0.0 | **Ratified**: 2026-11-05 | **Last Amended**: 2026-11-05
