@@ -3,9 +3,11 @@
 **Feature Branch**: `main`
 **Feature Directory**: `specs/001-assess-job-posting`
 **Created**: 2026-11-05
-**Status**: Draft — revised after owner review; input boundary awaiting confirmation
+**Status**: Owner-reviewed specification — clarification complete; technical planning not started
 
-**Input**: Assess a posting against the owner's work-arrangement criteria, with source evidence and explicit uncertainty. The original request accepted a URL. After reviewing that scope, the owner questioned combining fetching with evaluation and specified that realistic assessment input is HTML whose markup may matter. This revision proposes evaluating a saved HTML file first and deferring URL fetching; that scope change is not yet adopted.
+**Input**: Assess one saved HTML posting against the owner's work-arrangement criteria, with source evidence and explicit uncertainty. Preserve meaningful HTML structure. URL fetching is deferred to a later feature.
+
+**Owner review**: The owner accepted this revised specification on 2026-11-05, including saved HTML input and deferred fetching.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -36,7 +38,7 @@ As a job seeker, I assess a posting's HTML and learn whether it offers remote or
 
 ### Functional Requirements
 
-These detailed requirements express the revised proposal; the agreed decisions and pending scope change are separated below.
+These requirements describe the owner-reviewed first increment. Scope and defaults are recorded below.
 
 - **FR-001**: The CLI MUST accept one saved HTML file representing a posting. A source URL MAY accompany it for provenance; it MUST NOT trigger fetching in this feature. Invalid or unreadable input MUST produce an explanatory unsuccessful outcome (scenario 6).
 - **FR-002**: HTML MUST be accepted without requiring the user to flatten it to plain text. Assessment MUST preserve meaning conveyed by document structure and content relationships; the internal processing method belongs in the technical plan (scenario 5).
@@ -56,7 +58,7 @@ These detailed requirements express the revised proposal; the agreed decisions a
 
 ### Measurable Outcomes
 
-Proposed targets for feature acceptance:
+Targets for feature acceptance:
 
 - **SC-001**: All required semantic findings and uncertainties in the owner-reviewed golden cases are reported correctly; every factual claim has supporting source evidence and no case-defined prohibited conclusion appears.
 - **SC-002**: Structure-sensitive cases correctly associate schedules with the relevant role/location. Include a paired example where changing HTML associations changes the expected finding while retaining the same words.
@@ -74,9 +76,9 @@ Golden cases must cover remote, hybrid allowances and expectations, missing sche
 - Findings require evidence, explicit uncertainty, and manually authored examples.
 - External company research, commute estimates, and managing saved assessments are deferred.
 
-### Proposed Scope Change and Defaults — Awaiting Review
+### Agreed Scope and Defaults
 
-- Evaluate one saved HTML file first, replacing URL input for this increment. Fetching, browser rendering, authentication, and extraction from live sites belong in a subsequent feature. This is a proposed separation of work, not an adopted abandonment of the URL-based product goal.
+- Evaluate one saved HTML file first, replacing URL input for this increment. Fetching, browser rendering, authentication, and extraction from live sites are deferred. The eventual URL-based product goal remains unchanged.
 - Output is terminal-only, with no numeric score or overall apply/reject recommendation.
 - Supplied HTML is the sole factual source. The optional URL records provenance; it is not additional evidence.
 
@@ -84,4 +86,8 @@ Golden cases must cover remote, hybrid allowances and expectations, missing sche
 
 The constitution is unchanged. This draft supports simplicity, evidence, owner-supplied criteria, CLI use, and golden-case validation. Criterion separation, strict lint/type checks, coverage target, system tests, and external-service test strategy remain obligations for technical planning. No constitutional violation has been identified at this stage.
 
-Current stage: specification review. Confirm the proposed input boundary and supply/review golden examples before technical planning is finalized. Next stage after owner review: `$speckit-clarify`. No plan, tasks, implementation, or model evaluation has run.
+Clarification review on 2026-11-05 found no critical ambiguities requiring additional questions (0 asked). Functional scope, data, CLI behavior, failure handling, terminology, and acceptance expectations are clear for this increment. Technical choices and operational limits are deferred to planning; concrete manually authored golden examples remain a dependency to address before that plan is finalized.
+
+Requirements-quality checklist: 15/16 → 16/16 passing after owner acceptance resolved the scope boundary; no regressions or unchecked items remain. Its existing review notes describe the earlier draft review.
+
+Next action: owner reviews the clarification outcome, then `$speckit-plan`. No plan, tasks, implementation, or model evaluation has run.
