@@ -1,0 +1,36 @@
+{
+  "case_id": "posting-02",
+  "review_status": "pending_owner_review",
+  "owner_note": "fully remote",
+  "expectation_authorship": "The short classification is owner-authored. Detailed checks below are agent-proposed for owner review; they are not an approved manually authored golden dataset.",
+  "proposed_required_findings": [
+    "Remote work is offered and matches the preferred arrangement.",
+    "Europe/UK residence, valid work authorization, and a European time zone qualify availability.",
+    "The office is optional; invitations to three office weeks annually are mentioned. Whether attendance is mandatory is not specified."
+  ],
+  "evidence": [
+    {
+      "quote": "fully remote",
+      "occurrence": 0
+    },
+    {
+      "quote": "Applicants must live in Europe, including the UK, and hold valid work authorization.",
+      "occurrence": 0
+    },
+    {
+      "quote": "Your working location must be within a European time zone.",
+      "occurrence": 0
+    },
+    {
+      "quote": "We invite employees to three office weeks each year.",
+      "occurrence": 0
+    }
+  ],
+  "proposed_prohibited_conclusions": [
+    "Work is available from anywhere worldwide.",
+    "The user is known to satisfy the eligibility restrictions.",
+    "Office attendance is compulsory on a weekly hybrid schedule.",
+    "The posting guarantees there will never be office visits."
+  ],
+  "review_question": "Confirm that the generic copy retains the remote role correctly, including geographic/work-right restrictions and the office-week invitation."
+}

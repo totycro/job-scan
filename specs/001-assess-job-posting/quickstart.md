@@ -27,12 +27,12 @@ Expected: lint, formatting, and strict type checking pass; network-blocked unit/
 uv run --locked job-scan auth login
 uv run --locked job-scan auth status
 uv run --locked job-scan models
-uv run --locked job-scan assess evaluations/cases/hybrid-allowance/posting.html
+uv run --locked job-scan assess evaluations/cases/posting-01/posting.html
 ```
 
-The `hybrid-allowance` fixture path is planned; its HTML and expectations still need to be manually authored/reviewed. Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
+The `posting-01` generic HTML draft now exists; the owner's note labels it hybrid with unspecified days. Detailed expectations remain pending owner review. Other generic drafts cover restricted remote work and an on-site target alongside hybrid related-job cards; see the [case notes](../../evaluations/cases/README.md). Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
 
-Expected: remote/hybrid facts and schedule details are distinguishable from fit judgments; quoted HTML and locations support claims; allowances are not reported as required schedules. See [CLI contract](contracts/cli.md) for output/exit codes and [data model](data-model.md) for evidence validation.
+Expected: remote/hybrid facts and schedule details are distinguishable from fit judgments; quoted HTML and locations support claims; case 01 does not invent a home-working day count. Add a manually authored allowance case before claiming allowance-versus-expectation validation. See [CLI contract](contracts/cli.md) for output/exit codes and [data model](data-model.md) for evidence validation.
 
 ## Live golden evaluation (separate from code coverage)
 

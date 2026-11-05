@@ -56,4 +56,6 @@ Sources: [HTTPX custom/mock transports](https://www.python-httpx.org/advanced/tr
 
 ## Remaining validation dependencies
 
-The owner must supply/review manually authored HTML cases and expectations, including the structure-sensitive pair. Those inputs determine whether the proposed raw-HTML strategy and 256 KiB limit are useful. They are pending evidence for plan adoption, not unresolved technology selections. Live account eligibility, inference quality, and recorded stream compatibility have not been tested during this stage.
+Three [generic case drafts](../../evaluations/cases/README.md) now retain owner-authored short classification notes; detailed expectations are agent-proposed and await review. The supplied remote example was an outer page with a job-board iframe; a direct download of the embedded document recovered the actual posting. Preserve this capture distinction for future retrieval design without adding fetching to the current feature.
+
+The original on-site page is 2,144,770 bytes and exceeds the proposed 256 KiB input limit. The generic files are curated excerpts, so their smaller sizes are not evidence that the limit handles full pages. Review that limit with the owner before plan adoption. The structure-sensitive pair and other uncovered scenarios still need manually authored expectations. Live account eligibility, inference quality, and recorded stream compatibility have not been tested.

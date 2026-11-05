@@ -1,0 +1,23 @@
+{
+  "case_id": "posting-03",
+  "review_status": "pending_owner_review",
+  "owner_note": "onsite only",
+  "expectation_authorship": "The short classification is owner-authored. Detailed checks below are agent-proposed for owner review; they are not an approved manually authored golden dataset.",
+  "proposed_required_findings": [
+    "The target role explicitly states an on-site workplace type.",
+    "Hybrid labels on related-job cards must not be attributed to the target role.",
+    "On-site work is outside the stated remote/hybrid preferences; no hard rejection rule is invented."
+  ],
+  "evidence": [
+    {
+      "quote": "<dt class=\"example-node-122\">Workplace type</dt><dd class=\"example-node-123\">onsite</dd>",
+      "occurrence": 0
+    }
+  ],
+  "proposed_prohibited_conclusions": [
+    "The target job is hybrid because another card is labelled Hybrid.",
+    "The target job is remote because a location is described as flexible.",
+    "A hard apply/reject rule was supplied by the owner."
+  ],
+  "review_question": "Confirm that the target on-site role remains clear despite hybrid labels on related-job cards."
+}

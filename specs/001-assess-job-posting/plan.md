@@ -1,7 +1,7 @@
 # Implementation Plan: Assess a Job Posting
 
 **Branch**: `main` | **Date**: 2026-11-05 | **Spec**: [spec.md](spec.md)
-**Status**: Design draft for owner review. Golden examples must be supplied/reviewed before adoption. No tasks or implementation have been created.
+**Status**: Design draft for owner review. Three generic example drafts and owner notes are available; detailed expectations, remaining coverage, and the input-size limit need review before adoption. No tasks or implementation have been created.
 
 ## Summary
 
@@ -21,7 +21,7 @@ Build a Python CLI that reads one HTML file, asks ChatGPT for evidence-backed wo
 | Storage | No assessment database. Protected app-local OAuth credentials; versioned golden inputs/expectations and sanitized transport recordings; developer evaluation reports |
 | Platform/type | Personal synchronous CLI on Linux/macOS; Windows support deferred because reference auth uses Unix file locking |
 | Performance | One assessment/request at a time; 180-second total inference deadline, 10-second connection timeout; no automatic inference retry |
-| Limits | One UTF-8 HTML file, up to 256 KiB, no silent truncation. Proposed initial limit; revisit with representative examples |
+| Limits | One UTF-8 HTML file, up to 256 KiB, no silent truncation. Proposed limit needs review: supplied case 03 is 2,144,770 bytes; smaller curated fixtures do not validate full-page support |
 | Model | Start with reference model `gpt-6.1-sol`, reasoning `low`; verify availability for the signed-in account. Optional `--model` selects another available model; no automatic substitution |
 | Billing | OAuth permission for ChatGPT plan usage only. No API-key billing fallback; eligibility/limits remain account-specific |
 
@@ -36,7 +36,7 @@ Pre-research gate: the approved spec has no known constitutional violations. Res
 | III. Separate criteria | Work-arrangement prompts/interpretation/preferences live in `criteria/work_arrangement.py`; no runtime criterion framework | Pass |
 | IV. Development practices | Strict lint/type settings and coverage below; TDD preference; pure validation/formatting with imperative file/auth/network shell; real-component CLI tests | Pass by design |
 | V. CLI | Packaged `job-scan` command, readable terminal report | Pass |
-| VI. Validation | Manually authored, owner-reviewed HTML/expectations; recorded offline tests plus live semantic evaluation and results report | Pass by design; examples pending |
+| VI. Validation | Manually authored, owner-reviewed HTML/expectations; recorded offline tests plus live semantic evaluation and results report | Pass by design; three generic drafts available, owner review and coverage pending |
 | Boundaries/workflow | No fetching, website authentication, company research, commute, scoring, or report-management feature; spec/plan/tasks review preserved | Pass |
 
 No amendment or complexity exception is needed. These are design checks, not claims that software passes validation.
@@ -86,6 +86,6 @@ The CLI owns file/auth/network effects. Pure functions validate evidence, map pr
 
 ## Review and Resume
 
-The design artifacts are drafted; required golden HTML/expectations are not yet supplied, so the plan remains a draft. Review the proposed stack, input limit, auth adaptation, and coverage target; then select manually authored representative cases before finalizing the plan. A generated example may illustrate a format but must not be presented as the owner's golden dataset. No account access, live request, dependency installation, or implementation was performed during planning.
+The design artifacts remain a draft. Three [genericized example drafts](../../evaluations/cases/README.md) now preserve the owner's short notes; their detailed expectations are agent proposals awaiting owner review. Further cases are needed for full spec coverage. The original on-site page exceeds the proposed input-size limit, which must be revisited before plan adoption; reducing fixtures is not a runtime solution to that limit. Review the remaining stack, input limit, auth adaptation, coverage target, and manually authored expectations before finalizing the plan. No subscription request, dependency installation, or application implementation has run. A separate public iframe document was downloaded only to recover the supplied remote example; the product's fetching scope is unchanged.
 
 After plan adoption, the next command is `$speckit-tasks`, followed by review of its task list. Do not advance automatically.

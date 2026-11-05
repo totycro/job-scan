@@ -35,7 +35,7 @@ Flow: `input validated → complete model response → schema/evidence validated
 
 ## GoldenCase and EvaluationRun
 
-Each versioned case contains `posting.html` and manually authored `expected.json`: case ID, required findings/uncertainties, expected evidence/associations, and prohibited conclusions. Expectations may match structured fields and supporting spans without demanding identical report prose. Include the paired HTML association example from SC-002. These cases have not yet been authored.
+Each versioned case contains `posting.html` and manually authored `expected.json`: case ID, required findings/uncertainties, expected evidence/associations, and prohibited conclusions. Expectations may match structured fields and supporting spans without demanding identical report prose. Include the paired HTML association example from SC-002. Three [generic case drafts](../../evaluations/cases/README.md) now include owner-authored short notes and agent-proposed detailed checks. They remain pending owner review, and do not yet provide complete coverage. Preserve expectation authorship and review status rather than treating generated checks as accepted human expectations.
 
 A developer evaluation run records timestamp, Git revision, case/prompt/schema hashes, requested and returned model identity when available, reasoning settings, per-case findings/evidence results, manual relevance review, and limitations. Keep reports separate from product output. A failed mandatory expectation fails acceptance.
 
