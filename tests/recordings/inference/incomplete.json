@@ -1,0 +1,12 @@
+{
+  "provenance": "synthetic failure fixture, not a recorded provider response",
+  "exchanges": [
+    {
+      "method": "POST",
+      "url": "https://api.openai.com/v1/responses",
+      "request_sha256": "14f80e63c70fbcf8bbbee89f4ddac490c859f8e17196d6e79f138962485e431f",
+      "status": 200,
+      "body": "data: {\"type\": \"response.incomplete\"}\n\n"
+    }
+  ]
+}

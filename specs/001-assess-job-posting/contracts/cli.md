@@ -1,6 +1,6 @@
 # CLI Contract: Assess a Job Posting
 
-**Status**: Interface adopted with plan approval on 2026-11-06. Commands below are not implemented yet.
+**Status**: Interface adopted with plan approval on 2026-11-06. Commands below are implemented and verified; see [validation.md](../validation.md) for offline checks and accepted live results.
 
 ## Assessment
 
@@ -46,3 +46,5 @@ Store credentials under `$XDG_CONFIG_HOME/job-scan/`, falling back to `~/.config
 `assess_html` receives the HTML, work-arrangement instructions, and JSON schema. It returns a validated response or a typed failure. The real adapter uses OAuth, public Responses, `store=false`, `stream=true`, and completion-gated SSE. Subscription failures stop inference without a paid fallback, as required by the owner's provider constraint. [Official inference contract](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference)
 
 Only tests substitute HTTP transport responses; production has no replay flag. Optional model selection concerns the provider, not runtime configuration of job criteria.
+
+Scope refinement adopted 2026-11-06: the work-arrangement criterion omits candidate residence/geographic eligibility, right-to-work/visa and time-zone requirements from findings, fit and uncertainty. It retains relevant office-attendance conditions and stated home-working schedules.

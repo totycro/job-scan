@@ -26,17 +26,17 @@ Strict Pydantic response model; disallow unknown keys and type coercion.
 - `home_working`: schedule findings with `days_text` and `period` (nullable strings preserving the stated quantity/range and period), `kind` (`allowed | expected | unspecified`), `context`, and evidence. `unspecified` has null quantity/period and does not claim a fabricated absence quote.
 - `uncertainties`: missing-information explanations; `conflicts`: explanations with the evidence for opposing statements.
 
-Positive arrangements, quantities, restrictions, and conflict statements need source evidence. Missing information is explicitly labelled as absence, not represented as an invented source statement. Home-working `days_text` must reproduce the cited wording; do not silently calculate days from office-attendance statements. An allowed/expected schedule may have null quantity when wording is qualitative; explain that uncertainty.
+Positive arrangements, quantities, work-arrangement conditions, and conflict statements need source evidence. Missing information is explicitly labelled as absence, not represented as an invented source statement. Home-working `days_text` must reproduce the cited wording; do not silently calculate days from office-attendance statements. An allowed/expected schedule may have null quantity when wording is qualitative; explain that uncertainty.
 
 ## Assessment
 
-Contains the validated source findings, resolved evidence, and locally derived fit judgments. Remote maps to preferred; hybrid to acceptable; on-site to outside the stated preferences. Missing/conflicting findings remain uncertain, and available alternatives retain their conditions. No score, hard rejection, personal-eligibility inference, or overall application recommendation.
+Contains the validated source findings, resolved evidence, and locally derived fit judgments. Remote maps to preferred; hybrid to acceptable; on-site to outside the stated preferences. Missing/conflicting findings remain uncertain, and available alternatives retain their work-arrangement conditions. No score, hard rejection, personal-eligibility inference, or overall application recommendation.
 
 Flow: `input validated → complete model response → schema/evidence validated → preferences applied → report`. Any failed step yields an explanatory unsuccessful command outcome; never display a completed report from partial output.
 
 ## GoldenCase and EvaluationRun
 
-Each shared case contains `posting.html`, `metadata.json`, unchanged `owner-note.txt`, and `expected.json`. Preserve substantive job/company content and meaningful structure so future features can annotate the same input. Metadata records provenance, capture/transformations, content-review status and the exact input hash. The corpus currently contains three rich generic postings with approved criterion expectations; source-content reviews remain pending.
+Each shared case contains `posting.html`, `metadata.json`, unchanged `owner-note.txt`, and `expected.json`. Preserve substantive job/company content and meaningful structure so future features can annotate the same input. Metadata records provenance, capture/transformations, content-review status and the exact input hash. The corpus currently contains three rich generic postings with approved criterion expectations; source-content reviews were also owner-approved on 2026-11-06.
 
 `expected.json` contains `schema_version`, `case_id`, and `criteria`. Each criterion key owns its review status, authorship, posting hash, expected semantic field values, required findings/uncertainties, evidence quotes/occurrences, and prohibited conclusions. Only `work_arrangement` is currently annotated. Its owner-authored short notes are retained; expanded checks were reviewed and approved by the owner on 2026-11-06.
 
@@ -56,3 +56,5 @@ A developer evaluation run records timestamp, Git revision, selected case/criter
 ## OAuth Session (provider infrastructure)
 
 Protected runtime record holds stable host ID, issued client IDs, verified identities, token/scopes/expiry, and active registration. Follow the reference's per-registration storage and refresh semantics with a separate job-scan directory. Never include credential values in assessment models, fixtures, reports, logs, or source control. Authentication transitions are signed out, authorization pending, authorized with/without plan permission, refresh required, and revoked/expired; only authorized plan permission allows inference.
+
+Owner scope refinement (2026-11-06): work-arrangement findings cover on-site/hybrid/remote, relevant office attendance and home-working schedules. Omit candidate residence/geographic eligibility, right-to-work/visa and time-zone requirements from findings, fit and uncertainty. Keep supplied HTML intact for future independent criteria.

@@ -1,0 +1,8 @@
+{
+  "provenance": "Synthetic OpenID discovery for offline OAuth tests; no actual account data.",
+  "response": {
+    "issuer": "https://auth.openai.com",
+    "jwks_uri": "https://auth.openai.com/keys",
+    "revocation_endpoint": "https://auth.openai.com/revoke"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "loading",
+  "content_review_status": "approved",
+  "posting_sha256": "e9643d2449f41280415d06dd031780f3dbc9d4aa708863105768057218737188",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 48,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

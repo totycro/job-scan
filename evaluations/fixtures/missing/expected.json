@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "missing",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "54073ccfa3892342743d17af2d195887b0723f3fa3ad2f3a33b4462edac760a7",
+      "expected": {
+        "arrangement": [],
+        "home_working_schedule": {
+          "status": "not_stated",
+          "days_text": null,
+          "period": null
+        }
+      },
+      "required_findings": [
+        "Assess successfully with explicit uncertainty about arrangement and schedule."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "This role is onsite because remote is not mentioned."
+      ]
+    }
+  }
+}

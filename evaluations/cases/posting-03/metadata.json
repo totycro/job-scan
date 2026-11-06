@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "case_id": "posting-03",
-  "content_review_status": "pending_owner_review",
+  "content_review_status": "approved",
   "posting_sha256": "841c613ba9c9946dfd11dff92a6c140912f44d11bdbd348ea830d5d199cc3fd2",
   "source_file": "posting-03.html",
   "capture_method": "not supplied by owner",
@@ -18,5 +18,6 @@
     "Not a pixel-identical or byte-identical page archive.",
     "Not evidence that the current input-size limit supports the larger original snapshots.",
     "Source-specific identity replacements are intentionally not stored in the public corpus."
-  ]
+  ],
+  "content_reviewed_by": "Owner approved transformed source content on 2026-11-06."
 }

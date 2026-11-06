@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "structure-pair/allowed",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "0d90128482619826066f167446e5980539be83b72331e8911e5bff8fc9a37196",
+      "expected": {
+        "arrangement": "hybrid",
+        "home_working_schedule": {
+          "status": "stated",
+          "kind": "allowed",
+          "days_text": "up to 2 days",
+          "period": "per week"
+        }
+      },
+      "required_findings": [
+        "Associate schedule by aria-labelledby with the target Engineer heading; do not assign Designer schedule to Engineer."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "Both schedules apply to the target role."
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "qualitative",
+  "content_review_status": "approved",
+  "posting_sha256": "090f88e089eb62d2c3f24b593d67d334a4ef6cd94647f5ed2e7a04bf0eb74909",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 111,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

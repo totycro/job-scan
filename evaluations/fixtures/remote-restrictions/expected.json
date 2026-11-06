@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "case_id": "remote-restrictions",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used. Owner narrowed criterion scope on 2026-11-06 to exclude candidate geography, right-to-work/visa and time-zone details from findings, fit and uncertainty.",
+      "posting_sha256": "3949d39bbf3629a8120c777dc38cfd30d72f0899279de6a85583074458582851",
+      "expected": {
+        "arrangement": "remote"
+      },
+      "required_findings": [
+        "Identify remote work as preferred; focus on work arrangement rather than candidate geography or time-zone eligibility."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "The owner is eligible to work here.",
+        "Work from any country.",
+        "Candidate residence, right-to-work/visa or time-zone requirements are presented as work-arrangement findings, fit judgments or uncertainties."
+      ]
+    }
+  }
+}

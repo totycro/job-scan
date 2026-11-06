@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "office-days",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "ea9a01996d2a0cdb98562b68ce2ac11a669bcb051d4b0651b2c8f4b8ab2599bb",
+      "expected": {
+        "arrangement": "hybrid",
+        "home_working_schedule": {
+          "status": "not_stated",
+          "days_text": null,
+          "period": null
+        }
+      },
+      "required_findings": [
+        "Home-working day count is unknown; office days do not establish workweek length."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "Three home-working days per week."
+      ]
+    }
+  }
+}

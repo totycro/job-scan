@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "structure-pair/expected",
+  "content_review_status": "approved",
+  "posting_sha256": "6bed9984c2cc1887968a89dfc989776b36052a159e51fd90ae889e84e6caba62",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 314,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

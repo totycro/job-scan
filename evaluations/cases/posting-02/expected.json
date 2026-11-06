@@ -5,13 +5,14 @@
     "work_arrangement": {
       "review_status": "approved",
       "owner_note": "fully remote",
-      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations reviewed and approved by owner on 2026-11-06.",
+      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations reviewed and approved by owner on 2026-11-06. Owner narrowed criterion scope on 2026-11-06 to exclude candidate geography, right-to-work/visa and time-zone details from findings, fit and uncertainty.",
       "posting_sha256": "53910077955652647907ebd17f6f516df22cb63f9cea2ca26de6026a552a5651",
       "expected": {
         "arrangement": "remote"
       },
       "required_findings": [
-        "Remote work is offered and matches the preferred arrangement."
+        "Remote work is offered and matches the preferred arrangement.",
+        "Keep the assessment focused on remote work and any relevant office-attendance expectations, without candidate residence, right-to-work or time-zone detail in findings, fit or uncertainty."
       ],
       "evidence": [
         {
@@ -25,7 +26,8 @@
       ],
       "prohibited_conclusions": [
         "Office attendance is compulsory on a weekly hybrid schedule.",
-        "The posting guarantees there will never be office visits."
+        "The posting guarantees there will never be office visits.",
+        "Candidate residence, right-to-work/visa or time-zone requirements are presented as work-arrangement findings, fit judgments or uncertainties."
       ]
     }
   }

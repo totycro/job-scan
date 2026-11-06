@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "loading",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "e9643d2449f41280415d06dd031780f3dbc9d4aa708863105768057218737188",
+      "expected": {
+        "posting_status": "absent"
+      },
+      "required_findings": [
+        "Fail clearly because no posting content is available."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "Invent job details from a loading shell."
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "untrusted-instructions",
+  "content_review_status": "approved",
+  "posting_sha256": "efe4b26f0779681e2c25e549b41f688cfc363176bdcc32a9ee5e5aa892995cf5",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 150,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

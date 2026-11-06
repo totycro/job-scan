@@ -1,7 +1,7 @@
 # Implementation Plan: Assess a Job Posting
 
 **Branch**: `main` | **Date**: 2026-11-05 | **Spec**: [spec.md](spec.md)
-**Status**: Owner-approved on 2026-11-06. Implementation tasks owner-approved on 2026-11-06 in [tasks.md](tasks.md); no application implementation or model evaluation has run. Source-content review and remaining golden coverage are tracked as acceptance work.
+**Status**: Owner-approved on 2026-11-06. Implementation tasks owner-approved on 2026-11-06 in [tasks.md](tasks.md); implementation, offline checks, and all 16 owner-reviewed live cases pass. Convergence identified one stale documentation status, corrected by T033; the final pass found zero remaining gaps.
 
 ## Summary
 
@@ -36,7 +36,7 @@ Pre-research gate: the approved spec has no known constitutional violations. Res
 | III. Separate criteria | Work-arrangement prompts/interpretation/preferences live in `criteria/work_arrangement.py`; no runtime criterion framework | Pass |
 | IV. Development practices | Strict lint/type settings and coverage below; TDD preference; pure validation/formatting with imperative file/auth/network shell; real-component CLI tests | Pass by design |
 | V. CLI | Packaged `job-scan` command, readable terminal report | Pass |
-| VI. Validation | Manually authored, owner-reviewed HTML/expectations; recorded offline tests plus live semantic evaluation and results report | Pass by design; three criterion expectations approved, source-content review and remaining coverage pending |
+| VI. Validation | Manually authored, owner-reviewed HTML/expectations; recorded offline tests plus live semantic evaluation and results report | Implemented; all 16 source/expectation reviews approved; all 16 live reports approved |
 | Boundaries/workflow | No fetching, website authentication, company research, commute, scoring, or report-management feature; spec/plan/tasks review preserved | Pass |
 
 No amendment or complexity exception is needed. These are design checks, not claims that software passes validation.
@@ -68,7 +68,7 @@ Adapt only generic OAuth and stream handling from the reference, with its source
 
 `plan.md` is the review entry point; `research.md` explains choices; `data-model.md` defines validated data; `contracts/cli.md` defines command behavior; `quickstart.md` describes future validation. `tasks.md` contains the implementation work approved by the owner on 2026-11-06.
 
-### Source Code (repository root; planned)
+### Source Code (repository root; implemented)
 
 ```text
 pyproject.toml, uv.lock, .python-version
@@ -86,6 +86,10 @@ The CLI owns file/auth/network effects. Pure functions validate evidence, map pr
 
 ## Review and Resume
 
-The owner approved the technical plan on 2026-11-06, including the stack, OAuth adaptation, verification gates, and 256 KiB input limit. All three shared cases have approved work-arrangement expectations with matching posting hashes. Their source-content reviews remain pending; focused cases are still needed for full coverage. These are tracked in [tasks.md](tasks.md) as acceptance dependencies, not as outstanding plan decisions. The 62,393-byte generic posting-03 is unchanged and fits the limit; the 2,144,770-byte original capture does not. No production preprocessing or fetching is added.
+The owner approved the technical plan on 2026-11-06, including the stack, OAuth adaptation, verification gates, and 256 KiB input limit. All three shared cases have approved work-arrangement expectations with matching posting hashes. Their source-content reviews and thirteen focused cases are also owner-approved. These are tracked in [tasks.md](tasks.md) as acceptance dependencies, not as outstanding plan decisions. The 62,393-byte generic posting-03 is unchanged and fits the limit; the 2,144,770-byte original capture does not. No production preprocessing or fetching is added.
 
-The owner approved the task list on 2026-11-06. Consistency analysis found no critical issues and three minor contract clarifications, now resolved in the data model and tasks: evaluation projection, posting-failure explanations, and recorded versus synthetic fixture scope. Next: `$speckit-implement`. No subscription request, dependency installation, application implementation, or model evaluation has run. A separate public iframe document was previously downloaded only to recover the supplied remote example; the product's fetching scope is unchanged.
+The owner approved the task list on 2026-11-06. Consistency analysis found no critical issues and three minor contract clarifications, now resolved in the data model and tasks: evaluation projection, posting-failure explanations, and recorded versus synthetic fixture scope. Implementation exists and live evaluations have run. Accepted report review, final offline checks and convergence status are tracked in [validation.md](validation.md). A separate public iframe document was previously downloaded only to recover the supplied remote example; the product's fetching scope is unchanged.
+
+Owner scope refinement (2026-11-06): work-arrangement findings cover on-site/hybrid/remote, relevant office attendance and home-working schedules. Omit candidate residence/geographic eligibility, right-to-work/visa and time-zone requirements from findings, fit and uncertainty. Keep supplied HTML intact for future independent criteria.
+
+The user authorized developer-only encrypted VM registration transfer for live validation. `evaluations/auth_transfer.py` exports only the active job-scan registration, preserves the receiving VM host ID and removes the encrypted handoff after import; see the evaluation guide.

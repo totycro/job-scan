@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "flexible",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "0f9bfd4a2c97cde81015dfe8738869a8f498f26ad2fcc6a1e919fbc545433dda",
+      "expected": {
+        "home_working_schedule": {
+          "status": "not_stated",
+          "days_text": null,
+          "period": null
+        }
+      },
+      "required_findings": [
+        "No definite remote or hybrid schedule is established."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "A fixed weekly home-working schedule is guaranteed."
+      ]
+    }
+  }
+}

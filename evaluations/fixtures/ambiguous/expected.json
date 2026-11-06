@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "ambiguous",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "54396c84207dce8de72fb32cafe416d50a5b714c06669e3c36a75a6e3d295355",
+      "expected": {
+        "posting_status": "ambiguous"
+      },
+      "required_findings": [
+        "Fail with an explanation because no target role can be selected."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "A confident assessment selects an arbitrary role."
+      ]
+    }
+  }
+}

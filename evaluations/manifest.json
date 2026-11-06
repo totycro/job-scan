@@ -1,0 +1,21 @@
+{
+  "criterion": "work_arrangement",
+  "required_cases": [
+    "cases/posting-01",
+    "cases/posting-02",
+    "cases/posting-03",
+    "fixtures/ambiguous",
+    "fixtures/conflict",
+    "fixtures/flexible",
+    "fixtures/hybrid-allowed",
+    "fixtures/hybrid-expected",
+    "fixtures/loading",
+    "fixtures/missing",
+    "fixtures/office-days",
+    "fixtures/qualitative",
+    "fixtures/remote-restrictions",
+    "fixtures/structure-pair/allowed",
+    "fixtures/structure-pair/expected",
+    "fixtures/untrusted-instructions"
+  ]
+}

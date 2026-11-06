@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "hybrid-expected",
+  "content_review_status": "approved",
+  "posting_sha256": "4ea2e421d4054dd6e44f97598e23821421795440a3a76ca95b55c509f93c9cbe",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 89,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

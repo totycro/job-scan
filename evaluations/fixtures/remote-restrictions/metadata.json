@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "case_id": "remote-restrictions",
+  "content_review_status": "approved",
+  "posting_sha256": "3949d39bbf3629a8120c777dc38cfd30d72f0899279de6a85583074458582851",
+  "source_file": "manually authored focused fixture",
+  "capture_method": "synthetic HTML authored before model evaluation",
+  "generic_size_bytes": 97,
+  "changes": [],
+  "limitations": [
+    "Focused fixture; not a captured website."
+  ]
+}

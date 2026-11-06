@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "case_id": "conflict",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "c42c69277fe34ecd709e85fb24bdaade6cd300713eea3e9a727b30ad081b1482",
+      "expected": {},
+      "required_findings": [
+        "Explain the conflicting remote and office-attendance statements with both source quotes.",
+        "Keep fit uncertain."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "One statement resolves the conflict without further evidence."
+      ]
+    }
+  }
+}

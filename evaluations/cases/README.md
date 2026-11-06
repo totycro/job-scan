@@ -2,7 +2,7 @@
 
 Keep one reusable collection of rich, generic job postings. Start with these three and grow toward roughly ten representative cases as useful variations appear; ten is a working goal, not a feature-completion requirement. Add expectations for each criterion as features introduce it, using the same posting instead of making feature-specific copies.
 
-The current files have been rebuilt from the originals. Source-content review remains **pending owner review**. On 2026-11-06 the owner approved all three work-arrangement expectations. All three retain that approval with matching posting hashes. Posting-03 is unchanged at 62,393 bytes, already within the proposed 256 KiB limit.
+The current files have been rebuilt from the originals. The owner approved all three transformed source files on 2026-11-06. On 2026-11-06 the owner approved all three work-arrangement expectations. All three retain that approval with matching posting hashes. Posting-03 is unchanged at 62,393 bytes, already within the approved 256 KiB limit.
 
 | Case | Owner's classification | Other retained material |
 | --- | --- | --- |
@@ -64,8 +64,8 @@ Record the Git revision, selected case/criterion keys, input and expectation has
 
 Keep a few small, purpose-built edge-case fixtures separate from this shared corpus when implementation needs them. For example, the paired structure-sensitive test may change only which role a schedule belongs to while retaining the same words. Do not shrink the reusable postings to make those focused tests.
 
-The three cases do not cover the entire first specification: explicit hybrid allowances/expectations, conflicts, missing arrangements, unusable input and the structure-sensitive pair still need reviewed expectations. Broader criteria remain unannotated. No assessment model has evaluated this corpus yet.
+The three shared cases are supplemented by thirteen owner-approved focused cases under `../fixtures/`, covering explicit hybrid allowances/expectations, conflicts, missing arrangements, unusable input and the structure-sensitive pair. Broader criteria remain unannotated. Live model results and manual review are tracked separately in `../../specs/001-assess-job-posting/validation.md`.
 
-Original sizes are recorded in each metadata file. The original on-site capture is 2,144,770 bytes and exceeds the draft 256 KiB input limit. Removing website scaffolding from a test fixture is not a production solution to that limit; review it before adopting the technical plan.
+Original sizes are recorded in each metadata file. The original on-site capture is 2,144,770 bytes and exceeds the approved 256 KiB input limit. Removing website scaffolding from a test fixture is not a production solution to that limit; the original full capture remains unsupported in this increment.
 
-Next: review transformed posting content, then resolve remaining plan decisions before `$speckit-tasks`. All three cases already have approved criterion expectations.
+The technical plan and tasks are approved. Implementation and live validation are tracked in the feature artifacts. Candidate geography, right-to-work/visa and time-zone requirements are excluded from the work-arrangement criterion following owner feedback; relevant office-attendance/home-working conditions remain in scope.

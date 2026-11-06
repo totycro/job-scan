@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "hybrid-expected",
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "approved",
+      "expectation_authorship": "Agent-authored source and expectations; owner reviewed and approved focused fixtures on 2026-11-06. No model responses used.",
+      "posting_sha256": "4ea2e421d4054dd6e44f97598e23821421795440a3a76ca95b55c509f93c9cbe",
+      "expected": {
+        "arrangement": "hybrid",
+        "home_working_schedule": {
+          "status": "stated",
+          "kind": "expected",
+          "days_text": "2–3 days",
+          "period": "each week"
+        }
+      },
+      "required_findings": [
+        "Preserve expected schedule and range."
+      ],
+      "evidence": [],
+      "prohibited_conclusions": [
+        "The schedule is only an optional allowance."
+      ]
+    }
+  }
+}

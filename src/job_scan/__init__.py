@@ -1,0 +1,1 @@
+"""Job posting assessment CLI."""
