@@ -1,7 +1,7 @@
 # Implementation Plan: Assess a Job Posting
 
 **Branch**: `main` | **Date**: 2026-11-05 | **Spec**: [spec.md](spec.md)
-**Status**: Design draft for owner review. Three generic example drafts and owner notes are available; detailed expectations, remaining coverage, and the input-size limit need review before adoption. No tasks or implementation have been created.
+**Status**: Design draft for owner review. Three rich generic postings form a shared corpus; content review, per-criterion expectations, remaining coverage, and the input-size limit need review before adoption. No tasks or implementation have been created.
 
 ## Summary
 
@@ -18,10 +18,10 @@ Build a Python CLI that reads one HTML file, asks ChatGPT for evidence-backed wo
 | Language/version | Python 3.14; pin the minor in `.python-version` and project metadata |
 | Dependencies | HTTPX for OAuth/streaming; PyJWT with crypto for identity validation; Pydantic 2 for response schema/validation; stdlib argparse for CLI |
 | Development | uv and committed lockfile; Ruff; ty with strict settings below; pytest, pytest-cov, pytest-socket |
-| Storage | No assessment database. Protected app-local OAuth credentials; versioned golden inputs/expectations and sanitized transport recordings; developer evaluation reports |
+| Storage | No assessment database. Protected app-local OAuth credentials; versioned shared posting corpus with per-criterion expectations and sanitized transport recordings; developer evaluation reports |
 | Platform/type | Personal synchronous CLI on Linux/macOS; Windows support deferred because reference auth uses Unix file locking |
 | Performance | One assessment/request at a time; 180-second total inference deadline, 10-second connection timeout; no automatic inference retry |
-| Limits | One UTF-8 HTML file, up to 256 KiB, no silent truncation. Proposed limit needs review: supplied case 03 is 2,144,770 bytes; smaller curated fixtures do not validate full-page support |
+| Limits | One UTF-8 HTML file, up to 256 KiB, no silent truncation. Proposed limit needs review: supplied case 03 is 2,144,770 bytes; generic copies omit website scaffolding and do not validate full-page support |
 | Model | Start with reference model `gpt-6.1-sol`, reasoning `low`; verify availability for the signed-in account. Optional `--model` selects another available model; no automatic substitution |
 | Billing | OAuth permission for ChatGPT plan usage only. No API-key billing fallback; eligibility/limits remain account-specific |
 
@@ -60,7 +60,7 @@ Adapt only generic OAuth and stream handling from the reference, with its source
 - Small system suite calls the real `main(argv)` with real file loading, prompt construction, auth session logic, SSE parsing, validation, preferences, and rendering. Replay sanitized recorded HTTP responses through HTTPX's transport boundary; seed a synthetic unexpired session. Match method, URL, and request-body hash; unmatched requests fail. Replay transport and network blocking remain test-only. One subprocess smoke test checks the installed command's `--help`.
 - Recorded: inference streams and OAuth/discovery/refresh/revocation HTTP exchanges. Auth failure tests may use deliberately synthetic HTTP fixtures. Never record real tokens, login callbacks, or personal account details. Block all unrecorded network in ordinary tests. No external webpage calls exist.
 - Live: explicit browser sign-in, account model discovery, and an opt-in golden evaluation using the actual subscription transport. Do not run live calls in routine tests. Record git/data/prompt/schema revisions, model/settings, timestamp, per-case semantic results, evidence review, and limitations. Expectations remain manually authored; recordings never become the oracle.
-- Acceptance requires every spec-defined mandatory expectation to pass, plus owner review of evidence relevance and structure-sensitive associations. Code coverage and cassette replay do not establish LLM quality.
+- Reuse the shared posting corpus across features. Evaluate selected supported criterion keys; absent annotations mean not evaluated, not absent source information. Require approved content and criterion reviews with matching posting hashes; stale/pending reviews cannot establish acceptance. Every spec-defined mandatory expectation must pass, including owner review of evidence relevance and structure-sensitive associations. Code coverage and cassette replay do not establish LLM quality.
 
 ## Project Structure
 
@@ -78,7 +78,7 @@ src/job_scan/
 tests/
   unit/, system/, recordings/, conftest.py
 evaluations/
-  cases/<case-id>/posting.html, expected.json
+  cases/<case-id>/posting.html, metadata.json, owner-note.txt, expected.json
   run.py
 ```
 
@@ -86,6 +86,6 @@ The CLI owns file/auth/network effects. Pure functions validate evidence, map pr
 
 ## Review and Resume
 
-The design artifacts remain a draft. Three [genericized example drafts](../../evaluations/cases/README.md) now preserve the owner's short notes; their detailed expectations are agent proposals awaiting owner review. Further cases are needed for full spec coverage. The original on-site page exceeds the proposed input-size limit, which must be revisited before plan adoption; reducing fixtures is not a runtime solution to that limit. Review the remaining stack, input limit, auth adaptation, coverage target, and manually authored expectations before finalizing the plan. No subscription request, dependency installation, or application implementation has run. A separate public iframe document was downloaded only to recover the supplied remote example; the product's fetching scope is unchanged.
+The design artifacts remain a draft. Three [rich generic postings in the shared corpus](../../evaluations/cases/README.md) preserve substantive source content and the owner's short notes. Content and detailed per-criterion expectations await owner review; future features extend criterion keys without duplicating postings. Further cases are needed for full spec coverage. The original on-site page exceeds the proposed input-size limit, which must be revisited before plan adoption; removing scaffolding from fixtures is not a runtime solution to that limit. Review the remaining stack, input limit, auth adaptation, coverage target, and manually authored expectations before finalizing the plan. No subscription request, dependency installation, or application implementation has run. A separate public iframe document was downloaded only to recover the supplied remote example; the product's fetching scope is unchanged.
 
 After plan adoption, the next command is `$speckit-tasks`, followed by review of its task list. Do not advance automatically.

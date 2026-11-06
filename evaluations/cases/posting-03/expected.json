@@ -1,23 +1,33 @@
 {
+  "schema_version": 1,
   "case_id": "posting-03",
-  "review_status": "pending_owner_review",
-  "owner_note": "onsite only",
-  "expectation_authorship": "The short classification is owner-authored. Detailed checks below are agent-proposed for owner review; they are not an approved manually authored golden dataset.",
-  "proposed_required_findings": [
-    "The target role explicitly states an on-site workplace type.",
-    "Hybrid labels on related-job cards must not be attributed to the target role.",
-    "On-site work is outside the stated remote/hybrid preferences; no hard rejection rule is invented."
-  ],
-  "evidence": [
-    {
-      "quote": "<dt class=\"example-node-122\">Workplace type</dt><dd class=\"example-node-123\">onsite</dd>",
-      "occurrence": 0
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "pending_owner_review",
+      "owner_note": "onsite only",
+      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations awaiting owner review.",
+      "posting_sha256": "841c613ba9c9946dfd11dff92a6c140912f44d11bdbd348ea830d5d199cc3fd2",
+      "expected": {
+        "arrangement": "onsite"
+      },
+      "required_findings": [
+        "The target role explicitly states an on-site workplace type.",
+        "Hybrid labels on related-job cards must not be attributed to the target role.",
+        "On-site work is outside the stated remote/hybrid preferences; no hard rejection rule is invented.",
+        "Company-level mobile-work benefits are conditional on job profile/local rules and do not override the target role’s explicit on-site label."
+      ],
+      "evidence": [
+        {
+          "quote": "<dt class=\"detailLabel-2AsIg\">Workplace type</dt><dd class=\"detailValue-3NGwm\">onsite</dd>",
+          "occurrence": 0
+        }
+      ],
+      "prohibited_conclusions": [
+        "The target job is hybrid because another card is labelled Hybrid.",
+        "The target job is remote because a location is described as flexible.",
+        "A hard apply/reject rule was supplied by the owner."
+      ],
+      "review_question": "Confirm that the target on-site role remains clear despite hybrid labels on related-job cards."
     }
-  ],
-  "proposed_prohibited_conclusions": [
-    "The target job is hybrid because another card is labelled Hybrid.",
-    "The target job is remote because a location is described as flexible.",
-    "A hard apply/reject rule was supplied by the owner."
-  ],
-  "review_question": "Confirm that the target on-site role remains clear despite hybrid labels on related-job cards."
+  }
 }

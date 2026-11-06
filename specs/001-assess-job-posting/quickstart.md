@@ -30,19 +30,19 @@ uv run --locked job-scan models
 uv run --locked job-scan assess evaluations/cases/posting-01/posting.html
 ```
 
-The `posting-01` generic HTML draft now exists; the owner's note labels it hybrid with unspecified days. Detailed expectations remain pending owner review. Other generic drafts cover restricted remote work and an on-site target alongside hybrid related-job cards; see the [case notes](../../evaluations/cases/README.md). Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
+The `posting-01` rich generic HTML draft now exists; the owner's note labels it hybrid with unspecified days. Detailed expectations remain pending owner review. Other generic drafts cover restricted remote work and an on-site target alongside hybrid related-job cards; see the [case notes](../../evaluations/cases/README.md). Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
 
 Expected: remote/hybrid facts and schedule details are distinguishable from fit judgments; quoted HTML and locations support claims; case 01 does not invent a home-working day count. Add a manually authored allowance case before claiming allowance-versus-expectation validation. See [CLI contract](contracts/cli.md) for output/exit codes and [data model](data-model.md) for evidence validation.
 
 ## Live golden evaluation (separate from code coverage)
 
-After the owner reviews all HTML/expectation pairs:
+After the owner approves posting content and the `criteria.work_arrangement` expectations for the required cases, with matching input hashes:
 
 ```bash
 uv run --locked python evaluations/run.py --live --output .local/evaluations/latest.json
 ```
 
-The implementation must ignore `.local/` in Git. This explicit command uses real ChatGPT requests and writes a developer evaluation report, not saved-assessment product functionality. Compare against every mandatory expectation from SC-001–SC-004, including changed HTML associations with unchanged words. The runner checks structured expectations/provenance; the owner reviews whether evidence actually supports findings and records the result. It returns unsuccessful if a mandatory check fails or manual review remains pending.
+The implementation must ignore `.local/` in Git. This explicit command uses real ChatGPT requests and writes a developer evaluation report, not saved-assessment product functionality. Compare against every mandatory expectation from SC-001–SC-004, including changed HTML associations with unchanged words. The runner selects `work_arrangement` from the shared corpus and checks structured expectations/provenance. Missing criterion keys are not evaluated, and pending/stale reviews cannot count as passing; the owner reviews whether evidence actually supports findings and records the result. It returns unsuccessful if a mandatory check fails or manual review remains pending.
 
 Record model/configuration, prompt/schema and case hashes, Git revision, results, manual evidence review, and limitations. Do not claim semantic validation passed on the strength of fixture replay or coverage. Never generate expected answers by copying model output.
 

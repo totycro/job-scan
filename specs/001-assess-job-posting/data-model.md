@@ -35,9 +35,13 @@ Flow: `input validated → complete model response → schema/evidence validated
 
 ## GoldenCase and EvaluationRun
 
-Each versioned case contains `posting.html` and manually authored `expected.json`: case ID, required findings/uncertainties, expected evidence/associations, and prohibited conclusions. Expectations may match structured fields and supporting spans without demanding identical report prose. Include the paired HTML association example from SC-002. Three [generic case drafts](../../evaluations/cases/README.md) now include owner-authored short notes and agent-proposed detailed checks. They remain pending owner review, and do not yet provide complete coverage. Preserve expectation authorship and review status rather than treating generated checks as accepted human expectations.
+Each shared case contains `posting.html`, `metadata.json`, unchanged `owner-note.txt`, and `expected.json`. Preserve substantive job/company content and meaningful structure so future features can annotate the same input. Metadata records provenance, capture/transformations, content-review status and the exact input hash. The corpus currently contains three rich generic drafts; it is not yet an approved dataset.
 
-A developer evaluation run records timestamp, Git revision, case/prompt/schema hashes, requested and returned model identity when available, reasoning settings, per-case findings/evidence results, manual relevance review, and limitations. Keep reports separate from product output. A failed mandatory expectation fails acceptance.
+`expected.json` contains `schema_version`, `case_id`, and `criteria`. Each criterion key owns its review status, authorship, posting hash, expected semantic field values, required findings/uncertainties, evidence quotes/occurrences, and prohibited conclusions. Only `work_arrangement` is currently annotated. Its owner-authored short notes are retained; expanded checks remain agent proposals pending owner review.
+
+An absent criterion key means not annotated/not evaluated; an explicit expected `not_stated` or `null` means a checked absence in the source. Omitted expected fields are not checks. A changed posting hash invalidates prior review until the owner checks the content and each existing criterion against the new version. Evaluation must report pending/stale/missing annotations rather than counting them as passes. See the [corpus lifecycle](../../evaluations/cases/README.md) for review and growth toward roughly ten representative postings.
+
+A developer evaluation run records timestamp, Git revision, selected case/criterion keys, input/expectation/prompt/schema hashes, requested and returned model identity when available, reasoning settings, per-case findings/evidence results, manual relevance review, and limitations. Feature acceptance requires its selected coverage and all mandatory expectations to pass with approved content/criterion reviews. Reports remain separate from product output. Keep focused edge-case fixtures, including the SC-002 structure-sensitive pair, separate from the shared rich postings.
 
 ## OAuth Session (provider infrastructure)
 

@@ -1,22 +1,36 @@
 {
+  "schema_version": 1,
   "case_id": "posting-01",
-  "review_status": "pending_owner_review",
-  "owner_note": "Hybrid with an unspecified number of days",
-  "expectation_authorship": "The short classification is owner-authored. Detailed checks below are agent-proposed for owner review; they are not an approved manually authored golden dataset.",
-  "proposed_required_findings": [
-    "Home working is available; report the owner-labelled hybrid arrangement as acceptable.",
-    "The number of home-working days and any allowed/expected schedule are unstated."
-  ],
-  "evidence": [
-    {
-      "quote": "Ein attraktives Gleitzeitmodell und die Möglichkeit zum Homeoffice lässt Beruf und Privatleben in einem ausgeglichenen Verhältnis vereinbaren.",
-      "occurrence": 0
+  "criteria": {
+    "work_arrangement": {
+      "review_status": "pending_owner_review",
+      "owner_note": "Hybrid with an unspecified number of days",
+      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations awaiting owner review.",
+      "posting_sha256": "a49831c4537fdc0f1aa4949a5c46f0a981ed15499c31556e51ca049133a39a94",
+      "expected": {
+        "arrangement": "hybrid",
+        "home_working_schedule": {
+          "status": "not_stated",
+          "days_text": null,
+          "period": null
+        }
+      },
+      "required_findings": [
+        "Home working is available; report the owner-labelled hybrid arrangement as acceptable.",
+        "The number of home-working days and any allowed/expected schedule are unstated."
+      ],
+      "evidence": [
+        {
+          "quote": "Ein attraktives Gleitzeitmodell und die Möglichkeit zum Homeoffice lässt Beruf und Privatleben in einem ausgeglichenen Verhältnis vereinbaren.",
+          "occurrence": 0
+        }
+      ],
+      "prohibited_conclusions": [
+        "Fully remote work is explicitly guaranteed.",
+        "A particular number of home-working or office days is specified.",
+        "Home working is mandatory."
+      ],
+      "review_question": "The owner labels this hybrid; the source only promises the possibility of home working. Confirm whether hybrid with an unspecified schedule is the desired interpretation, without asserting mandatory office attendance."
     }
-  ],
-  "proposed_prohibited_conclusions": [
-    "Fully remote work is explicitly guaranteed.",
-    "A particular number of home-working or office days is specified.",
-    "Home working is mandatory."
-  ],
-  "review_question": "The owner labels this hybrid; the source only promises the possibility of home working. Confirm whether hybrid with an unspecified schedule is the desired interpretation, without asserting mandatory office attendance."
+  }
 }

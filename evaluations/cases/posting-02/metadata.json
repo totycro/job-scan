@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "posting-02",
+  "content_review_status": "pending_owner_review",
+  "posting_sha256": "53910077955652647907ebd17f6f516df22cb63f9cea2ca26de6026a552a5651",
+  "source_file": "posting-02-embedded.html",
+  "capture_method": "direct HTTP download of the embedded posting",
+  "original_size_bytes": 73717,
+  "generic_size_bytes": 8845,
+  "changes": [
+    "Rebuilt from source, retaining substantive body prose and structural relationships.",
+    "Fictional employer/person/contact identifiers; generic link targets; broad geography, technology names, numerical quantities, and work-arrangement conditions preserved.",
+    "Executable scripts, trackers, visual assets/stylesheets, and application forms omitted.",
+    "Source JobPosting JSON-LD retained; company-benefit descriptions from embedded configuration retained with company-level scope where available.",
+    "Whitespace-only padding and trailing space after closing markup removed; substantive text retained."
+  ],
+  "limitations": [
+    "Not a pixel-identical or byte-identical page archive.",
+    "Not evidence that the current input-size limit supports the larger original snapshots.",
+    "Source-specific identity replacements are intentionally not stored in the public corpus."
+  ]
+}
