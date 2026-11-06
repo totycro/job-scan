@@ -3,9 +3,9 @@
   "case_id": "posting-01",
   "criteria": {
     "work_arrangement": {
-      "review_status": "pending_owner_review",
+      "review_status": "approved",
       "owner_note": "Hybrid with an unspecified number of days",
-      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations awaiting owner review.",
+      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations reviewed and approved by owner on 2026-11-06.",
       "posting_sha256": "a49831c4537fdc0f1aa4949a5c46f0a981ed15499c31556e51ca049133a39a94",
       "expected": {
         "arrangement": "hybrid",
@@ -29,8 +29,7 @@
         "Fully remote work is explicitly guaranteed.",
         "A particular number of home-working or office days is specified.",
         "Home working is mandatory."
-      ],
-      "review_question": "The owner labels this hybrid; the source only promises the possibility of home working. Confirm whether hybrid with an unspecified schedule is the desired interpretation, without asserting mandatory office attendance."
+      ]
     }
   }
 }

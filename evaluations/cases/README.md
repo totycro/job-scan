@@ -2,7 +2,7 @@
 
 Keep one reusable collection of rich, generic job postings. Start with these three and grow toward roughly ten representative cases as useful variations appear; ten is a working goal, not a feature-completion requirement. Add expectations for each criterion as features introduce it, using the same posting instead of making feature-specific copies.
 
-The current files have been rebuilt from the originals. They preserve substantive content and remain **pending owner review**, rather than an approved golden dataset.
+The current files have been rebuilt from the originals. Source-content review remains **pending owner review**. On 2026-11-06 the owner approved all three work-arrangement expectations. All three retain that approval with matching posting hashes. Posting-03 is unchanged at 62,393 bytes, already within the proposed 256 KiB limit.
 
 | Case | Owner's classification | Other retained material |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Each criterion records:
 - `required_findings`, `evidence` (exact source quotes and zero-based occurrences), and `prohibited_conclusions`.
 - `review_question`: an unresolved interpretation to settle before approval, when needed.
 
-The current owner classifications are human-authored. The expanded checks are agent drafts; their status remains pending. Reading or generating a model response must never automatically approve or overwrite expectations.
+The current owner classifications are human-authored. The expanded checks were agent-drafted and owner-approved on 2026-11-06, subject to the per-case HTML revision and review status described above. Reading or generating a model response must never automatically approve or overwrite expectations.
 
 **Absence has two different meanings:** an absent criterion key means this case has not been annotated for that criterion. An explicit expected value such as `home_working_schedule.status = "not_stated"` means the criterion was annotated and the posting is expected to omit that information. Omitted expected fields are not checks; explicit `null` values are checked absences.
 
@@ -68,4 +68,4 @@ The three cases do not cover the entire first specification: explicit hybrid all
 
 Original sizes are recorded in each metadata file. The original on-site capture is 2,144,770 bytes and exceeds the draft 256 KiB input limit. Removing website scaffolding from a test fixture is not a production solution to that limit; review it before adopting the technical plan.
 
-Next: owner reviews the richer generic copies and per-criterion expectations, then resolves remaining plan decisions before `$speckit-tasks`.
+Next: review transformed posting content, then resolve remaining plan decisions before `$speckit-tasks`. All three cases already have approved criterion expectations.

@@ -3,9 +3,9 @@
   "case_id": "posting-03",
   "criteria": {
     "work_arrangement": {
-      "review_status": "pending_owner_review",
+      "review_status": "approved",
       "owner_note": "onsite only",
-      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations awaiting owner review.",
+      "expectation_authorship": "Owner-authored classification note; agent-drafted detailed expectations reviewed and approved by owner on 2026-11-06.",
       "posting_sha256": "841c613ba9c9946dfd11dff92a6c140912f44d11bdbd348ea830d5d199cc3fd2",
       "expected": {
         "arrangement": "onsite"
@@ -25,8 +25,7 @@
         "The target job is hybrid because another card is labelled Hybrid.",
         "The target job is remote because a location is described as flexible.",
         "A hard apply/reject rule was supplied by the owner."
-      ],
-      "review_question": "Confirm that the target on-site role remains clear despite hybrid labels on related-job cards."
+      ]
     }
   }
 }
