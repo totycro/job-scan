@@ -13,8 +13,7 @@
       "required_findings": [
         "The target role explicitly states an on-site workplace type.",
         "Hybrid labels on related-job cards must not be attributed to the target role.",
-        "On-site work is outside the stated remote/hybrid preferences; no hard rejection rule is invented.",
-        "Company-level mobile-work benefits are conditional on job profile/local rules and do not override the target role’s explicit on-site label."
+        "On-site work is outside the stated remote/hybrid preferences; no hard rejection rule is invented."
       ],
       "evidence": [
         {

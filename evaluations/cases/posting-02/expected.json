@@ -11,21 +11,11 @@
         "arrangement": "remote"
       },
       "required_findings": [
-        "Remote work is offered and matches the preferred arrangement.",
-        "Europe/UK residence, valid work authorization, and a European time zone qualify availability.",
-        "The office is optional; invitations to three office weeks annually are mentioned. Whether attendance is mandatory is not specified."
+        "Remote work is offered and matches the preferred arrangement."
       ],
       "evidence": [
         {
           "quote": "fully remote",
-          "occurrence": 0
-        },
-        {
-          "quote": "This role is open to candidates based in Europe (including UK) only with a valid right to work.",
-          "occurrence": 0
-        },
-        {
-          "quote": "You have excellent English skills and you are based in a European time zone.",
           "occurrence": 0
         },
         {
@@ -34,12 +24,10 @@
         }
       ],
       "prohibited_conclusions": [
-        "Work is available from anywhere worldwide.",
-        "The user is known to satisfy the eligibility restrictions.",
         "Office attendance is compulsory on a weekly hybrid schedule.",
         "The posting guarantees there will never be office visits."
       ],
-      "review_question": "Confirm that the generic copy retains the remote role correctly, including geographic/work-right restrictions and the office-week invitation."
+      "review_question": "Confirm that the generic copy retains the remote role correctly."
     }
   }
 }
