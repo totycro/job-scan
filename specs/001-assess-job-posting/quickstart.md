@@ -1,6 +1,6 @@
 # Quickstart Validation Guide
 
-**Status**: Planned commands for the implementation stage. Only design documents exist today; these commands have not been run and will not work until the package, fixtures, and evaluation runner are implemented.
+**Status**: Planned commands for the implementation stage. Only design documents, task list, and initial corpus exist today; these commands have not been run and will not work until the package, fixtures, and evaluation runner are implemented.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ uv run --locked job-scan models
 uv run --locked job-scan assess evaluations/cases/posting-01/posting.html
 ```
 
-The `posting-01` rich generic HTML draft now exists; the owner's note labels it hybrid with unspecified days. Detailed expectations remain pending owner review. Other generic drafts cover restricted remote work and an on-site target alongside hybrid related-job cards; see the [case notes](../../evaluations/cases/README.md). Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
+The `posting-01` rich generic HTML draft now exists; the owner's note labels it hybrid with unspecified days. Detailed expectations were owner-approved on 2026-11-06; source-content review remains pending. Other generic drafts cover restricted remote work and an on-site target alongside hybrid related-job cards; see the [case notes](../../evaluations/cases/README.md). Sign-in must finish in the foreground before the assessment runs. Verify that the configured model appears in the account catalog; use `--model` if selecting another supported account model and record that choice.
 
 Expected: remote/hybrid facts and schedule details are distinguishable from fit judgments; quoted HTML and locations support claims; case 01 does not invent a home-working day count. Add a manually authored allowance case before claiming allowance-versus-expectation validation. See [CLI contract](contracts/cli.md) for output/exit codes and [data model](data-model.md) for evidence validation.
 

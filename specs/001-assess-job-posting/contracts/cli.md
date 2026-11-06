@@ -1,6 +1,6 @@
 # CLI Contract: Assess a Job Posting
 
-**Status**: Proposed interface for plan review. Commands below are not implemented yet.
+**Status**: Interface adopted with plan approval on 2026-11-06. Commands below are not implemented yet.
 
 ## Assessment
 

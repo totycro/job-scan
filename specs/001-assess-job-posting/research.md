@@ -1,6 +1,6 @@
 # Research: Assess a Job Posting
 
-**Status**: Decisions proposed for plan review; Python, subscription-based ChatGPT access, and ty for type checking are owner constraints. Research resolves the technical choices; it does not establish account eligibility or model quality.
+**Status**: Decisions adopted with owner plan approval on 2026-11-06; Python, subscription-based ChatGPT access, and ty for type checking are owner constraints. Research resolves the technical choices; it does not establish account eligibility or model quality.
 
 ## 1. Python and development tools
 
@@ -56,6 +56,6 @@ Sources: [HTTPX custom/mock transports](https://www.python-httpx.org/advanced/tr
 
 ## Remaining validation dependencies
 
-Three [rich generic postings](../../evaluations/cases/README.md) now retain substantive source content and owner-authored short notes. Use one shared corpus across features, adding independently reviewed criterion keys to each case's expectations; absent keys mean not annotated. Content and detailed expectations remain pending owner review, bound to posting hashes. Small synthetic edge-case fixtures are separate; roughly ten shared cases is a working goal, not a mandatory count. The supplied remote example was an outer page with a job-board iframe; a direct download of the embedded document recovered the actual posting. Preserve this capture distinction for future retrieval design without adding fetching to the current feature.
+Three [rich generic postings](../../evaluations/cases/README.md) now retain substantive source content and owner-authored short notes. Use one shared corpus across features, adding independently reviewed criterion keys to each case's expectations; absent keys mean not annotated. Detailed expectations were owner-approved on 2026-11-06, bound to matching posting hashes; source-content reviews remain pending. Small synthetic edge-case fixtures are separate; roughly ten shared cases is a working goal, not a mandatory count. The supplied remote example was an outer page with a job-board iframe; a direct download of the embedded document recovered the actual posting. Preserve this capture distinction for future retrieval design without adding fetching to the current feature.
 
-The original on-site page is 2,144,770 bytes and exceeds the proposed 256 KiB input limit. The generic copies omit executable/scaffolding data while retaining substantive content, so their smaller sizes are not evidence that the limit handles complete original pages. Review that limit with the owner before plan adoption. The structure-sensitive pair and other uncovered scenarios still need manually authored expectations. Live account eligibility, inference quality, and recorded stream compatibility have not been tested.
+The original on-site page is 2,144,770 bytes and exceeds the proposed 256 KiB input limit. The generic copies omit executable/scaffolding data while retaining substantive content, so their smaller sizes are not evidence that the limit handles complete original pages. The owner adopted the 256 KiB limit with plan approval; the original capture remains unsupported. The structure-sensitive pair and other uncovered scenarios still need manually authored expectations. Live account eligibility, inference quality, and recorded stream compatibility have not been tested.

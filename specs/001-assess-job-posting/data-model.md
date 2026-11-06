@@ -1,6 +1,6 @@
 # Data Model: Assess a Job Posting
 
-**Status**: Proposed implementation contracts; no database or runtime assessment persistence.
+**Status**: Implementation contracts adopted with plan approval on 2026-11-06; no database or runtime assessment persistence.
 
 ## PostingInput
 
@@ -20,7 +20,8 @@
 
 Strict Pydantic response model; disallow unknown keys and type coercion.
 
-- `posting_status`: `identified | ambiguous | absent`. Ambiguous/absent produces failure, with a short explanation.
+- `posting_status`: `identified | ambiguous | absent`. Ambiguous/absent produces failure.
+- `posting_explanation`: required nullable string; must be nonempty after trimming when `posting_status` is `ambiguous` or `absent`, and null when `identified`. Use it for the concise unsuccessful-outcome explanation; missing criterion details belong in `uncertainties`.
 - `arrangements`: list of findings, each containing `kind` (`remote | hybrid | onsite`), `context` (role/location/options/conditions), and one or more evidence entries. Multiple alternatives are allowed; an empty list means no arrangement was established.
 - `home_working`: schedule findings with `days_text` and `period` (nullable strings preserving the stated quantity/range and period), `kind` (`allowed | expected | unspecified`), `context`, and evidence. `unspecified` has null quantity/period and does not claim a fabricated absence quote.
 - `uncertainties`: missing-information explanations; `conflicts`: explanations with the evidence for opposing statements.
@@ -35,11 +36,20 @@ Flow: `input validated → complete model response → schema/evidence validated
 
 ## GoldenCase and EvaluationRun
 
-Each shared case contains `posting.html`, `metadata.json`, unchanged `owner-note.txt`, and `expected.json`. Preserve substantive job/company content and meaningful structure so future features can annotate the same input. Metadata records provenance, capture/transformations, content-review status and the exact input hash. The corpus currently contains three rich generic drafts; it is not yet an approved dataset.
+Each shared case contains `posting.html`, `metadata.json`, unchanged `owner-note.txt`, and `expected.json`. Preserve substantive job/company content and meaningful structure so future features can annotate the same input. Metadata records provenance, capture/transformations, content-review status and the exact input hash. The corpus currently contains three rich generic postings with approved criterion expectations; source-content reviews remain pending.
 
-`expected.json` contains `schema_version`, `case_id`, and `criteria`. Each criterion key owns its review status, authorship, posting hash, expected semantic field values, required findings/uncertainties, evidence quotes/occurrences, and prohibited conclusions. Only `work_arrangement` is currently annotated. Its owner-authored short notes are retained; expanded checks remain agent proposals pending owner review.
+`expected.json` contains `schema_version`, `case_id`, and `criteria`. Each criterion key owns its review status, authorship, posting hash, expected semantic field values, required findings/uncertainties, evidence quotes/occurrences, and prohibited conclusions. Only `work_arrangement` is currently annotated. Its owner-authored short notes are retained; expanded checks were reviewed and approved by the owner on 2026-11-06.
 
 An absent criterion key means not annotated/not evaluated; an explicit expected `not_stated` or `null` means a checked absence in the source. Omitted expected fields are not checks. A changed posting hash invalidates prior review until the owner checks the content and each existing criterion against the new version. Evaluation must report pending/stale/missing annotations rather than counting them as passes. See the [corpus lifecycle](../../evaluations/cases/README.md) for review and growth toward roughly ten representative postings.
+
+### Mapping golden expectations to response findings
+
+Keep approved expectation files unchanged. The evaluation runner projects validated findings into the expectation vocabulary; it does not compare raw response JSON paths directly.
+
+- `expected.arrangement` matches the set of distinct `arrangements[].kind` values for the target role. A scalar requires exactly that one kind; an array, when authored for multiple alternatives, requires exact set equality. Preserve contexts, alternatives and conflicts in the report for semantic review; never select one convenient finding or discard a contrary finding to pass a scalar check.
+- `expected.home_working_schedule.status = "not_stated"` requires no target-role schedule with a stated quantity/period or `allowed`/`expected` assertion. Empty `home_working`, or only `unspecified` findings with null quantity/period, represents that absence; the assessment must explain the missing information. Qualitative allowed/expected findings do not count as `not_stated` even when their quantities are null.
+- Schedule `days_text` and `period` expectations apply together to the same target-role schedule finding. Explicit null requires an absent value; when no schedule exists both project to null. Omitted expected fields impose no check. Multiple schedules require a context-specific expectation/review rather than choosing a favorable match; unsupported expectation shapes must fail clearly rather than silently skip checks.
+- Required findings, prohibited conclusions, and evidence relevance/role associations remain explicit owner-reviewed semantic checks. Automatic field and quote checks cannot approve those claims. A failed or ambiguous posting cannot pass successful-assessment expectations.
 
 A developer evaluation run records timestamp, Git revision, selected case/criterion keys, input/expectation/prompt/schema hashes, requested and returned model identity when available, reasoning settings, per-case findings/evidence results, manual relevance review, and limitations. Feature acceptance requires its selected coverage and all mandatory expectations to pass with approved content/criterion reviews. Reports remain separate from product output. Keep focused edge-case fixtures, including the SC-002 structure-sensitive pair, separate from the shared rich postings.
 

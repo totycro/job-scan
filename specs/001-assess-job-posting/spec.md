@@ -3,7 +3,7 @@
 **Feature Branch**: `main`
 **Feature Directory**: `specs/001-assess-job-posting`
 **Created**: 2026-11-05
-**Status**: Owner-reviewed specification — clarification complete; technical plan drafted for review
+**Status**: Owner-reviewed specification — clarification complete; technical plan approved; task list approved; consistency analysis complete
 
 **Input**: Assess one saved HTML posting against the owner's work-arrangement criteria, with source evidence and explicit uncertainty. Preserve meaningful HTML structure. URL fetching is deferred to a later feature.
 
@@ -90,4 +90,4 @@ Clarification review on 2026-11-05 found no critical ambiguities requiring addit
 
 Requirements-quality checklist: 15/16 → 16/16 passing after owner acceptance resolved the scope boundary; no regressions or unchecked items remain. Its existing review notes describe the earlier draft review.
 
-Planning draft: [plan.md](plan.md) and its supporting design artifacts are available for review. The owner selected Python and subscription-based ChatGPT access, with `../fyntok/src/fyntok/ai.py` as the integration reference. Three [rich generic postings in a shared corpus](../../evaluations/cases/README.md) now retain substantive content and the owner's short classification notes. Future features can add criteria to the same cases; content review, per-criterion expectations, and remaining coverage need owner review before the plan is finalized. Review the plan before `$speckit-tasks`; no tasks, implementation, or model evaluation has run.
+The owner approved [plan.md](plan.md) on 2026-11-06, including its technical choices and input limit. The three shared cases have approved work-arrangement expectations with matching posting hashes; source-content review and remaining focused coverage are tracked in [tasks.md](tasks.md). The owner approved the task list on 2026-11-06. Consistency analysis identified no critical issues; three minor contract clarifications were resolved with owner authorization. Next: `$speckit-implement`. No application implementation or model evaluation has run.
