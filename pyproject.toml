@@ -3,17 +3,28 @@ name = "job-scan"
 version = "0.1.0"
 description = "Evidence-backed work-arrangement assessments from saved job HTML"
 requires-python = ">=3.14,<3.15"
-dependencies = ["httpx", "pyjwt[crypto]", "pydantic>=2,<3"]
+dependencies = [
+    "httpx==0.28.1",
+    "pyjwt[crypto]==2.15.1",
+    "pydantic==2.14.3",
+    "typer==0.28.0",
+]
 
 [project.scripts]
 job-scan = "job_scan.cli:entrypoint"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.33.0"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
-dev = ["ruff", "ty", "pytest", "pytest-cov", "pytest-socket"]
+dev = [
+    "ruff==0.17.4",
+    "ty==0.0.98",
+    "pytest==9.2.0",
+    "pytest-cov==7.1.0",
+    "pytest-socket==0.8.1",
+]
 
 [tool.ruff]
 target-version = "py314"

@@ -1,3 +1,15 @@
+<!--
+Sync Impact Report (temporary amendment review notes; remove before commit)
+Version change: 1.0.0 -> 1.1.0
+Modified principles: IV. Development practices (title unchanged)
+Added sections: None
+Removed sections: None
+Reason: Make the owner's reproducible, uv-only environment policy explicit for future planning.
+Impact: Plans and implementations must use exact dependency pins and the locked uv workflow.
+Existing pyproject.toml, uv.lock, README.md, and AGENTS.md already reflect this policy.
+Assessment behavior is unchanged. Templates and commands read this constitution at runtime.
+Follow-up TODOs: None
+-->
 # job-scan Constitution
 
 ## Core Principles
@@ -22,6 +34,8 @@ There are a number of criteria by which job postings are evaluated. Keep criteri
 The technical plan MUST select strict linting and type-checking settings and define a coverage target. Required checks MUST pass before feature completion.
 Prefer TDD and Imperative shell/functional core architecture.
 Maintain a small set of end-to-end tests covering the primary CLI workflows. Exercise real internal components; the technical plan MUST define which external services use recorded responses or live calls.
+
+This tool is not meant to support a wide range of installation, only `uv run --locked` is officially supported. Use exact version pins in `pyproject.toml` with `==` to ensure reprocability and pin transitive dependencies with `uv.lock`.
 
 ### V. UI
 
@@ -76,4 +90,4 @@ Use semantic versioning: MAJOR for incompatible changes to or removal of existin
 MINOR for new principles or materially expanded guidance, and PATCH for clarifications that do
 not change obligations. This initial adoption establishes version 1.0.0.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-05 | **Last Amended**: 2026-11-05
+**Version**: 1.1.0 | **Ratified**: 2026-11-05 | **Last Amended**: 2026-11-09

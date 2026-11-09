@@ -11,7 +11,9 @@ scores, application decisions, and saved-report management are outside this incr
 
 ## Setup and use
 
-Requires Python 3.14, uv, and Linux/macOS. Install from the repository root:
+Requires Python 3.14, uv, and Linux/macOS.
+
+Run from the repository root:
 
 ```bash
 uv sync --locked
@@ -34,6 +36,9 @@ produce uncertainty; absent/ambiguous postings and invalid responses produce fai
 
 Exit codes: 0 successful assessment/auth/help; 1 assessment/auth/provider failure;
 2 invalid arguments/input; 130 interrupted. Failures use stderr without a success report.
+
+Commands and options are declared with Typer. Use `job-scan --help`,
+`job-scan assess --help`, or `job-scan auth --help` to explore the interface.
 
 ## Development and validation
 
