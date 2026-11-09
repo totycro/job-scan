@@ -14,7 +14,10 @@ from job_scan.ai import DEFAULT_MODEL, ResponsesClient
 from job_scan.auth import ChatGPTSession
 from job_scan.evidence import assess as assess_posting
 from job_scan.models import PostingInput
-from job_scan.report import render, safe
+from job_scan.profiles import ProfileError, ProfileInput, has_exceptions, parse_profile
+from job_scan.rating_models import PassMetadata
+from job_scan.ratings import assemble, build_dimensions
+from job_scan.report import render, render_personalized, safe
 
 MAX_BYTES = 262144
 
@@ -45,6 +48,24 @@ def load_posting(path: Path, source_url: str | None = None) -> PostingInput:
     )
 
 
+def load_profile(path: Path) -> ProfileInput:
+    try:
+        if not path.is_file():
+            raise ProfileError("Profile must be a readable regular TOML file.")
+        with path.open("rb") as stream:
+            content = stream.read(65537)
+        if len(content) > 65536:
+            raise ProfileError("Profile exceeds the 64 KiB limit; no content was sent.")
+        if not content:
+            raise ProfileError("Profile is empty.")
+        profile = parse_profile(content.decode("utf-8-sig"))
+    except OSError, UnicodeError:
+        raise InputError(f"Profile {path}: unable to read UTF-8 TOML.") from None
+    except ProfileError as exc:
+        raise InputError(f"Profile {path}: {exc}") from None
+    return ProfileInput(path=path, sha256=hashlib.sha256(content).hexdigest(), profile=profile)
+
+
 app = typer.Typer(
     help="Assess saved job-posting HTML.",
     add_completion=False,
@@ -62,12 +83,41 @@ def assess(
         str | None, typer.Option(help="HTTP(S) source URL for provenance; never fetched.")
     ] = None,
     model: Annotated[str, typer.Option(help="Account-available model to use.")] = DEFAULT_MODEL,
+    profile: Annotated[
+        Path | None, typer.Option(help="UTF-8 preference TOML (up to 64 KiB). ")
+    ] = None,
 ) -> None:
     """Assess one saved HTML file."""
     source = load_posting(posting, source_url)
+    preferences = load_profile(profile) if profile is not None else None
     with ChatGPTSession() as session, ResponsesClient(session) as client:
         result = client.assess_html(source.html, model)
-        print(render(assess_posting(source, result, client.returned_model or model)), end="")
+        work = assess_posting(source, result, client.returned_model or model)
+        if preferences is None:
+            print(render(work), end="")
+            return
+        passes = [
+            PassMetadata(
+                stage="work_arrangement",
+                requested_model=model,
+                returned_model=client.returned_model,
+            )
+        ]
+        fits = client.assess_fit(source.html, preferences.profile, model)
+        passes.append(
+            PassMetadata(stage="fit", requested_model=model, returned_model=client.returned_model)
+        )
+        build_dimensions(work, preferences, fits)
+        exceptions = None
+        if has_exceptions(preferences.profile):
+            exceptions = client.assess_exceptions(source.html, preferences.profile, model)
+            passes.append(
+                PassMetadata(
+                    stage="exceptions", requested_model=model, returned_model=client.returned_model
+                )
+            )
+        report = assemble(work, preferences, fits, passes, exceptions)
+        print(render_personalized(report), end="")
 
 
 @app.command()

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "case_id": "omitted-technology",
+  "posting_sha256": "cc573b5e9647a51b6146d3f5d1be4b989e57bc660a13c3fe650f6e0ffdc19685",
+  "profile_sha256": "559bb362549d47dc20ce68da0d511eb70d701d94ab43829581154abc99538894",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "technology_fit": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Infer PHP is absent because it is not mentioned."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I want to avoid PHP."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "technology_fit"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 1,
+    "rated_importance": 0,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

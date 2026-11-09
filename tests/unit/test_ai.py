@@ -229,3 +229,98 @@ def test_catalog_status(signed_session: Path) -> None:
         pytest.raises(RuntimeError, match="HTTP 403"),
     ):
         ai.models()
+
+
+@pytest.mark.parametrize(
+    "event",
+    [
+        "response.completed",
+        "response.incomplete",
+        "response.failed",
+        "response.refusal.done",
+        "error",
+        "response.output_text.done",
+    ],
+)
+def test_typed_transport(signed_session: Path, event: str) -> None:
+    from job_scan.ai import RequestError
+    from job_scan.rating_models import FitResponse
+
+    session = ChatGPTSession(signed_session / "job-scan")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content)
+        assert body["input"] == [{"role": "user", "content": '{"dimensions": []}'}]
+        assert body["instructions"] == "test instructions"
+        assert body["model"] == "selected-model"
+        assert body["store"] is False
+        assert body["reasoning"] == {"effort": "low"}
+        assert body["text"]["format"]["schema"] == FitResponse.model_json_schema()
+        return httpx.Response(
+            200,
+            text="data: "
+            + json.dumps(
+                {
+                    "type": event,
+                    "response": {
+                        "model": "returned-model",
+                        "output": [
+                            {"content": [{"type": "output_text", "text": '{"dimensions": []}'}]}
+                        ],
+                    },
+                }
+            )
+            + "\n\n",
+        )
+
+    with ResponsesClient(session, httpx.Client(transport=httpx.MockTransport(handler))) as ai:
+        ai.returned_model = "previous-pass"
+        if event == "response.completed":
+            assert (
+                ai.request_structured(
+                    "test instructions", '{"dimensions": []}', "fit", FitResponse, "selected-model"
+                ).dimensions
+                == []
+            )
+            assert ai.returned_model == "returned-model"
+        else:
+            with pytest.raises(RequestError):
+                ai.request_structured(
+                    "test instructions", '{"dimensions": []}', "fit", FitResponse, "selected-model"
+                )
+            assert ai.returned_model is None
+
+
+def test_legacy_request_bytes() -> None:
+    import hashlib
+
+    from job_scan.ai import DEFAULT_MODEL, request_body
+
+    for path in Path("tests/recordings/inference").glob("*.json"):
+        cassette = json.loads(path.read_text())
+        # Existing actual recordings bind the exact serialization through their system tests.
+        assert cassette
+    html = "Fully remote"
+    assert (
+        hashlib.sha256(
+            httpx.Request(
+                "POST", "https://example.test", json=request_body(html, DEFAULT_MODEL)
+            ).content
+        ).hexdigest()
+        == "2eacafb3292ab3ea60f34d325225c95ade2d70de56366229e1c4cc852772bf91"
+    )
+
+
+def test_no_declarations_rejects_exception_transport(signed_session: Path) -> None:
+    from job_scan.profiles import Profile
+    from tests.conftest import fictional_profile
+
+    def forbidden(_request: httpx.Request) -> httpx.Response:
+        pytest.fail("No declaration may cause an exception inference request")
+
+    with (
+        ChatGPTSession(signed_session / "job-scan") as session,
+        ResponsesClient(session, httpx.Client(transport=httpx.MockTransport(forbidden))) as client,
+        pytest.raises(ValueError, match="skip"),
+    ):
+        client.assess_exceptions("HTML", Profile.model_validate(fictional_profile()))

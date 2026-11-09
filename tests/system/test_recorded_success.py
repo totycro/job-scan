@@ -14,7 +14,11 @@ from job_scan.models import WorkArrangementResult
 from tests.conftest import Replay
 
 ROOT = Path(__file__).resolve().parents[2]
-CASE_PATHS = json.loads((ROOT / "evaluations/manifest.json").read_text())["required_cases"]
+CASE_PATHS = [
+    entry["posting"].removesuffix("/posting.html")
+    for entry in json.loads((ROOT / "evaluations/manifest.json").read_text())["required_cases"]
+    if entry["mode"] == "work_arrangement"
+]
 
 
 @pytest.mark.parametrize("case_path", CASE_PATHS)

@@ -1,0 +1,17 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = ""
+
+[dimensions.technology_fit]
+importance = 1
+preferences = "I know Python and SQL but want to stop using them. I want PHP and do not want to learn Rust."
+
+[dimensions.field_interest]
+importance = 1
+preferences = ""
+
+[dimensions.company_affinity]
+importance = 1
+preferences = ""

@@ -1,0 +1,27 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = "I want hands-on individual contributor backend work, not managing people."
+
+[dimensions.technology_fit]
+importance = 1
+preferences = "I will not accept a role requiring PHP."
+
+[[dimensions.technology_fit.exceptions]]
+id = "php"
+kind = "deal_breaker"
+preference_quote = "I will not accept a role requiring PHP."
+
+[dimensions.field_interest]
+importance = 1
+preferences = "I find climate science software compelling enough to accept weaknesses elsewhere."
+
+[dimensions.company_affinity]
+importance = 1
+preferences = "I require protected learning time."
+
+[[dimensions.company_affinity.exceptions]]
+id = "learning"
+kind = "compelling_attraction"
+preference_quote = "I require protected learning time."

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "case_id": "technology-contrast-high",
+  "posting_sha256": "fa5be1c36112d8fb82ed2f40c104aa2e209b9750c99bf1644b29688260f308c5",
+  "profile_sha256": "cf2237577565b43eed1581f51ddd5d7db736335396fc82f11867fb379c2350fc",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "technology_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Known desired tools and willingness to learn Rust support fit; PHP is explicitly absent."
+      ],
+      "prohibited_conclusions": [
+        "Use company reputation or business facts not stated in HTML.",
+        "Treat familiarity alone as technology preference."
+      ],
+      "evidence": [
+        {
+          "quote": "We require Python and SQL; Rust can be learned on the job. PHP is not used in this role.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I know Python and SQL and want to use them. I would enjoy learning Rust. I avoid PHP."
+      ],
+      "exceptions": {},
+      "score_band": [
+        65,
+        100
+      ],
+      "relative_to": "technology-contrast-low",
+      "direction": "higher"
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

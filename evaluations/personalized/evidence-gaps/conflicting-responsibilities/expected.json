@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "case_id": "conflicting-responsibilities",
+  "posting_sha256": "84501eebbeb2af87df302ad48979c805a2ce7a1aba0a2659e92c053b2fc71ce7",
+  "profile_sha256": "370f58b537452ba2fe91acc2c5198ce1094756d1392230a3d3cc83678bc6fe50",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "Preserve both conflicting target-role passages; no score can resolve the condition."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "This role has no management duties.",
+          "occurrence": 0
+        },
+        {
+          "quote": "This same role requires line management.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I will accept this role only if it has no management duties."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "role_fit"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 1,
+    "rated_importance": 0,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

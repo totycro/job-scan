@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "case_id": "partial-required-unknown",
+  "posting_sha256": "cc573b5e9647a51b6146d3f5d1be4b989e57bc660a13c3fe650f6e0ffdc19685",
+  "profile_sha256": "545c934fcdf4ab210e4d1c5046a5ee907f653322c9be62eb2be38fc54c0f4cf9",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "Preserve the backend match but leave management duties unknown; the required condition prevents a score."
+      ],
+      "prohibited_conclusions": [
+        "Treat silence as no line management; assign a neutral score."
+      ],
+      "evidence": [
+        {
+          "quote": "Own hands-on backend development.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want hands-on backend development only if the role has no line-management duties."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "role_fit"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 1,
+    "rated_importance": 0,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

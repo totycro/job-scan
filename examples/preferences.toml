@@ -1,0 +1,31 @@
+# Copy to .local/preferences.toml and write your own preferences before assessment.
+# All weights are 1–5 and affect weighting only. Blank prose skips a dimension.
+# At least one dimension needs nonblank preferences. Comments are guidance, not preferences.
+# Relevant configured prose is sent to the assessment model; the file is never rewritten.
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+# Describe responsibilities, seniority, hands-on work and career direction.
+preferences = ""
+
+[dimensions.technology_fit]
+importance = 1
+# Distinguish technologies you know, want to learn, and want to avoid.
+preferences = ""
+# Optional: after writing an actual condition in the prose above, quote it exactly:
+# [[dimensions.technology_fit.exceptions]]
+# id = "avoid-php"
+# kind = "deal_breaker"
+# preference_quote = "I will not work in a role requiring PHP."
+
+[dimensions.field_interest]
+importance = 1
+# Describe business domains you find interesting or uninteresting.
+preferences = ""
+# Optional kind = "compelling_attraction" uses the same exact-excerpt declaration format.
+
+[dimensions.company_affinity]
+importance = 1
+# Describe employer identity/practices you value; beliefs are not verified company facts.
+preferences = ""

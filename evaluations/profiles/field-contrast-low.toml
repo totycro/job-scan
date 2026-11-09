@@ -1,0 +1,17 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = ""
+
+[dimensions.technology_fit]
+importance = 1
+preferences = ""
+
+[dimensions.field_interest]
+importance = 1
+preferences = "I prefer advertising technology and do not want climate science software."
+
+[dimensions.company_affinity]
+importance = 1
+preferences = ""

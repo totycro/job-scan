@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "case_id": "partial-optional-rated",
+  "posting_sha256": "cc573b5e9647a51b6146d3f5d1be4b989e57bc660a13c3fe650f6e0ffdc19685",
+  "profile_sha256": "552bbbb4ab9a4a38c8e30b01fe5cd4e6f85ed9ad343bf88a314bfc90a2f7b529",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Backend work supports the main responsibility; mentoring is unknown but optional and does not prevent a dimension-level judgment."
+      ],
+      "prohibited_conclusions": [
+        "Claim mentoring is provided or absent."
+      ],
+      "evidence": [
+        {
+          "quote": "Own hands-on backend development.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want hands-on backend development; occasional mentoring is a nice-to-have."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

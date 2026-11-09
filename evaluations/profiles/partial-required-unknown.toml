@@ -1,0 +1,17 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = "I want hands-on backend development only if the role has no line-management duties."
+
+[dimensions.technology_fit]
+importance = 1
+preferences = ""
+
+[dimensions.field_interest]
+importance = 1
+preferences = ""
+
+[dimensions.company_affinity]
+importance = 1
+preferences = ""

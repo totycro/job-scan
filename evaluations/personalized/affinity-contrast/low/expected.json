@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "case_id": "affinity-contrast-low",
+  "posting_sha256": "fa5be1c36112d8fb82ed2f40c104aa2e209b9750c99bf1644b29688260f308c5",
+  "profile_sha256": "87f5a49b83446e45acd0ea611822d47b405e2d316509007bad56351c79ae9b9a",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "company_affinity": {
+      "state": "rated",
+      "required_findings": [
+        "The stated operating practices conflict with the requested employer practices."
+      ],
+      "prohibited_conclusions": [
+        "Use company reputation or business facts not stated in HTML.",
+        "Treat familiarity alone as technology preference."
+      ],
+      "evidence": [
+        {
+          "quote": "Our engineering practices include public design documents and four protected learning hours weekly.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I prefer employers without public design documents or protected learning time."
+      ],
+      "exceptions": {},
+      "score_band": [
+        0,
+        40
+      ],
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

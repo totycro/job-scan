@@ -1,0 +1,22 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = ""
+
+[dimensions.technology_fit]
+importance = 1
+preferences = "I avoid roles requiring Rust."
+
+[[dimensions.technology_fit.exceptions]]
+id = "rust"
+kind = "deal_breaker"
+preference_quote = "I avoid roles requiring Rust."
+
+[dimensions.field_interest]
+importance = 1
+preferences = ""
+
+[dimensions.company_affinity]
+importance = 1
+preferences = ""

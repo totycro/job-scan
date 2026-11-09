@@ -13,3 +13,8 @@ build/
 .env*
 *.key
 .DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "case_id": "exception-omitted-unresolved",
+  "posting_sha256": "d3a0ae339c12d24dc4093369383dbc76b6b6f3c97b1d78e9b2d57eba80173596",
+  "profile_sha256": "1fc7f41277c0599bf507512eab619212eecaf72f570c1f6c15292a42b1c29586",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "technology_fit": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I avoid roles requiring Rust."
+      ],
+      "exceptions": {
+        "rust": "unresolved"
+      },
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "technology_fit"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 1,
+    "rated_importance": 0,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "unresolved_exceptions"
+}

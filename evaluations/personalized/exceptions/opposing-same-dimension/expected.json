@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "case_id": "opposing-same-dimension",
+  "posting_sha256": "d3a0ae339c12d24dc4093369383dbc76b6b6f3c97b1d78e9b2d57eba80173596",
+  "profile_sha256": "728030022536b26af3834649e6a4aeaa4face422073a2832367e803934c4aa2d",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "field_interest": {
+      "state": "rated",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "Aurora Climate builds climate science software.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I find climate science software compelling enough to accept weaknesses elsewhere."
+      ],
+      "exceptions": {
+        "climate": "matched",
+        "climate-breaker": "matched"
+      },
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "conflicting_exceptions"
+}

@@ -1,0 +1,17 @@
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 1
+preferences = ""
+
+[dimensions.technology_fit]
+importance = 1
+preferences = ""
+
+[dimensions.field_interest]
+importance = 1
+preferences = "I want climate science software."
+
+[dimensions.company_affinity]
+importance = 1
+preferences = "I specifically want to work for Lumen Tools, which I believe has a good reputation."

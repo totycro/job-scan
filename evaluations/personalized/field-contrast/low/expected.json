@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "case_id": "field-contrast-low",
+  "posting_sha256": "fa5be1c36112d8fb82ed2f40c104aa2e209b9750c99bf1644b29688260f308c5",
+  "profile_sha256": "e5aa2182f9441587d065f4b19d93b7803fbcbc616da2c33a6d433b3363498a7a",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "field_interest": {
+      "state": "rated",
+      "required_findings": [
+        "The stated business domain conflicts with the desired advertising field."
+      ],
+      "prohibited_conclusions": [
+        "Use company reputation or business facts not stated in HTML.",
+        "Treat familiarity alone as technology preference."
+      ],
+      "evidence": [
+        {
+          "quote": "Lumen Tools builds climate science software.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I prefer advertising technology and do not want climate science software."
+      ],
+      "exceptions": {},
+      "score_band": [
+        0,
+        40
+      ],
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

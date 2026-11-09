@@ -109,3 +109,85 @@ def test_interrupted_command(
     captured = capsys.readouterr()
     assert not captured.out
     assert "Interrupted." in captured.err
+
+
+def test_profile_file_boundaries(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import hashlib
+
+    from job_scan.cli import InputError, load_profile
+
+    path = tmp_path / "preferences.toml"
+    example = Path("specs/002-personalized-job-ratings/contracts/profile.example.toml").read_bytes()
+    for content in [
+        example,
+        b"\xef\xbb\xbf" + example,
+        example + b"\n#" + b" " * (65536 - len(example) - 2),
+    ]:
+        path.write_bytes(content)
+        loaded = load_profile(path)
+        assert loaded.sha256 == hashlib.sha256(content).hexdigest()
+        assert loaded.path == path
+        assert path.read_bytes() == content
+    for content in [b"", b"\xff", b" " * 65537, b"schema_version = 1\nschema_version = 1"]:
+        path.write_bytes(content)
+        with pytest.raises(InputError):
+            load_profile(path)
+    for invalid in [tmp_path / "missing", tmp_path]:
+        with pytest.raises(InputError):
+            load_profile(invalid)
+    path.write_bytes(example)
+    real_open = Path.open
+    calls = []
+
+    def counting_open(self: Path, mode: str = "r") -> object:
+        if self == path:
+            calls.append(self)
+        return real_open(self, mode)
+
+    monkeypatch.setattr(Path, "open", counting_open)
+    load_profile(path)
+    assert calls == [path]
+
+
+@pytest.mark.parametrize(
+    "content",
+    [b"", b"\xff", b" " * 65537, b'schema_version = "PRIVATE-PROFILE"', b"PRIVATE-PROFILE = ["],
+)
+def test_invalid_profile_before_clients(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    content: bytes,
+) -> None:
+    from job_scan.cli import main
+
+    posting = tmp_path / "posting.html"
+    posting.write_text("backend development")
+    profile = tmp_path / "preferences.toml"
+    profile.write_bytes(content)
+
+    def forbidden(*_args: object, **_kwargs: object) -> None:
+        pytest.fail("Invalid local input constructed an auth or network client")
+
+    monkeypatch.setattr("job_scan.cli.ChatGPTSession", forbidden)
+    monkeypatch.setattr("job_scan.cli.ResponsesClient", forbidden)
+    assert main(["assess", str(posting), "--profile", str(profile)]) == 2
+    captured = capsys.readouterr()
+    assert not captured.out
+    assert "Profile" in captured.err
+    assert "PRIVATE-PROFILE" not in captured.err
+
+
+def test_profile_read_permission_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from job_scan.cli import InputError, load_profile
+
+    path = tmp_path / "profile.toml"
+    path.touch()
+
+    def unreadable(*_args: object, **_kwargs: object) -> None:
+        raise PermissionError("PRIVATE-PROFILE")
+
+    monkeypatch.setattr(Path, "open", unreadable)
+    with pytest.raises(InputError, match="unable to read") as failure:
+        load_profile(path)
+    assert "PRIVATE-PROFILE" not in str(failure.value)

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "case_id": "exception-explicit-not-matched",
+  "posting_sha256": "97e53721fc66f98483b9d7ce34676f557ef8375ee25d4eb86e9294c7ba24a713",
+  "profile_sha256": "335fb80070bc4c3e244403ba921b8d829449d580a5a8d42beecb9064675a241b",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "technology_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "PHP is not used in this role.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I will not accept a role requiring PHP."
+      ],
+      "exceptions": {
+        "php": "not_matched"
+      },
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

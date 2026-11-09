@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "case_id": "role-contrast-high",
+  "posting_sha256": "fa5be1c36112d8fb82ed2f40c104aa2e209b9750c99bf1644b29688260f308c5",
+  "profile_sha256": "85bc2b6b0e5282f9fcf98cb8f6e4b399f63610eb8397198bec73d68595950f3e",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "rated",
+      "required_findings": [
+        "The stated individual contributor responsibilities match hands-on preferences."
+      ],
+      "prohibited_conclusions": [
+        "Use company reputation or business facts not stated in HTML.",
+        "Treat familiarity alone as technology preference."
+      ],
+      "evidence": [
+        {
+          "quote": "This individual contributor role owns hands-on backend development and system design.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want hands-on backend development."
+      ],
+      "exceptions": {},
+      "score_band": [
+        65,
+        100
+      ],
+      "relative_to": "role-contrast-low",
+      "direction": "higher"
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

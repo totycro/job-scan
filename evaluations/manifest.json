@@ -1,21 +1,334 @@
 {
-  "criterion": "work_arrangement",
+  "schema_version": 2,
   "required_cases": [
-    "cases/posting-01",
-    "cases/posting-02",
-    "cases/posting-03",
-    "fixtures/ambiguous",
-    "fixtures/conflict",
-    "fixtures/flexible",
-    "fixtures/hybrid-allowed",
-    "fixtures/hybrid-expected",
-    "fixtures/loading",
-    "fixtures/missing",
-    "fixtures/office-days",
-    "fixtures/qualitative",
-    "fixtures/remote-restrictions",
-    "fixtures/structure-pair/allowed",
-    "fixtures/structure-pair/expected",
-    "fixtures/untrusted-instructions"
+    {
+      "id": "cases/posting-01",
+      "mode": "work_arrangement",
+      "posting": "cases/posting-01/posting.html",
+      "profile": null,
+      "expectations": "cases/posting-01/expected.json"
+    },
+    {
+      "id": "cases/posting-02",
+      "mode": "work_arrangement",
+      "posting": "cases/posting-02/posting.html",
+      "profile": null,
+      "expectations": "cases/posting-02/expected.json"
+    },
+    {
+      "id": "cases/posting-03",
+      "mode": "work_arrangement",
+      "posting": "cases/posting-03/posting.html",
+      "profile": null,
+      "expectations": "cases/posting-03/expected.json"
+    },
+    {
+      "id": "fixtures/ambiguous",
+      "mode": "work_arrangement",
+      "posting": "fixtures/ambiguous/posting.html",
+      "profile": null,
+      "expectations": "fixtures/ambiguous/expected.json"
+    },
+    {
+      "id": "fixtures/conflict",
+      "mode": "work_arrangement",
+      "posting": "fixtures/conflict/posting.html",
+      "profile": null,
+      "expectations": "fixtures/conflict/expected.json"
+    },
+    {
+      "id": "fixtures/flexible",
+      "mode": "work_arrangement",
+      "posting": "fixtures/flexible/posting.html",
+      "profile": null,
+      "expectations": "fixtures/flexible/expected.json"
+    },
+    {
+      "id": "fixtures/hybrid-allowed",
+      "mode": "work_arrangement",
+      "posting": "fixtures/hybrid-allowed/posting.html",
+      "profile": null,
+      "expectations": "fixtures/hybrid-allowed/expected.json"
+    },
+    {
+      "id": "fixtures/hybrid-expected",
+      "mode": "work_arrangement",
+      "posting": "fixtures/hybrid-expected/posting.html",
+      "profile": null,
+      "expectations": "fixtures/hybrid-expected/expected.json"
+    },
+    {
+      "id": "fixtures/loading",
+      "mode": "work_arrangement",
+      "posting": "fixtures/loading/posting.html",
+      "profile": null,
+      "expectations": "fixtures/loading/expected.json"
+    },
+    {
+      "id": "fixtures/missing",
+      "mode": "work_arrangement",
+      "posting": "fixtures/missing/posting.html",
+      "profile": null,
+      "expectations": "fixtures/missing/expected.json"
+    },
+    {
+      "id": "fixtures/office-days",
+      "mode": "work_arrangement",
+      "posting": "fixtures/office-days/posting.html",
+      "profile": null,
+      "expectations": "fixtures/office-days/expected.json"
+    },
+    {
+      "id": "fixtures/qualitative",
+      "mode": "work_arrangement",
+      "posting": "fixtures/qualitative/posting.html",
+      "profile": null,
+      "expectations": "fixtures/qualitative/expected.json"
+    },
+    {
+      "id": "fixtures/remote-restrictions",
+      "mode": "work_arrangement",
+      "posting": "fixtures/remote-restrictions/posting.html",
+      "profile": null,
+      "expectations": "fixtures/remote-restrictions/expected.json"
+    },
+    {
+      "id": "fixtures/structure-pair/allowed",
+      "mode": "work_arrangement",
+      "posting": "fixtures/structure-pair/allowed/posting.html",
+      "profile": null,
+      "expectations": "fixtures/structure-pair/allowed/expected.json"
+    },
+    {
+      "id": "fixtures/structure-pair/expected",
+      "mode": "work_arrangement",
+      "posting": "fixtures/structure-pair/expected/posting.html",
+      "profile": null,
+      "expectations": "fixtures/structure-pair/expected/expected.json"
+    },
+    {
+      "id": "fixtures/untrusted-instructions",
+      "mode": "work_arrangement",
+      "posting": "fixtures/untrusted-instructions/posting.html",
+      "profile": null,
+      "expectations": "fixtures/untrusted-instructions/expected.json"
+    },
+    {
+      "id": "role-contrast-high",
+      "mode": "personalized",
+      "posting": "personalized/role-contrast/high/posting.html",
+      "profile": "profiles/role-contrast-high.toml",
+      "expectations": "personalized/role-contrast/high/expected.json"
+    },
+    {
+      "id": "role-contrast-low",
+      "mode": "personalized",
+      "posting": "personalized/role-contrast/low/posting.html",
+      "profile": "profiles/role-contrast-low.toml",
+      "expectations": "personalized/role-contrast/low/expected.json"
+    },
+    {
+      "id": "technology-contrast-high",
+      "mode": "personalized",
+      "posting": "personalized/technology-contrast/high/posting.html",
+      "profile": "profiles/technology-contrast-high.toml",
+      "expectations": "personalized/technology-contrast/high/expected.json"
+    },
+    {
+      "id": "technology-contrast-low",
+      "mode": "personalized",
+      "posting": "personalized/technology-contrast/low/posting.html",
+      "profile": "profiles/technology-contrast-low.toml",
+      "expectations": "personalized/technology-contrast/low/expected.json"
+    },
+    {
+      "id": "field-contrast-high",
+      "mode": "personalized",
+      "posting": "personalized/field-contrast/high/posting.html",
+      "profile": "profiles/field-contrast-high.toml",
+      "expectations": "personalized/field-contrast/high/expected.json"
+    },
+    {
+      "id": "field-contrast-low",
+      "mode": "personalized",
+      "posting": "personalized/field-contrast/low/posting.html",
+      "profile": "profiles/field-contrast-low.toml",
+      "expectations": "personalized/field-contrast/low/expected.json"
+    },
+    {
+      "id": "affinity-contrast-high",
+      "mode": "personalized",
+      "posting": "personalized/affinity-contrast/high/posting.html",
+      "profile": "profiles/affinity-contrast-high.toml",
+      "expectations": "personalized/affinity-contrast/high/expected.json"
+    },
+    {
+      "id": "affinity-contrast-low",
+      "mode": "personalized",
+      "posting": "personalized/affinity-contrast/low/posting.html",
+      "profile": "profiles/affinity-contrast-low.toml",
+      "expectations": "personalized/affinity-contrast/low/expected.json"
+    },
+    {
+      "id": "attraction-despite-weaknesses",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/attraction-despite-weaknesses/posting.html",
+      "profile": "profiles/attraction-despite-weaknesses.toml",
+      "expectations": "personalized/exceptions/attraction-despite-weaknesses/expected.json"
+    },
+    {
+      "id": "breaker-despite-strengths",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/breaker-despite-strengths/posting.html",
+      "profile": "profiles/breaker-despite-strengths.toml",
+      "expectations": "personalized/exceptions/breaker-despite-strengths/expected.json"
+    },
+    {
+      "id": "ordinary-undeclared",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/ordinary-undeclared/posting.html",
+      "profile": "profiles/ordinary-undeclared.toml",
+      "expectations": "personalized/exceptions/ordinary-undeclared/expected.json"
+    },
+    {
+      "id": "opposing-across-dimensions",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/opposing-across-dimensions/posting.html",
+      "profile": "profiles/opposing-across-dimensions.toml",
+      "expectations": "personalized/exceptions/opposing-across-dimensions/expected.json"
+    },
+    {
+      "id": "opposing-same-dimension",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/opposing-same-dimension/posting.html",
+      "profile": "profiles/opposing-same-dimension.toml",
+      "expectations": "personalized/exceptions/opposing-same-dimension/expected.json"
+    },
+    {
+      "id": "unresolved-only",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/unresolved-only/posting.html",
+      "profile": "profiles/unresolved-only.toml",
+      "expectations": "personalized/exceptions/unresolved-only/expected.json"
+    },
+    {
+      "id": "unresolved-plus-attraction",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/unresolved-plus-attraction/posting.html",
+      "profile": "profiles/unresolved-plus-attraction.toml",
+      "expectations": "personalized/exceptions/unresolved-plus-attraction/expected.json"
+    },
+    {
+      "id": "unresolved-plus-breaker",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/unresolved-plus-breaker/posting.html",
+      "profile": "profiles/unresolved-plus-breaker.toml",
+      "expectations": "personalized/exceptions/unresolved-plus-breaker/expected.json"
+    },
+    {
+      "id": "unresolved-plus-both",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/unresolved-plus-both/posting.html",
+      "profile": "profiles/unresolved-plus-both.toml",
+      "expectations": "personalized/exceptions/unresolved-plus-both/expected.json"
+    },
+    {
+      "id": "unavailable-with-attraction",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/unavailable-with-attraction/posting.html",
+      "profile": "profiles/unavailable-with-attraction.toml",
+      "expectations": "personalized/exceptions/unavailable-with-attraction/expected.json"
+    },
+    {
+      "id": "exception-omitted-unresolved",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/exception-omitted-unresolved/posting.html",
+      "profile": "profiles/exception-omitted-unresolved.toml",
+      "expectations": "personalized/exceptions/exception-omitted-unresolved/expected.json"
+    },
+    {
+      "id": "partial-optional-rated",
+      "mode": "personalized",
+      "posting": "personalized/evidence-gaps/partial-optional-rated/posting.html",
+      "profile": "profiles/partial-optional-rated.toml",
+      "expectations": "personalized/evidence-gaps/partial-optional-rated/expected.json"
+    },
+    {
+      "id": "partial-required-unknown",
+      "mode": "personalized",
+      "posting": "personalized/evidence-gaps/partial-required-unknown/posting.html",
+      "profile": "profiles/partial-required-unknown.toml",
+      "expectations": "personalized/evidence-gaps/partial-required-unknown/expected.json"
+    },
+    {
+      "id": "partial-overall",
+      "mode": "personalized",
+      "posting": "personalized/evidence-gaps/partial-overall/posting.html",
+      "profile": "profiles/partial-overall.toml",
+      "expectations": "personalized/evidence-gaps/partial-overall/expected.json"
+    },
+    {
+      "id": "all-unknown",
+      "mode": "personalized",
+      "posting": "personalized/evidence-gaps/all-unknown/posting.html",
+      "profile": "profiles/all-unknown.toml",
+      "expectations": "personalized/evidence-gaps/all-unknown/expected.json"
+    },
+    {
+      "id": "conflicting-responsibilities",
+      "mode": "personalized",
+      "posting": "personalized/evidence-gaps/conflicting-responsibilities/posting.html",
+      "profile": "profiles/conflicting-responsibilities.toml",
+      "expectations": "personalized/evidence-gaps/conflicting-responsibilities/expected.json"
+    },
+    {
+      "id": "omitted-technology",
+      "mode": "personalized",
+      "posting": "personalized/attribution/omitted-technology/posting.html",
+      "profile": "profiles/omitted-technology.toml",
+      "expectations": "personalized/attribution/omitted-technology/expected.json"
+    },
+    {
+      "id": "agency-client-separation",
+      "mode": "personalized",
+      "posting": "personalized/attribution/agency-client-separation/posting.html",
+      "profile": "profiles/agency-client-separation.toml",
+      "expectations": "personalized/attribution/agency-client-separation/expected.json"
+    },
+    {
+      "id": "company-name-beliefs",
+      "mode": "personalized",
+      "posting": "personalized/attribution/company-name-beliefs/posting.html",
+      "profile": "profiles/company-name-beliefs.toml",
+      "expectations": "personalized/attribution/company-name-beliefs/expected.json"
+    },
+    {
+      "id": "structure-backend",
+      "mode": "personalized",
+      "posting": "personalized/structure/structure-backend/posting.html",
+      "profile": "profiles/structure-backend.toml",
+      "expectations": "personalized/structure/structure-backend/expected.json"
+    },
+    {
+      "id": "structure-management",
+      "mode": "personalized",
+      "posting": "personalized/structure/structure-management/posting.html",
+      "profile": "profiles/structure-management.toml",
+      "expectations": "personalized/structure/structure-management/expected.json"
+    },
+    {
+      "id": "untrusted-profile-instructions",
+      "mode": "personalized",
+      "posting": "personalized/untrusted/untrusted-profile-instructions/posting.html",
+      "profile": "profiles/untrusted-profile-instructions.toml",
+      "expectations": "personalized/untrusted/untrusted-profile-instructions/expected.json"
+    },
+    {
+      "id": "exception-explicit-not-matched",
+      "mode": "personalized",
+      "posting": "personalized/exceptions/exception-explicit-not-matched/posting.html",
+      "profile": "profiles/exception-explicit-not-matched.toml",
+      "expectations": "personalized/exceptions/exception-explicit-not-matched/expected.json"
+    }
   ]
 }

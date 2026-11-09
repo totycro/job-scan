@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "case_id": "all-unknown",
+  "posting_sha256": "8671ddd6c3af3224a6f6924e1e813fc24a7891a6917eb09bdcdb2bded260a977",
+  "profile_sha256": "d0ba76e431007ecabc59644fde3b2b5ade06ebeaaa9431c7a2ddcbf754927082",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "No responsibility evidence supports the required backend work."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I require hands-on backend development."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    },
+    "company_affinity": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "No learning-time evidence exists. No overall numeric score is available."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I require protected learning time."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "role_fit",
+      "company_affinity"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 2,
+    "rated_importance": 0,
+    "total_configured_importance": 2
+  },
+  "decisive_code": "no_exception_applies"
+}

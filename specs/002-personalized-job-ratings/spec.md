@@ -6,7 +6,7 @@
 
 **Created**: 2026-11-09
 
-**Status**: Draft — clarification, planning, and task generation complete; ready for implementation.
+**Status**: Complete, owner-accepted and converged after full live/replay validation.
 
 **Input**: Add advanced LLM-based job-posting ratings for role fit, technology fit, interest in the company's field, and affinity for the company. These are four new dimensions alongside the existing work-arrangement dimension (remote/hybrid/on-site); the assessment model can grow with future dimensions. Users first write their individual preferences/profiles in files and assign importance to each new dimension so the assessment reflects their priorities.
 

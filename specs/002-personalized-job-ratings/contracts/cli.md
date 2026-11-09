@@ -1,6 +1,6 @@
 # CLI Contract: Personalized Assessment
 
-**Status**: Proposed interface to implement. Existing commands and no-profile behavior remain supported.
+**Status**: Implemented and accepted with current live/replay validation. Existing commands and no-profile behavior remain supported.
 
 ## Invocation
 

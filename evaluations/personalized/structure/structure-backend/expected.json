@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "case_id": "structure-backend",
+  "posting_sha256": "5e8a7c2b282e4320811c428f004ddbf3674f1ee99af5d0be9948927ed5a3170e",
+  "profile_sha256": "51fd09ec914b7b7b57cc60e19d338e733341102c3990880bd1e619b12c046424",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Use aria-labelledby associations to assess the target role, preserving related-role boundaries."
+      ],
+      "prohibited_conclusions": [
+        "Use responsibilities from the related role."
+      ],
+      "evidence": [
+        {
+          "quote": "Hands-on backend development; no management.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want hands-on backend development and no management."
+      ],
+      "exceptions": {},
+      "score_band": [
+        65,
+        100
+      ],
+      "relative_to": "structure-management",
+      "direction": "higher"
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 1,
+    "rated_importance": 1,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "no_exception_applies"
+}

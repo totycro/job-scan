@@ -4,7 +4,7 @@
 
 **Input**: `specs/002-personalized-job-ratings/spec.md`, including the confirmed exception outcomes and dimension terminology.
 
-**Status**: Phase 0 research and Phase 1 design complete. Implementation, corpus authoring, live evaluation, and owner acceptance remain future work.
+**Status**: Design and implementation are complete. The full live/replay suite, current bound owner semantic review and final convergence pass. See tasks.md and quickstart.md.
 
 ## Summary
 
@@ -35,11 +35,11 @@ Pre-research gate: **PASS**. The clarified spec has no identified constitutional
 | Principle / policy | Design evidence | Gate |
 | --- | --- | --- |
 | I. Keep it simple | TOML/std-library parsing, existing stack and transport, static criteria definitions, no storage or plugin framework | Pass |
-| II. Evidence and explicit uncertainty | Exact HTML quote/occurrence resolution, explicit insufficient/unresolved states, factual/preference/judgment separation, owner evidence-relevance review | Pass by design |
+| II. Evidence and explicit uncertainty | Exact HTML quote/occurrence resolution, explicit insufficient/unresolved states, factual/preference/judgment separation, owner evidence-relevance review | Pass (verified) |
 | III. Separate criteria | Four dedicated prompt/policy modules; shared mechanics independent of criterion content; existing work-arrangement policy preserved | Pass |
-| IV. Development practices | Strict tooling, 90% coverage target, TDD for core rules, imperative file/auth/network shell and pure validation/aggregation/rendering; real-component recorded CLI tests | Pass by design |
+| IV. Development practices | Strict tooling, 90% coverage target, TDD for core rules, imperative file/auth/network shell and pure validation/aggregation/rendering; real-component recorded CLI tests | Pass (verified) |
 | V. CLI | Optional profile flag, starter file/guidance, atomic terminal report, preserved errors/exit codes | Pass |
-| VI. Golden validation | Manually authored posting/profile pairs, bound owner review, model/configuration and limitations in evaluation reports | Pass by design; acceptance work remains |
+| VI. Golden validation | Manually authored posting/profile pairs, bound owner review, model/configuration and limitations in evaluation reports | Pass (verified with bound owner acceptance) |
 | Product boundaries | Saved HTML only; provenance URLs never fetched; supported inputs, output, failures, limits, and exclusions specified | Pass |
 | Reproducibility/workflow | Exact existing pins, `uv.lock`, locked commands; tasks and convergence follow planning | Pass |
 

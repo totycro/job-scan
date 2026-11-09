@@ -65,3 +65,44 @@ uv run --locked python evaluations/run.py --live --recordings-dir tests/recordin
 An evaluation remains unsuccessful until all automatic checks and bound owner reviews pass.
 See [evaluation workflow](evaluations/README.md), [feature validation](specs/001-assess-job-posting/validation.md),
 and [Spec Kit guide](SPEC_KIT_GUIDE.md). Reports and credentials are not versioned.
+
+Personalized ratings accept an explicitly selected TOML file:
+
+```bash
+mkdir -p .local
+cp examples/preferences.toml .local/preferences.toml
+# Edit .local/preferences.toml before running:
+uv run --locked job-scan assess posting.html --profile .local/preferences.toml
+```
+
+The starter is intentionally incomplete. Enter your own prose for at least one dimension:
+role fit (responsibilities/seniority), technology fit (known versus desired, avoided or
+willing-to-learn technologies), field interest (business domain), and company affinity
+(employer identity/practices). Every dimension needs importance 1–5; it weights the mean,
+while absent or blank preferences skip assessment. Relevant configured text is sent to
+the assessment model. The file is read once and never rewritten; paths and hashes stay local.
+
+Optional exceptions reference an exact excerpt already in the preferences:
+
+```toml
+[[dimensions.technology_fit.exceptions]]
+id = "avoid-php"
+kind = "deal_breaker"
+preference_quote = "I will not work in a role requiring PHP."
+```
+
+Use `compelling_attraction` for a preference that warrants pursuing despite weaknesses.
+Include the quoted sentence in that dimension's prose first. See the completed fictional
+[profile example](specs/002-personalized-job-ratings/contracts/profile.example.toml).
+Exceptions affect a separate decisive outcome; they never add points or change weights.
+Scores are subjective fit, not probabilities. The weighted mean covers only rated configured
+dimensions; partial results disclose missing dimensions and coverage. Work arrangement
+remains qualitative alongside the four new outcomes. HTML supplies all factual evidence;
+company names, profile beliefs and omitted technologies do not establish additional facts.
+
+Personalized inference runs work arrangement, fit, and optional exceptions sequentially,
+then emits one complete report. The maximum inference budget is 360 seconds without
+exceptions or 540 seconds with them, excluding authentication. There is no automatic retry
+or billing fallback. If no configured dimension can be rated, the report shows no numeric
+overall score. Confirmed opposing exceptions produce “conflicting exceptions” with evidence
+for both; unresolved declarations remain visible alongside any confirmed outcome.

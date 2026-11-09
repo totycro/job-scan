@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "case_id": "ordinary-undeclared",
+  "posting_sha256": "d3a0ae339c12d24dc4093369383dbc76b6b6f3c97b1d78e9b2d57eba80173596",
+  "profile_sha256": "944573e2359c4d97e1e57ef9ee251aa111d03e578cc48d96f2b41833bf548fb7",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "role_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "This role manages six engineers and requires PHP development.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want hands-on individual contributor backend work, not managing people."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    },
+    "technology_fit": {
+      "state": "rated",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "This role manages six engineers and requires PHP development.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I will not accept a role requiring PHP."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    },
+    "field_interest": {
+      "state": "rated",
+      "required_findings": [
+        "Explain the stated preference using only attributed posting evidence."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "Aurora Climate builds climate science software.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I find climate science software compelling enough to accept weaknesses elsewhere."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "available",
+    "missing_dimension_ids": [],
+    "rated_dimension_count": 3,
+    "configured_dimension_count": 3,
+    "rated_importance": 3,
+    "total_configured_importance": 3
+  },
+  "decisive_code": "no_exception_applies"
+}

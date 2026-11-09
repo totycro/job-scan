@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "case_id": "agency-client-separation",
+  "posting_sha256": "6f1e90e531985c247ff0017d2f5f521ccfa55f99a91497b982f8c7372ff92a11",
+  "profile_sha256": "d5bbd4356ef1f720b5686cba7b350f5ccb6c97080037e4862f65c8b1986b62f4",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "field_interest": {
+      "state": "rated",
+      "required_findings": [
+        "Attribute climate to employer Lumen Climate and advertising to agency Orbit."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "Your employer Lumen Climate builds climate science software.",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I prefer climate science software and dislike advertising technology."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    },
+    "company_affinity": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "Agency and client learning benefits do not establish employer benefits."
+      ],
+      "prohibited_conclusions": [
+        "Attribute Orbit Recruitment or Ember Ads learning time to employer Lumen Climate."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I require protected learning time from my employer."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "partial",
+    "missing_dimension_ids": [
+      "company_affinity"
+    ],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 2,
+    "rated_importance": 1,
+    "total_configured_importance": 2
+  },
+  "decisive_code": "no_exception_applies"
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "case_id": "company-name-beliefs",
+  "posting_sha256": "77130a12d5e55e4e86f152fcb0d3e2e0330087b518556f888ae0a165a12e90c5",
+  "profile_sha256": "85b7853d72496c693fea9dbe69c99ae0ccebbd5d6b0faae5873b87fc53810663",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "company_affinity": {
+      "state": "rated",
+      "required_findings": [
+        "Identity supports the explicitly named employer preference; reputation remains a user belief."
+      ],
+      "prohibited_conclusions": [
+        "Verify the claimed good reputation using memory."
+      ],
+      "evidence": [
+        {
+          "quote": "Engineer at Lumen Tools",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I specifically want to work for Lumen Tools, which I believe has a good reputation."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    },
+    "field_interest": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "The company name alone does not establish a field."
+      ],
+      "prohibited_conclusions": [
+        "Infer a business domain from the company name."
+      ],
+      "evidence": [],
+      "preference_excerpts": [
+        "I want climate science software."
+      ],
+      "exceptions": {},
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "partial",
+    "missing_dimension_ids": [
+      "field_interest"
+    ],
+    "rated_dimension_count": 1,
+    "configured_dimension_count": 2,
+    "rated_importance": 1,
+    "total_configured_importance": 2
+  },
+  "decisive_code": "no_exception_applies"
+}

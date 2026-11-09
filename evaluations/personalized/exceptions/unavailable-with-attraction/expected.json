@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "case_id": "unavailable-with-attraction",
+  "posting_sha256": "d3a0ae339c12d24dc4093369383dbc76b6b6f3c97b1d78e9b2d57eba80173596",
+  "profile_sha256": "7cd538a8e49fbb49850738f6b8d2ed07ba02762d79ce729d3fa3631db6d1aacf",
+  "review_status": "approved",
+  "expectation_authorship": "Manually authored fictional expectations during implementation; owner review pending.",
+  "criteria": {
+    "company_affinity": {
+      "state": "insufficient_evidence",
+      "required_findings": [
+        "The named employer identity is evidenced, but required protected learning time remains unknown; no dimension-level score."
+      ],
+      "prohibited_conclusions": [
+        "Invent unstated facts or treat missing information as a mismatch."
+      ],
+      "evidence": [
+        {
+          "quote": "Engineering manager at Aurora Climate",
+          "occurrence": 0
+        }
+      ],
+      "preference_excerpts": [
+        "I want to work for Aurora Climate but require protected learning time."
+      ],
+      "exceptions": {
+        "climate": "matched"
+      },
+      "score_band": null,
+      "relative_to": null,
+      "direction": null
+    }
+  },
+  "overall": {
+    "status": "unavailable",
+    "missing_dimension_ids": [
+      "company_affinity"
+    ],
+    "rated_dimension_count": 0,
+    "configured_dimension_count": 1,
+    "rated_importance": 0,
+    "total_configured_importance": 1
+  },
+  "decisive_code": "worth_pursuing_despite_weaknesses"
+}
