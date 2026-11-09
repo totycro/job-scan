@@ -13,7 +13,7 @@
 
 ## 2. One TOML profile with explicit exception references
 
-**Decision**: Read UTF-8 TOML using standard-library `tomllib`; validate the parsed mapping with strict Pydantic models and forbidden extra fields. The profile has a version, a required `dimensions` table with four named entries, prose preferences, integer importance, and optional exception declarations. Each declaration identifies an exact excerpt of that dimension's preferences and its exceptional type. An excerpt identifies the underlying preference; it is not an extra scoring instruction.
+**Decision**: Read UTF-8 TOML using standard-library `tomllib`; validate the parsed mapping with strict Pydantic models and forbidden extra fields. The profile has a version, a required `dimensions` table with four named entries, optional prose preferences, integer importance 1–5 for weighting only, and optional exception declarations. Absent or blank preferences skip a dimension; at least one dimension must have nonblank prose. There is no enable/disable setting. Absent or empty exception arrays mean none; every supplied valid declaration is evaluated. Each declaration identifies an exact excerpt of that dimension's preferences and its exceptional type. An excerpt identifies the underlying preference; it is not an extra scoring instruction.
 
 **Rationale**: Multiline prose, comments, integers, and named tables make a reusable profile readable without a parser dependency. Exception metadata can be added to existing prose without changing the scoring input. The Python documentation specifies the parser and location-bearing errors; size-limit files before parsing. Diagnostics expose field paths and locations, not parser documents or profile values. [Python 3.14 tomllib](https://docs.python.org/3.14/library/tomllib.html).
 
@@ -21,7 +21,7 @@
 
 ## 3. Separate model scoring from exceptional status
 
-**Decision**: In personalized mode run the unchanged work-arrangement request, then one new fit request for all enabled new dimensions. Run one additional exception-matching request only if enabled dimensions declare exceptions. Execute sequentially and publish one report after all stages validate. The fit request receives only dimension IDs and preference text, without importance, exception IDs/types, overall outcomes, profile paths, or disabled dimensions. The exception request receives HTML and the declared preference excerpts with IDs/types, without numeric scores.
+**Decision**: In personalized mode run the unchanged work-arrangement request, then one new fit request for all configured new dimensions. Run one additional exception-matching request only if configured dimensions declare exceptions. Execute sequentially and publish one report after all stages validate. The fit request receives only dimension IDs and preference text, without importance, exception IDs/types, overall outcomes, profile paths, or dimensions without preferences. The exception request receives HTML and the declared preference excerpts with IDs/types, without numeric scores.
 
 **Rationale**: Changing weights or adding an exceptional declaration to unchanged preferences must leave the scoring request byte-identical. The separate pass prevents exception labels from affecting scores by construction. A single fit request avoids one network call per new criterion; separate criterion prompt fragments retain independent ownership. Both new passes use the existing 180-second per-request total deadline and 10-second connection timeout; maximum inference time is 540 seconds with three passes, or 360 seconds without exception evaluation, excluding authentication. Legacy mode remains one request. No retries or parallel network work are introduced.
 
@@ -29,7 +29,7 @@
 
 ## 4. Strict evidence-backed results and local derivation
 
-**Decision**: Use `Evidence(quote, occurrence)` and `resolve()` from the current source model. Add typed fit and exception response schemas with IDs and explicit states. Require source evidence for scored dimensions and resolved exception claims; preserve insufficient/conflicting evidence. Validate profile references locally as well as posting quotes. Derive disabled entries, weighting, and the decisive outcome locally after validation; never accept a model-provided overall score or winner.
+**Decision**: Use `Evidence(quote, occurrence)` and `resolve()` from the current source model. Add typed fit and exception response schemas with IDs and explicit states. Require source evidence for scored dimensions and resolved exception claims; preserve insufficient/conflicting evidence. Validate profile references locally as well as posting quotes. Derive entries without preferences, weighting, and the decisive outcome locally after validation; never accept a model-provided overall score or winner.
 
 **Rationale**: Existing quote provenance works on intact HTML and preserves structural evidence. Strict models and generated schemas already fit the codebase; field and cross-field validators enforce invariants that a schema alone cannot express. Strictness is deliberately used to reject type coercion, and schema generation is distinct from semantic validation. [Pydantic strict mode](https://docs.pydantic.dev/latest/concepts/strict_mode/), [Pydantic JSON Schema](https://docs.pydantic.dev/latest/concepts/json_schema/).
 

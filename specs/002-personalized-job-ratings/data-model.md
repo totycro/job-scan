@@ -8,21 +8,21 @@
 | --- | --- | --- |
 | ProfileInput | local path, SHA-256 of original bytes, parsed Profile | Read once per invocation; no mutation; path/hash remain local |
 | Profile | `schema_version: 1`, `dimensions: mapping[str, DimensionProfile]` | Exactly the four supported new IDs in version 1; no extra root fields |
-| DimensionProfile | `importance: int`, `preferences: str`, `exceptions: list[ExceptionDeclaration]` | Weight 0–5; no coercion from booleans, floats, or strings; preferences/exceptions may default to empty only when disabled; enabled prose must contain non-whitespace; at least one profile dimension enabled |
+| DimensionProfile | `importance: int`, `preferences: str`, `exceptions: list[ExceptionDeclaration]` | Weight 1–5 controls weighting only; no coercion from booleans, floats, or strings; preferences default to empty and absent/blank prose skips the dimension; exceptions independently default to empty for every dimension; at least one dimension has nonblank preferences; every supplied valid declaration is evaluated |
 | ExceptionDeclaration | `id: str`, `kind: compelling_attraction \| deal_breaker`, `preference_quote: str` | IDs unique across profile, match `[a-z][a-z0-9_-]{0,63}`; nonblank quote must be an exact contiguous substring of that dimension's preferences; no duplicate `(kind, preference_quote)` in a dimension |
 | DimensionDefinition | stable ID, label, prompt fragment | Static code-owned definitions, ordered presentation; no runtime plugin loading |
 
 Current new IDs: `role_fit`, `technology_fit`, `field_interest`, `company_affinity`. Existing dimension ID: `work_arrangement`. Version 1 of this profile supports the four additions only; the product dimension vocabulary is not capped at four or five. A future feature explicitly adds a supported definition and decides profile-version compatibility.
 
-If an exception excerpt appears multiple times in the same prose it still identifies one declaration; no profile occurrence counter is needed. Treat prose as user preferences, not as verified company facts or instructions overriding application rules. Parse/validate even disabled definitions and any supplied declarations, but do not send their content or evaluate them. Zero-importance entries need not include prose or declarations.
+If an exception excerpt appears multiple times in the same prose it still identifies one declaration; no profile occurrence counter is needed. Treat prose as user preferences, not as verified company facts or instructions overriding application rules. Validate every definition and supplied declaration. Skip fit assessment only for absent/blank preferences. Every supplied valid declaration is evaluated; without preference text, a nonblank excerpt reference cannot validate. Importance never suppresses assessment or exception evaluation.
 
 ## Fit request projection
 
-`FitInput = {html: str, dimensions: [{dimension_id: str, preferences: str}]}` in definition order, enabled entries only. No profile path, file hash, importance, or exceptional declaration metadata enters this projection. Keep preference text intact. Equal HTML, enabled-ID set, preference text, model/configuration, prompts, and schema produce equal serialized scoring requests; adjusting only positive importance values or declaration metadata cannot change that request. Setting a weight to zero changes the enabled set and therefore the request.
+`FitInput = {html: str, dimensions: [{dimension_id: str, preferences: str}]}` in definition order, configured entries only. No profile path, file hash, importance, or exceptional declaration metadata enters this projection. Keep preference text intact. Equal HTML, configured-ID set, preference text, model/configuration, prompts, and schema produce equal serialized scoring requests; adjusting only importance values or declaration metadata cannot change that request. Only adding or removing nonblank preference content changes the configured set; changing a valid weight never changes the request.
 
 ## Model fit response
 
-`FitResponse` has `dimensions: list[DimensionFit]`. There must be exactly one entry for each requested enabled ID, no unknown/disabled/duplicate/missing IDs. Model-returned order is normalized locally. Missing entries are invalid output, not insufficient evidence.
+`FitResponse` has `dimensions: list[DimensionFit]`. There must be exactly one entry for each requested configured ID, no unknown/not_configured/duplicate/missing IDs. Model-returned order is normalized locally. Missing entries are invalid output, not insufficient evidence.
 
 | Entity | Fields | Invariants |
 | --- | --- | --- |
@@ -37,27 +37,27 @@ Every `Evidence` uses exact raw HTML `quote` and zero-based `occurrence`, counti
 
 ## Exception matching
 
-`ExceptionInput = {html: str, exceptions: [{dimension_id, exception_id, kind, preference_quote}]}` for enabled declarations only. This request sees no weights or numeric scores. The locally validated profile is authoritative for IDs, types, and quotes.
+`ExceptionInput = {html: str, exceptions: [{dimension_id, exception_id, kind, preference_quote}]}` for supplied declarations only. This request sees no weights or numeric scores. The locally validated profile is authoritative for IDs, types, and quotes.
 
 `ExceptionResponse = {exceptions: list[ExceptionMatch]}` with exactly one result per requested declaration and no extras. A match contains `exception_id`, `status: matched | not_matched | unresolved`, nonblank `explanation`, and `evidence: list[Evidence]`. Matched/not-matched claims require at least one supporting quote. Unresolved entries may have no quote or may include conflicting evidence, but must explain uncertainty. Absence of a named technology in the posting is not evidence of absence. Unknown IDs, duplicates, missing results, invalid quotes, or unsupported status/shape fail validation. Do not accept model-returned weights, exception types, or final outcomes.
 
-Empty enabled declaration set skips this request and produces a local empty collection. An exceptional declaration references ordinary preference text; toggling its kind or adding/removing the declaration changes only exception processing, not ordinary scoring input.
+Empty supplied declaration set skips this request and produces a local empty collection. An exceptional declaration references ordinary preference text; toggling its kind or adding/removing the declaration changes only exception processing, not ordinary scoring input.
 
 ## Local dimension and aggregate outcomes
 
-`DimensionOutcome` combines dimension ID, importance, state (`rated`, `insufficient_evidence`, or locally created `disabled`), nullable score, findings/judgments/uncertainties/conflicts, resolved evidence, and its exception matches. Disabled entries have weight zero, null score, no computed findings, and no evaluated exceptions.
+`DimensionOutcome` combines dimension ID, importance, state (`rated`, `insufficient_evidence`, or locally created `not_configured`), nullable score, findings/judgments/uncertainties/conflicts, resolved evidence, and its exception matches. Entries without preferences retain their declared importance, have null score and no computed findings, and are excluded from aggregation. A supplied exception without a valid preference excerpt is rejected during profile validation.
 
-`WeightedOverall` contains `status: available | partial | unavailable`, nullable integer numerator/denominator, nullable Decimal value, `missing_dimension_ids`, rated/enabled dimension counts, rated/total enabled importance, and a contribution list. `available` means all enabled dimensions are rated; `partial` means some but not all are rated; `unavailable` means none is rated. For available or partial aggregates:
+`WeightedOverall` contains `status: available | partial | unavailable`, nullable integer numerator/denominator, nullable Decimal value, `missing_dimension_ids`, rated/configured dimension counts, rated/total configured importance, and a contribution list. `available` means all configured dimensions are rated; `partial` means some but not all are rated; `unavailable` means none is rated. For available or partial aggregates:
 
-- Numerator = sum of `importance * score` for every rated positive-weight new dimension.
-- Denominator = sum of rated enabled dimensions' importance; greater than zero when at least one dimension is rated.
-- Contribution per rated enabled dimension = `importance * score / denominator`; preserve unrounded values.
+- Numerator = sum of `importance * score` for every rated configured new dimension.
+- Denominator = sum of rated configured dimensions' importance; greater than zero when at least one dimension is rated.
+- Contribution per rated configured dimension = `importance * score / denominator`; preserve unrounded values.
 - Display Decimal value rounded half up to one decimal; do not sum pre-rounded display contributions.
 - Report inputs/numerator/denominator so users can verify totals. Independently rounded displayed contributions may differ by a tenth from the final rounded sum; label them approximate.
 
-If some enabled dimensions are unrated, retain their null scores and list each missing dimension and its reason. Calculate the mean and contributions over rated enabled dimensions only and label it partial. Show rated/enabled dimension counts and rated/total enabled importance so the excluded weight is explicit. If none is rated, status is unavailable: numerator, denominator, and value are null, contributions are empty, and all missing dimensions remain visible. Disabled dimensions are excluded from both coverage totals. Work-arrangement findings never enter this aggregate.
+If some configured dimensions are unrated, retain their null scores and list each missing dimension and its reason. Calculate the mean and contributions over rated configured dimensions only and label it partial. Show rated/configured dimension counts and rated/total configured importance so the excluded weight is explicit. If none is rated, status is unavailable: numerator, denominator, and value are null, contributions are empty, and all missing dimensions remain visible. Not-configured dimensions are excluded from both coverage totals. Work-arrangement findings never enter this aggregate.
 
-Fixed example: role 80 at importance 2, technology 60 at importance 1, and company affinity unrated at importance 3 (field disabled) gives numerator 220, denominator 3, and “Partial overall: 73.3/100; 2/3 enabled dimensions rated; importance coverage 3/6; company affinity missing.” The missing dimension does not receive a score.
+Fixed example: role 80 at importance 2, technology 60 at importance 1, and company affinity unrated at importance 3 (field preferences blank) gives numerator 220, denominator 3, and “Partial overall: 73.3/100; 2/3 configured dimensions rated; importance coverage 3/6; company affinity missing.” The missing dimension does not receive a score.
 
 ## Decisive outcome
 

@@ -1,6 +1,6 @@
 # Implementation Plan: Personalized Job Ratings
 
-**Branch**: `002-personalized-job-ratings` | **Date**: 2026-11-09 | **Spec**: [spec.md](spec.md)
+**Branch**: `main` | **Date**: 2026-11-09 | **Spec**: [spec.md](spec.md)
 
 **Input**: `specs/002-personalized-job-ratings/spec.md`, including the confirmed exception outcomes and dimension terminology.
 
@@ -10,7 +10,7 @@
 
 Add `assess POSTING --profile PROFILE.toml` to evaluate four new dimensions: role fit, technology fit, field interest, and company affinity. Work arrangement remains the existing qualitative fifth dimension. Reuse the existing stack, authenticated transport, source-quote resolution, and terminal workflow. Keep dimension-specific instructions in separate modules; share validation and deterministic arithmetic across a collection of scored results.
 
-Use one user-edited TOML file with explicit 0–5 weights and optional compelling-attraction/deal-breaker declarations referencing existing preference prose. Preserve the weighted numeric score and calculate a separate decisive outcome, including “conflicting exceptions” when both kinds match. No persistent assessment storage, external company retrieval, dynamic criterion plugins, or new dependency is needed.
+Use one user-edited TOML file with explicit 1–5 weights and optional compelling-attraction/deal-breaker declarations referencing existing preference prose. Absent or blank preferences skip a dimension; nonblank preferences are assessed. Importance only weights the mean. There is no enable/disable setting. Every supplied valid declaration is evaluated, while an absent or empty declarations array means none. Preserve the weighted numeric score and calculate a separate decisive outcome, including “conflicting exceptions” when both kinds match. No persistent assessment storage, external company retrieval, dynamic criterion plugins, or new dependency is needed.
 
 ## Technical Context
 
@@ -22,11 +22,11 @@ Use one user-edited TOML file with explicit 0–5 weights and optional compellin
 | Storage | One explicitly selected local profile; existing private OAuth registration storage; fictional golden profiles and sanitized recordings in the repository; ignored developer evaluation reports; no assessment database |
 | Testing | Pure unit/contract checks, real-component CLI tests with HTTP replay and sockets blocked, separate opt-in live semantic golden evaluation |
 | Platform/type | Existing synchronous personal CLI on Linux/macOS; no new installation/platform support |
-| Performance goals | Legacy: one request. Personalized: two sequential requests, or three when enabled exceptions exist. Each inference request retains a 180-second total deadline and 10-second connection timeout; max inference budget 360/540 seconds respectively, excluding authentication; no automatic retry |
+| Performance goals | Legacy: one request. Personalized: two sequential requests, or three when supplied exceptions exist. Each inference request retains a 180-second total deadline and 10-second connection timeout; max inference budget 360/540 seconds respectively, excluding authentication; no automatic retry |
 | Input limits | Existing one UTF-8 HTML file up to 256 KiB, intact; new one UTF-8 TOML regular file up to 64 KiB; fail rather than truncate |
 | Model/configuration | Preserve existing `DEFAULT_MODEL`, low reasoning, and `--model` selection; no implicit model substitution or billing fallback; record requested and returned model per pass |
 | Scale/scope | One posting/profile pair per invocation; five dimension outputs in this increment, four participating in numeric aggregation; future dimensions added through code and explicit contracts |
-| Security/privacy | Validate inputs before creating auth/network clients; do not send paths, weights, disabled prose, or complete file bytes; send relevant preference content only, with `store: false`; no profile dumps in diagnostics |
+| Security/privacy | Validate inputs before creating auth/network clients; do not send paths, weights, blank preference text, or complete file bytes; send relevant preference content only, with `store: false`; no profile dumps in diagnostics |
 
 ## Constitution Check
 
@@ -49,16 +49,16 @@ No amendment, unresolved gate, or complexity exception is required. This review 
 
 ### Profile loading and validation
 
-The CLI loads both local inputs before opening `ChatGPTSession` or `ResponsesClient`. Bound file reads reject non-regular, unreadable, oversized, empty, invalid-UTF-8, or malformed input. Parse TOML, then run strict validation with forbidden extras; require version 1 and the four currently supported new dimension keys. Reject invalid weights, booleans masquerading as integers, blank enabled prose, all-zero weights, duplicate definitions/exception IDs, unknown names, and invalid preference excerpt references. Never rewrite the profile.
+The CLI loads both local inputs before opening `ChatGPTSession` or `ResponsesClient`. Bound file reads reject non-regular, unreadable, oversized, empty, invalid-UTF-8, or malformed input. Parse TOML, then run strict validation with forbidden extras; require version 1 and the four currently supported new dimension keys. Reject invalid weights, booleans masquerading as integers, invalid preference types, all-blank preferences, duplicate definitions/exception IDs, unknown names, and invalid preference excerpt references. Never rewrite the profile.
 
-Starter at `examples/preferences.toml` will contain all four dimensions with importance 0, empty preferences, and explanatory comments; users must enter real prose and enable at least one dimension. The starter documents that relevant text goes to the model. The completed example in [contracts/profile.example.toml](contracts/profile.example.toml) demonstrates syntax; it is fictional example data, not a user's stored profile.
+Starter at `examples/preferences.toml` will contain all four dimensions with importance 1, empty preferences, and explanatory comments; users must enter real prose for at least one dimension. The starter documents that relevant text goes to the model. The completed example in [contracts/profile.example.toml](contracts/profile.example.toml) demonstrates syntax; it is fictional example data, not a user's stored profile.
 
 ### Request stages and stable numeric scoring
 
 1. Reuse the original work-arrangement request and source validation unchanged. If the target posting is absent/ambiguous or the request fails, stop with no report.
-2. Issue one fit request composed from shared evidence/uncertainty instructions and the enabled criteria's separate prompt fragments. Supply intact HTML plus `{dimension_id, preferences}` entries. Do not include weights, exceptional metadata, profile paths, or disabled dimensions. Validate schema, exact enabled-ID coverage, preference excerpts, finding references, and every source quote.
-3. If enabled declarations exist, issue a separate exception-applicability request with intact HTML and declared preference excerpts/IDs/types. Validate exact declaration coverage and evidence. This pass sees no numeric results and cannot change them. Skip it when there are no enabled declarations.
-4. Assemble disabled entries locally, calculate the weighted mean and contributions, and reduce matched exception types to a decisive outcome. Render only after every required pass succeeds. An inference failure at any stage fails the entire invocation; an insufficient-evidence result remains a successful assessment.
+2. Issue one fit request composed from shared evidence/uncertainty instructions and the configured criteria's separate prompt fragments. Supply intact HTML plus `{dimension_id, preferences}` entries. Do not include weights, exceptional metadata, profile paths, or dimensions without preferences. Validate schema, exact configured-ID coverage, preference excerpts, finding references, and every source quote.
+3. If supplied declarations exist, issue a separate exception-applicability request with intact HTML and declared preference excerpts/IDs/types. Validate exact declaration coverage and evidence. This pass sees no numeric results and cannot change them. Skip it when there are no supplied declarations.
+4. Assemble entries without preferences locally, calculate the weighted mean and contributions, and reduce matched exception types to a decisive outcome. Render only after every required pass succeeds. An inference failure at any stage fails the entire invocation; an insufficient-evidence result remains a successful assessment.
 
 The transport extraction keeps the original wrapper's instructions, schema, input serialization, timeout, registration checks, and completion gating. A typed reusable helper takes instructions, serialized user data, schema name, and result type; do not build an agent/orchestration framework. All factual input remains the supplied HTML. A source URL is never sent as evidence or fetched.
 
@@ -68,7 +68,7 @@ The plain scoring projection is byte-identical when only importance or exception
 
 Use strict typed fit models, exception models, and a composite personalized assessment containing the existing `Assessment` plus a collection of new dimension outcomes. Keep the original assessment and report unchanged for invocations without a profile. Use stable IDs and iterate scored collections for weighting/rendering. A static ordered list of current criterion definitions is sufficient; no code assumes four is the permanent product total.
 
-Calculate `sum(weight * score) / sum(weight)` over rated positive-weight new dimensions. Show a complete score when all enabled dimensions are rated, a clearly labeled partial score when only some are rated, and no numeric score when none is rated. Keep integer numerator/denominator and Decimal division; round half up only at final display to one decimal. Show weight, score, weighted numerator, denominator, and contribution so the result is auditable. Missing data never becomes zero. Exclude its weight from the partial denominator explicitly; show every missing dimension and reason, rated/enabled dimension counts, and rated/total enabled importance. Work arrangement remains qualitative and excluded.
+Calculate `sum(weight * score) / sum(weight)` over rated configured new dimensions. Show a complete score when all configured dimensions are rated, a clearly labeled partial score when only some are rated, and no numeric score when none is rated. Keep integer numerator/denominator and Decimal division; round half up only at final display to one decimal. Show weight, score, weighted numerator, denominator, and contribution so the result is auditable. Missing data never becomes zero. Exclude its weight from the partial denominator explicitly; show every missing dimension and reason, rated/configured dimension counts, and rated/total configured importance. Work arrangement remains qualitative and excluded.
 
 Exception applicability is `matched`, `not_matched`, or `unresolved`. Use authoritative local declaration types, not model-returned types. The pure outcome reducer implements the table in [data-model.md](data-model.md). Both matched kinds always yield “conflicting exceptions,” regardless of weights or dimension location. Unknown conditions remain visible alongside any confirmed outcome, including when no overall numeric score exists.
 
@@ -91,9 +91,9 @@ uv run --locked ty check src tests evaluations
 uv run --locked python -m pytest --strict-markers --disable-socket --cov=job_scan --cov-branch --cov-fail-under=90
 ```
 
-Prefer TDD for meaningful boundaries: profile coercion/validation, exact result coverage, evidence and preference references, partial/unavailable aggregates and coverage, rounding, and exception reduction. Table-driven pure tests cover all five decisive outcomes, uncertainty coexisting with matches, zero/low-weight conditions, same/across-dimension conflicts, and score invariance under metadata-only changes. Fixed-result examples verify arithmetic and monotonicity; no exact-score live oracle. Apply spec FR-006 and the paired US3 scenario-2 examples to partial evidence within a dimension: require an explanation supporting the dimension-level judgment without assumed facts about unassessed preferences, or retain findings with insufficient evidence. Golden review establishes this semantic boundary; schema checks alone cannot.
+Prefer TDD for meaningful boundaries: profile coercion/validation, exact result coverage, evidence and preference references, partial/unavailable aggregates and coverage, rounding, and exception reduction. Table-driven pure tests cover all five decisive outcomes, uncertainty coexisting with matches, low-weight conditions and absent/empty declaration arrays, same/across-dimension conflicts, and score invariance under metadata-only changes. Fixed-result examples verify arithmetic and monotonicity; no exact-score live oracle. Apply spec FR-006 and the paired US3 scenario-2 examples to partial evidence within a dimension: require an explanation supporting the dimension-level judgment without assumed facts about unassessed preferences, or retain findings with insufficient evidence. Golden review establishes this semantic boundary; schema checks alone cannot.
 
-A small personalized CLI system matrix covers completed scoring, conflicting exceptions, missing evidence/partial overall score and coverage, all-enabled-unknown/no overall score, invalid profile before authentication, disabled dimensions/no exception request, failure in a later pass/no stdout report, and existing no-profile behavior. Exercise actual parsing, HTTP adapter, validation, aggregation, and rendering. Replay sanitized actual provider inference streams for successful paths; synthetic fixtures may exercise transport/refusal/schema/evidence failures, clearly labeled. Block all unrecorded sockets in ordinary tests. Existing OAuth replay and installed-command help smoke tests remain.
+A small personalized CLI system matrix covers completed scoring, conflicting exceptions, missing evidence/partial overall score and coverage, all-configured-unknown/no overall score, invalid profile before authentication, dimensions without preferences/no exception request, failure in a later pass/no stdout report, and existing no-profile behavior. Exercise actual parsing, HTTP adapter, validation, aggregation, and rendering. Replay sanitized actual provider inference streams for successful paths; synthetic fixtures may exercise transport/refusal/schema/evidence failures, clearly labeled. Block all unrecorded sockets in ordinary tests. Existing OAuth replay and installed-command help smoke tests remain.
 
 ### Golden corpus and live acceptance
 
@@ -122,7 +122,7 @@ specs/002-personalized-job-ratings/
   checklists/requirements.md
 ```
 
-`tasks.md` will be produced by `$speckit-tasks`; it is not created by this planning command.
+`tasks.md` contains the implementation and acceptance tasks generated by `$speckit-tasks`.
 
 ### Source Code (repository root; proposed changes)
 
@@ -164,6 +164,6 @@ No constitutional violations or exceptions. The optional third model request is 
 
 Phase 0 decisions and Phase 1 contracts are complete. Verified all eight generated artifacts, local Markdown links, TOML example syntax/keys/exception references, rejection of invalid weight types under the installed pinned Pydantic version, and Decimal half-up rounding at a boundary using `uv run --locked python`. Post-design constitution gates pass by design. No new code, application test run, live inference, or owner acceptance is claimed. No before/after planning hooks are registered (`.specify/extensions.yml` absent).
 
-Next command: `$speckit-tasks`.
+Next command: `$speckit-implement`.
 
 Owner refinement: use one automatically loaded evaluation manifest for both assessment modes, one full-suite run, and one bound owner review. The existing evaluation command shape is retained.

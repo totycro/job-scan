@@ -1,5 +1,5 @@
 # Completed fictional example. Replace these preferences with your own.
-# Relevant enabled preference text is sent to the assessment model.
+# Relevant nonblank preference text is sent to the assessment model.
 schema_version = 1
 
 [dimensions.role_fit]

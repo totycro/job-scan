@@ -18,7 +18,7 @@ mkdir -p .local
 cp examples/preferences.toml .local/preferences.toml
 ```
 
-The starter has all weights 0 and empty prose. Enter text and positive weights for the dimensions you want assessed; retain explicit weights for all four. Follow [profile.md](contracts/profile.md). The completed fictional [example](contracts/profile.example.toml) shows two optional exceptions. Relevant enabled preference content will be sent to the model. Do not use a personal profile in versioned fixtures or recordings.
+The starter has all weights 1 and empty prose. Enter text for the dimensions you want assessed and choose relative weights 1–5; retain explicit weights for all four. Follow [profile.md](contracts/profile.md). The completed fictional [example](contracts/profile.example.toml) shows two optional exceptions. Relevant configured preference content will be sent to the model. Do not use a personal profile in versioned fixtures or recordings.
 
 ## Existing and personalized flows
 
@@ -42,8 +42,9 @@ After implementation, the manually authored personalized corpus supplies the fix
 | Deal-breaker | High-scoring posting with confirmed unacceptable technology | Separate deal-breaker outcome; no numeric penalty |
 | Both exceptional types | Confirmed field attraction and technology deal-breaker | “Conflicting exceptions,” evidence for both, no automatic winner |
 | Unknown evidence | Posting lacking relevant company facts or exception evidence | Explicit insufficient/unresolved states; no substituted scores; partial overall over rated dimensions with missing dimensions and dimension-count/importance coverage; no overall score if none is rated |
-| Disabled criterion | Importance 0 with a valid exception declaration | Disabled, omitted from requests/weighting/exception evaluation |
-| Invalid input | Missing file, malformed TOML, all-zero weights, invalid excerpt reference | Exit 2, actionable stderr, no auth/network or success report |
+| Empty preferences | Absent, empty, or whitespace-only preferences, with no exceptions | Not configured; omitted from fit requests and weighting regardless of importance |
+| Optional exceptions | Omit declarations or use an empty array; then add a valid excerpt-based declaration | No exception request when none are supplied; every supplied valid declaration is evaluated |
+| Invalid input | Missing file, malformed TOML, all-blank preferences or importance 0, invalid excerpt reference | Exit 2, actionable stderr, no auth/network or success report |
 | Later-stage failure | Recorded exception request timeout/incomplete response | Exit 1 with no partial stdout report |
 
 Use the completed example as an input-format smoke check after implementation:
@@ -64,7 +65,9 @@ uv run --locked python -m pytest --strict-markers --disable-socket --cov=job_sca
 uv run --locked python evaluations/run.py --check --output .local/evaluations/readiness.json
 ```
 
-All offline checks must pass. Successful system paths replay sanitized actual-provider responses; no unrecorded sockets are allowed. New corpus source/expectation reviews must be genuinely complete for readiness; pending statuses must not be silently bypassed.
+Lint, formatting, type checking, and tests must pass. Inspect the `--check` report for readiness: all mandatory readiness checks must pass, but exit 1 remains expected until an accepted review exists. Readiness does not establish live acceptance.
+
+Successful system paths replay sanitized actual-provider responses; no unrecorded sockets are allowed. New corpus source/expectation reviews must be genuinely complete for readiness; pending statuses must not be silently bypassed.
 
 ## Live evaluation and acceptance
 
