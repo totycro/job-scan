@@ -12,50 +12,50 @@
 
 ## Requirement Completeness
 
-- [ ] CHK001 Are evidence obligations defined for every factual claim, preference-based judgment, and exceptional-preference finding, including the distinction between source facts and user beliefs? [Completeness, Spec §FR-006, Spec §FR-008, Spec §FR-014]
-- [ ] CHK002 Are rated, disabled, and insufficient-evidence outcomes specified separately, with all reasons required when an overall score is unavailable? [Completeness, Spec §FR-005–FR-007]
-- [ ] CHK003 Are all five decisive outcomes and the information required to explain each outcome explicitly documented? [Completeness, Spec §FR-014]
+- [x] CHK001 Are evidence obligations defined for every factual claim, preference-based judgment, and exceptional-preference finding, including the distinction between source facts and user beliefs? [Completeness, Spec §FR-006, Spec §FR-008, Spec §FR-014]
+- [x] CHK002 Are rated, disabled, and insufficient-evidence outcomes specified separately, with missing-data reasons and coverage required for partial or unavailable overall scores? [Completeness, Spec §FR-005–FR-007]
+- [x] CHK003 Are all five decisive outcomes and the information required to explain each outcome explicitly documented? [Completeness, Spec §FR-014]
 
 ## Requirement Clarity
 
-- [ ] CHK004 Is the boundary between enough evidence for a partial but justified rating and insufficient evidence defined clearly enough for consistent author review? [Clarity, Ambiguity, Spec §User Story 3, acceptance scenarios 1–3; Spec §FR-006]
-- [ ] CHK005 Are the score anchors, permitted score precision, relative importance, contribution meaning, and final rounding rule unambiguous across the requirements and design? [Clarity, Spec §FR-004–FR-007; Data Model §Model fit response, §Local dimension and aggregate outcomes]
-- [ ] CHK006 Are matched, not matched, and unresolved exceptional conditions clearly distinguished, including why omission alone cannot establish absence? [Clarity, Spec §FR-014, Spec §Edge Cases]
+- [x] CHK004 Is the boundary between enough evidence for a partial but justified rating and insufficient evidence defined clearly enough for consistent author review? [Clarity, Ambiguity, Spec §User Story 3, acceptance scenarios 1–3; Spec §FR-006]
+- [x] CHK005 Are the score anchors, permitted score precision, relative importance, contribution meaning, and final rounding rule unambiguous across the requirements and design? [Clarity, Spec §FR-004–FR-007; Data Model §Model fit response, §Local dimension and aggregate outcomes]
+- [x] CHK006 Are matched, not matched, and unresolved exceptional conditions clearly distinguished, including why omission alone cannot establish absence? [Clarity, Spec §FR-014, Spec §Edge Cases]
 
 ## Requirement Consistency
 
-- [ ] CHK007 Are requirements consistent that only enabled new dimensions participate in the weighted mean, while work arrangement remains qualitative and outside that mean? [Consistency, Spec §FR-007, Spec §FR-009, Spec §FR-015]
-- [ ] CHK008 Are exceptional status and dimension importance consistently separated, including disabled exceptions, low-positive-importance exceptions, and the prohibition on numeric bonuses or penalties? [Consistency, Spec §FR-004, Spec §FR-013–FR-014]
-- [ ] CHK009 Is SC-007's unchanged-scoring requirement consistent with the documented variability of subjective scores, distinguishing unchanged scoring inputs and rules from exact equality across independent assessments? [Consistency, Ambiguity, Spec §SC-007, Spec §Assumptions; Plan §Request stages and stable numeric scoring]
+- [x] CHK007 Are requirements consistent that only enabled new dimensions participate in the weighted mean, while work arrangement remains qualitative and outside that mean? [Consistency, Spec §FR-007, Spec §FR-009, Spec §FR-015]
+- [x] CHK008 Are exceptional status and dimension importance consistently separated, including disabled exceptions, low-positive-importance exceptions, and the prohibition on numeric bonuses or penalties? [Consistency, Spec §FR-004, Spec §FR-013–FR-014]
+- [x] CHK009 Is SC-007's unchanged-scoring requirement consistent with the documented variability of subjective scores, distinguishing unchanged scoring inputs and rules from exact equality across independent assessments? [Consistency, Ambiguity, Spec §SC-007, Spec §Assumptions; Plan §Request stages and stable numeric scoring]
 
 ## Acceptance Criteria Quality
 
-- [ ] CHK010 Are arithmetic acceptance criteria objectively specified for equal, unequal, zero, and reversed priorities, including rounding and the prohibition on redistributing missing weights? [Measurability, Spec §SC-003–SC-004, Spec §FR-007]
-- [ ] CHK011 Are the required golden judgments, prohibited conclusions, contrasting profiles, and owner-review criteria sufficiently explicit to assess semantic quality without relying on exact wording, exact subjective scores, or source-quote existence alone? [Measurability, Spec §FR-012, Spec §SC-002, Spec §SC-007; Evaluation Contract §Expected outcomes, §Automatic and semantic checks]
+- [x] CHK010 Are arithmetic acceptance criteria objectively specified for equal, unequal, zero, and reversed priorities, including rounding and explicit rated-only weighting and missing-data coverage? [Measurability, Spec §SC-003–SC-004, Spec §FR-007]
+- [x] CHK011 Are the required golden judgments, prohibited conclusions, contrasting profiles, and owner-review criteria sufficiently explicit to assess semantic quality without relying on exact wording, exact subjective scores, or source-quote existence alone? [Measurability, Spec §FR-012, Spec §SC-002, Spec §SC-007; Evaluation Contract §Expected outcomes, §Automatic and semantic checks]
 
 ## Scenario Coverage
 
-- [ ] CHK012 Are requirements complete for opposing matched exceptions within one dimension and across dimensions, with both sides evidenced and no winner selected by importance or score? [Coverage, Spec §FR-014, Spec §SC-007]
-- [ ] CHK013 Are requirements defined for unresolved exceptions alongside confirmed matches, and for a supported decisive outcome when no overall numeric score is available? [Coverage, Spec §FR-014, Spec §User Story 2, acceptance scenario 9]
-- [ ] CHK014 Are requirements explicit about the distinction between a successful assessment with insufficient evidence and an unsuccessful assessment with unusable results, including failure after earlier findings are available? [Coverage, Spec §FR-010; CLI Contract §Failures and exits]
+- [x] CHK012 Are requirements complete for opposing matched exceptions within one dimension and across dimensions, with both sides evidenced and no winner selected by importance or score? [Coverage, Spec §FR-014, Spec §SC-007]
+- [x] CHK013 Are requirements defined for unresolved exceptions alongside confirmed matches, and for a supported decisive outcome when no overall numeric score is available? [Coverage, Spec §FR-014, Spec §User Story 2, acceptance scenario 9]
+- [x] CHK014 Are requirements explicit about the distinction between a successful assessment with insufficient evidence and an unsuccessful assessment with unusable results, including failure after earlier findings are available? [Coverage, Spec §FR-010; CLI Contract §Failures and exits]
 
 ## Edge Case Coverage
 
-- [ ] CHK015 Are evidence-attribution requirements defined for recruiter/client versus employer facts, named-company preferences, and technology omissions? [Coverage, Spec §Edge Cases, Spec §FR-008]
-- [ ] CHK016 Are requirements specified for all enabled dimensions lacking evidence and for contradictory evidence or preferences that prevent a justified rating? [Coverage, Spec §Edge Cases, Spec §User Story 3, acceptance scenarios 1–3]
+- [x] CHK015 Are evidence-attribution requirements defined for recruiter/client versus employer facts, named-company preferences, and technology omissions? [Coverage, Spec §Edge Cases, Spec §FR-008]
+- [x] CHK016 Are requirements specified for all enabled dimensions lacking evidence and for contradictory evidence or preferences that prevent a justified rating? [Coverage, Spec §Edge Cases, Spec §User Story 3, acceptance scenarios 1–3]
 
 ## Non-Functional Requirements
 
-- [ ] CHK017 Are evidence-integrity requirements explicit that posting instructions and unsupported model recollection cannot override the supplied preferences or establish company facts? [Completeness, Spec §FR-008, Spec §Edge Cases]
+- [x] CHK017 Are evidence-integrity requirements explicit that posting instructions and unsupported model recollection cannot override the supplied preferences or establish company facts? [Completeness, Spec §FR-008, Spec §Edge Cases]
 
 ## Dependencies & Assumptions
 
-- [ ] CHK018 Is the dependency on relevant facts in the supplied HTML documented, including the limits it places on company-affinity and field-interest judgments without external research? [Assumption, Completeness, Spec §FR-008, Spec §Assumptions]
+- [x] CHK018 Is the dependency on relevant facts in the supplied HTML documented, including the limits it places on company-affinity and field-interest judgments without external research? [Assumption, Completeness, Spec §FR-008, Spec §Assumptions]
 
 ## Ambiguities & Conflicts
 
-- [ ] CHK019 Is the status of the 0–100 scale, weighted mean, and withholding rule resolved consistently between their mandatory requirements and the Assumptions section's description of them as proposed defaults? [Conflict, Spec §FR-005, Spec §FR-007, Spec §Assumptions]
-- [ ] CHK020 Are differing or contradictory preferences within a dimension distinguished clearly from explicitly declared opposing exceptional conditions, so their uncertainty and decisive outcomes have separate requirements? [Clarity, Ambiguity, Spec §User Story 3, acceptance scenario 3; Spec §FR-013–FR-014]
+- [x] CHK019 Are the 0–100 scale, weighted mean, partial-score rule, and unavailable-score rule consistently mandatory across the requirements and Assumptions? [Conflict, Spec §FR-005, Spec §FR-007, Spec §Assumptions]
+- [x] CHK020 Are differing or contradictory preferences within a dimension distinguished clearly from explicitly declared opposing exceptional conditions, so their uncertainty and decisive outcomes have separate requirements? [Clarity, Ambiguity, Spec §User Story 3, acceptance scenario 3; Spec §FR-013–FR-014]
 
 ## Notes
 
@@ -65,3 +65,41 @@
 - `checklists/requirements.md` has a separate built-in lifecycle maintained by `$speckit-specify` and `$speckit-clarify`.
 - Add comments or findings inline and link to relevant resources or documentation.
 - Items are numbered sequentially for easy reference; no evaluation or approval is implied by generation.
+
+
+## Requirements review — 2026-11-09
+
+Reviewed by the coding agent at the user's request, as a separate requirements review rather than execution of `$speckit-implement`. Result: **20 satisfied, 0 open**. These checks assess document quality only; they do not establish implementation, golden-corpus acceptance, or owner approval of model results. Implementation task markers were not changed. A subsequent owner clarification updated the scoring requirements and the built-in checklist note without changing its markers.
+
+References below are relative to this checklist. No application or assessment behavior was changed.
+
+| Item | Result | Evidence / finding |
+| --- | --- | --- |
+| CHK001 | Satisfied | [Spec](../spec.md) FR-006/008/014 and [data model](../data-model.md), Model fit response / Exception matching, require separate source findings, exact preference excerpts, inferred judgments, and evidence or uncertainty for exceptions. User beliefs cannot establish company facts. |
+| CHK002 | Satisfied | Spec FR-005–007 and data model, Local dimension and aggregate outcomes, distinguish rated, disabled, and insufficient states; overall states distinguish complete, partial, and unavailable, disclose missing dimensions and coverage, and retain null aggregate fields only when none is rated. |
+| CHK003 | Satisfied | Spec FR-014 and data model, Decisive outcome, enumerate all five outcomes and retain matched/unresolved IDs, reasons, and evidence. |
+| CHK004 | Satisfied after authorized fix | Spec FR-006 now defines the qualitative sufficiency rule: a dimension-level score must be supported without assumed facts about unassessed preferences; required unknown conditions prevent a rating. US3 scenario 2 includes paired rated/insufficient examples. Data model, plan, evaluation contract and T041/T047 carry the boundary into validation. No numeric coverage threshold or schema-only semantic oracle is imposed. |
+| CHK005 | Satisfied | Spec FR-004–007 defines anchors and importance; data model, Model fit response / Local dimension and aggregate outcomes, specifies strict integer scores, exact numerator/denominator, unrounded contributions, one-decimal half-up display, and approximate displayed contributions. The owner resolved mandatory-versus-proposed wording in CHK019; partial means follow the same precision rules. |
+| CHK006 | Satisfied | Spec FR-014 and data model, Exception matching, define all three states, supporting quotes for matched/not-matched results, explained unresolved conditions, and prohibition on omission-as-absence. |
+| CHK007 | Satisfied | Spec FR-007/009/015, data model aggregate rules, and [CLI contract](../contracts/cli.md), Successful terminal output, consistently exclude qualitative work arrangement and disabled dimensions from the weighted mean. |
+| CHK008 | Satisfied | Spec FR-013/014 and Edge Cases, [profile contract](../contracts/profile.md), Exceptional declarations, and data model reducer separate importance from exception status; zero disables, low positive importance does not suppress a decisive match, and no numeric adjustment is allowed. |
+| CHK009 | Satisfied after authorized fix | Spec SC-007 now explicitly requires identical serialized fit requests under declaration-only edits with the remaining inputs/configuration fixed, identical scores/arithmetic for fixed or replayed results with unchanged weights, and permits variation between independent live calls. Evaluation contract and T031 distinguish deterministic replay from live semantic acceptance. |
+| CHK010 | Satisfied | Spec US2 scenarios 1–4 and SC-003/004, data model aggregate equations, and plan offline checks define fixed-result equal/unequal/zero/reversed-weight checks, rounding, monotonicity for fixed rated results, partial means over rated enabled dimensions only, explicit coverage and missing dimensions, and no numeric mean when none is rated. |
+| CHK011 | Satisfied | Spec FR-012 and SC-002/007 plus [evaluation contract](../contracts/evaluation.md), Expected outcomes / Automatic and semantic checks, require authored judgments, prohibited conclusions, contrasts for every new dimension, source/preference references, and bound semantic review beyond quote existence. Exact prose/scores are not an oracle. Actual corpus authoring and owner review remain implementation deliverables. |
+| CHK012 | Satisfied | Spec FR-014, Edge Cases, and SC-007 explicitly cover same/across-dimension opposing matches with both sides evidenced and no winner based on importance or scores; data model reducer agrees. |
+| CHK013 | Satisfied | Spec FR-014 and US2 scenario 9, data model outcome table, and CLI output contract retain unresolved declarations beside confirmed-match outcomes and permit decisive outcomes with incomplete numeric totals. |
+| CHK014 | Satisfied | Spec FR-010, CLI contract, Failures and exits, and data model lifecycle distinguish successful unknown states (exit 0) from unusable responses/request failures (exit 1); later-stage failures emit no partial successful report. |
+| CHK015 | Satisfied | Spec Edge Cases and FR-008 explicitly constrain agency/client attribution, named-company beliefs versus evidenced identity, and technology omission; evaluation contract requires coverage of these distinctions. |
+| CHK016 | Satisfied | Spec US3 scenarios 1–3 and Edge Cases define all-unknown/conflicting evidence and preferences, explicit uncertainties/conflicts, unrated outcomes when justification is prevented, and partial/unavailable aggregate behavior. The partial-evidence decision boundary is now defined in FR-006 and US3 scenario 2 (CHK004). |
+| CHK017 | Satisfied | Spec FR-008 and Edge Cases reject unsupported recollection and posting instructions that override profile/scoring rules; data model treats profile prose as preferences rather than authoritative application instructions or company facts. |
+| CHK018 | Satisfied | Spec FR-008 and Assumptions explicitly limit factual input to supplied HTML, exclude company research, and acknowledge insufficient field/company evidence as an expected outcome. |
+| CHK019 | Satisfied after owner clarification | The owner requested incomplete data be shown and marked partial. Spec FR-007, SC-004 and Assumptions now require a weighted mean over rated enabled dimensions, partial labeling, missing dimensions/reasons and count/importance coverage; no numeric mean when none is rated. Plan, data model, CLI/evaluation contracts, quickstart and tasks were aligned. The 0–100 scale and weighted mean remain mandatory; the proposed-default wording was removed. |
+| CHK020 | Satisfied | Spec US3 scenario 3 handles contradictory preferences as fit uncertainty; FR-013/014 requires explicit declarations for exceptional status. Profile contract permits opposite declared kinds, and the decisive reducer uses confirmed declaration matches only. Ordinary conflicting preferences cannot invent exceptions. |
+
+### Review outcome
+
+The user authorized the proposed fixes for CHK004 and CHK009. Both were applied and re-reviewed against the specification and downstream design. All 20 requirements-quality checks are satisfied. Run `$speckit-analyze` before resuming implementation; this checklist does not establish implemented behavior or semantic model acceptance.
+
+### Owner clarification — partial overall scores
+
+The owner stated: “what i want is to show incomplete data, but mark as partial.” This supersedes the original withholding rule reviewed above. CHK002/005/010/013/016 were rechecked against the revised requirements; CHK019 is satisfied. CHK004 (sufficiency within one dimension) and CHK009 (live versus fixed-result invariance) were subsequently resolved through separately authorized wording and design updates; changing aggregate behavior alone did not resolve them.

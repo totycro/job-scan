@@ -31,7 +31,7 @@ If an exception excerpt appears multiple times in the same prose it still identi
 | PreferenceJudgment | `preference_quote`, `finding_ids: list[str]`, `polarity: match \| mismatch \| mixed`, `explanation` | Quote is exact substring of requested dimension prose; finding IDs exist in that dimension and list is nonempty; explanation nonblank; expresses inference rather than an additional unsupported fact |
 | Conflict | existing `explanation`, `evidence` | Preserve existing requirement for at least two supporting passages; retain conflicting context |
 
-For `rated`, score is a strict integer from 0 through 100, with at least one source finding and preference judgment. Scores express subjective fit (0 no fit, 50 mixed, 100 full), never probability. For `insufficient_evidence`, score is null and at least one uncertainty or conflict explains why; supported partial findings/judgments may remain. Every supplied evidence quote is checked even for an unrated dimension. Missing information is described as uncertainty, never as an invented source quote or a fabricated mismatch. Unknown/contradictory evidence prevents a score when it cannot be justified; this semantic judgment is evaluated in golden review.
+For `rated`, score is a strict integer from 0 through 100, with at least one source finding and preference judgment. Scores express subjective fit (0 no fit, 50 mixed, 100 full), never probability. For `insufficient_evidence`, score is null and at least one uncertainty or conflict explains why; supported partial findings/judgments may remain. Every supplied evidence quote is checked even for an unrated dimension. Missing information is described as uncertainty, never as an invented source quote or a fabricated mismatch. A dimension MAY be rated from partial evidence only when the explanation supports a dimension-level fit judgment using the evidenced preferences without assuming facts about unassessed preferences. It MUST identify the supported and unassessed preferences and explain why the missing or conflicting information does not prevent that judgment. If a score would require assuming how an unassessed preference is satisfied or resolving an unsupported conflict, the dimension MUST be `insufficient_evidence`, retaining supported findings but no score. A source quote and a preference match alone do not establish sufficiency. This is a qualitative semantic-review rule, not a numeric preference-coverage threshold. Apply the paired examples in spec US3 scenario 2 during golden semantic review; schema validity and quote existence cannot decide sufficiency alone.
 
 Every `Evidence` uses exact raw HTML `quote` and zero-based `occurrence`, counting overlapping matches. Resolve with existing `resolve()` into character start/end and line/end-line, and deduplicate by `(quote, occurrence)`. Relevance, employer/role attribution, entailment, and appropriate scoring require semantic review beyond quote existence.
 
@@ -47,15 +47,17 @@ Empty enabled declaration set skips this request and produces a local empty coll
 
 `DimensionOutcome` combines dimension ID, importance, state (`rated`, `insufficient_evidence`, or locally created `disabled`), nullable score, findings/judgments/uncertainties/conflicts, resolved evidence, and its exception matches. Disabled entries have weight zero, null score, no computed findings, and no evaluated exceptions.
 
-`WeightedOverall` contains `status: available | incomplete`, nullable integer numerator/denominator, nullable Decimal value, `blocking_dimension_ids`, and a contribution list. For available aggregates:
+`WeightedOverall` contains `status: available | partial | unavailable`, nullable integer numerator/denominator, nullable Decimal value, `missing_dimension_ids`, rated/enabled dimension counts, rated/total enabled importance, and a contribution list. `available` means all enabled dimensions are rated; `partial` means some but not all are rated; `unavailable` means none is rated. For available or partial aggregates:
 
-- Numerator = sum of `importance * score` for every positive-weight new dimension.
-- Denominator = sum of their importance; greater than zero by profile validation.
-- Contribution per dimension = `importance * score / denominator`; preserve unrounded values.
+- Numerator = sum of `importance * score` for every rated positive-weight new dimension.
+- Denominator = sum of rated enabled dimensions' importance; greater than zero when at least one dimension is rated.
+- Contribution per rated enabled dimension = `importance * score / denominator`; preserve unrounded values.
 - Display Decimal value rounded half up to one decimal; do not sum pre-rounded display contributions.
 - Report inputs/numerator/denominator so users can verify totals. Independently rounded displayed contributions may differ by a tenth from the final rounded sum; label them approximate.
 
-If any enabled new dimension is unrated, the aggregate is incomplete: numerator, denominator, and value are null; list every blocker. Individual rated entries and their `importance * score` remain visible, but no normalized partial contribution or replacement overall score is shown. Work-arrangement findings never enter this aggregate.
+If some enabled dimensions are unrated, retain their null scores and list each missing dimension and its reason. Calculate the mean and contributions over rated enabled dimensions only and label it partial. Show rated/enabled dimension counts and rated/total enabled importance so the excluded weight is explicit. If none is rated, status is unavailable: numerator, denominator, and value are null, contributions are empty, and all missing dimensions remain visible. Disabled dimensions are excluded from both coverage totals. Work-arrangement findings never enter this aggregate.
+
+Fixed example: role 80 at importance 2, technology 60 at importance 1, and company affinity unrated at importance 3 (field disabled) gives numerator 220, denominator 3, and “Partial overall: 73.3/100; 2/3 enabled dimensions rated; importance coverage 3/6; company affinity missing.” The missing dimension does not receive a score.
 
 ## Decisive outcome
 
@@ -69,7 +71,7 @@ Reduce confirmed matches using the declaration types from the profile:
 | No | No | Yes | `unresolved_exceptions` — unresolved exceptions |
 | No | No | No | `no_exception_applies` — no exceptional preference applies |
 
-`DecisiveOutcome` includes code, matched declaration IDs, unresolved declaration IDs, and references to their explanations/evidence. Render matched-based outcomes as based on confirmed matches only when unresolved declarations remain. Neither importance nor dimension membership resolves opposing matches. This outcome can exist with an incomplete numeric aggregate. It is user guidance, not an automatic application action.
+`DecisiveOutcome` includes code, matched declaration IDs, unresolved declaration IDs, and references to their explanations/evidence. Render matched-based outcomes as based on confirmed matches only when unresolved declarations remain. Neither importance nor dimension membership resolves opposing matches. This outcome can exist with a partial or unavailable numeric aggregate. It is user guidance, not an automatic application action.
 
 ## Composite result and lifecycle
 

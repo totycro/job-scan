@@ -28,7 +28,7 @@ uv run --locked job-scan assess evaluations/cases/posting-01/posting.html
 uv run --locked job-scan assess evaluations/cases/posting-01/posting.html --profile .local/preferences.toml
 ```
 
-The first assessment preserves the existing work-arrangement report. The second identifies the existing qualitative dimension plus four new dimension outcomes, relevant preferences/evidence, importance, overall score or its blockers, and a separate decisive outcome. This posting may not establish company facts needed by your profile; an insufficient-evidence outcome is expected rather than fabricated information. Profile identity appears in the report, and the file is unchanged.
+The first assessment preserves the existing work-arrangement report. The second identifies the existing qualitative dimension plus four new dimension outcomes, relevant preferences/evidence, importance, complete/partial overall score with coverage and missing dimensions, or no numeric score when none is rated, and a separate decisive outcome. This posting may not establish company facts needed by your profile; an insufficient-evidence outcome is expected rather than fabricated information. Profile identity appears in the report, and the file is unchanged.
 
 ## Targeted validation scenarios
 
@@ -41,7 +41,7 @@ After implementation, the manually authored personalized corpus supplies the fix
 | Compelling attraction | Low-scoring posting with confirmed exceptional field interest | Separate worth-pursuing outcome; no numeric bonus |
 | Deal-breaker | High-scoring posting with confirmed unacceptable technology | Separate deal-breaker outcome; no numeric penalty |
 | Both exceptional types | Confirmed field attraction and technology deal-breaker | “Conflicting exceptions,” evidence for both, no automatic winner |
-| Unknown evidence | Posting lacking relevant company facts or exception evidence | Explicit insufficient/unresolved states; no substituted scores; incomplete overall withheld |
+| Unknown evidence | Posting lacking relevant company facts or exception evidence | Explicit insufficient/unresolved states; no substituted scores; partial overall over rated dimensions with missing dimensions and dimension-count/importance coverage; no overall score if none is rated |
 | Disabled criterion | Importance 0 with a valid exception declaration | Disabled, omitted from requests/weighting/exception evaluation |
 | Invalid input | Missing file, malformed TOML, all-zero weights, invalid excerpt reference | Exit 2, actionable stderr, no auth/network or success report |
 | Later-stage failure | Recorded exception request timeout/incomplete response | Exit 1 with no partial stdout report |
