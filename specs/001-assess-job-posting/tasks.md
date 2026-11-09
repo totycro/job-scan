@@ -3,6 +3,8 @@
 **Input**: Design documents in `specs/001-assess-job-posting/`.
 **Prerequisites**: Owner-approved spec and plan; research.md, data-model.md, contracts/cli.md, quickstart.md, and constitution.
 **Status**: Owner-approved on 2026-11-06; three minor analysis findings clarified with owner authorization. Implementation and all required checks pass; the owner approved all updated live reports on 2026-11-06. All 33 tasks complete. The first convergence pass identified one documentation gap, completed as T033; the final pass on 2026-11-06 found zero remaining gaps.
+**Maintenance status (2026-11-09)**: Owner-authorized Typer migration completed as T034–T036. All 36 tasks complete; required checks pass with 96 tests and 97.30% combined coverage.
+
 **Tests**: Include deterministic and real-component CLI tests plus live golden evaluation as required by the plan and constitution. Prefer tests first for validation, preferences, and failures; confirm meaningful failures before implementation.
 **Organization**: One story exists: US1, “Understand work arrangements from posting HTML” (P1). Authentication is a prerequisite of its selected provider, not an additional product story.
 
@@ -115,3 +117,12 @@ Owner refinement on 2026-11-06: T016/T020/T021 and affected golden cases must ke
 ## Phase 5: Convergence
 
 - [X] T033 Update the stale unimplemented-command status in `specs/001-assess-job-posting/contracts/cli.md` and planned-code labels in `specs/001-assess-job-posting/plan.md` to match the delivered CLI per plan: interface and project structure, T029 (partial; LOW).
+
+## Phase 6: CLI maintenance — 2026-11-09
+
+Owner-authorized technical revision: use Typer for less manual code and clearer command/option
+definitions. T034 supersedes T001’s argparse detail; original completion history is retained.
+
+- [X] T034 Replace argparse parser/dispatch with typed Typer command functions and an auth group in `src/job_scan/cli.py`; lock the dependency in `pyproject.toml` and `uv.lock`, per plan: CLI maintenance decision.
+- [X] T035 Verify command/option help, malformed arguments, validation before auth, stdout/stderr, exit codes and interruption; run existing CLI/system tests and all required offline checks, per plan: CLI maintenance decision.
+- [X] T036 Update technical decision, CLI contract, validation and resume notes with migration scope and actual results; review convergence against the updated artifacts, per plan: CLI maintenance decision.

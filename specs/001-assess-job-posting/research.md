@@ -61,3 +61,20 @@ Three [rich generic postings](../../evaluations/cases/README.md) now retain subs
 The original on-site page is 2,144,770 bytes and exceeds the proposed 256 KiB input limit. The generic copies omit executable/scaffolding data while retaining substantive content, so their smaller sizes are not evidence that the limit handles complete original pages. The owner adopted the 256 KiB limit with plan approval; the original capture remains unsupported. The structure-sensitive pair and other uncovered scenarios still need manually authored expectations. Live account eligibility, inference quality, and recorded stream compatibility have not been tested.
 
 Implementation validation: the selected model is available to the signed-in account. The user authorized an encrypted transfer of the active job-scan registration from the user VM to the worker; the worker preserves its host ID and owns later refreshes. See [official VM guidance](https://developers.openai.com/siwc/token-sharing-open-source/self-hosted-vms) and [validation.md](validation.md). Candidate geography/eligibility/time-zone details were excluded from this criterion by owner feedback after report review.
+
+## CLI framework revision — 2026-11-09
+
+**Decision:** Replace the original argparse choice with Typer, authorized by the owner.
+The goal is less manual command/option wiring and clearer CLI application code. Typed
+command functions colocate parameters and handlers; an auth sub-application expresses
+the command group without string-based dispatch. Keep file/auth/network effects in the
+CLI and reuse existing validation and reporting.
+
+**Tradeoff:** Accept Typer and its locked dependencies in exchange for declarative command
+definitions. The original dependency-minimization rationale above is superseded for the CLI.
+Disable completion setup options and pretty exception traces to keep the interface focused.
+Preserve exit codes (including interruption 130), safe diagnostics and output streams.
+
+Sources: [Typer commands](https://typer.tiangolo.com/tutorial/commands/),
+[typed options](https://typer.tiangolo.com/tutorial/commands/options/), and installed
+Typer 0.28.0 public exception types and invocation behavior.

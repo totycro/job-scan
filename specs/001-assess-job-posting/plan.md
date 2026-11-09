@@ -9,14 +9,14 @@ Build a Python CLI that reads one HTML file, asks ChatGPT for evidence-backed wo
 
 **Agreed technical constraints**: Python unless a clearly better choice emerges; ChatGPT subscription use rather than metered API-key billing; ty for type checking, prioritizing iteration speed. The owner identified `../fyntok/src/fyntok/ai.py` as the integration reference.
 
-**Approved choices**: Python 3.14, uv, HTTPX, PyJWT, Pydantic, argparse, Ruff, and pytest; adapt the reference's generic transport/authentication locally. The owner accepted these choices on 2026-11-06. Decisions and alternatives are in [research.md](research.md).
+**Approved choices**: Python 3.14, uv, HTTPX, PyJWT, Pydantic, Typer, Ruff, and pytest; adapt the reference's generic transport/authentication locally. The owner accepted these choices on 2026-11-06. Decisions and alternatives are in [research.md](research.md).
 
 ## Technical Context
 
 | Item | Design choice |
 | --- | --- |
 | Language/version | Python 3.14; pin the minor in `.python-version` and project metadata |
-| Dependencies | HTTPX for OAuth/streaming; PyJWT with crypto for identity validation; Pydantic 2 for response schema/validation; stdlib argparse for CLI |
+| Dependencies | HTTPX for OAuth/streaming; PyJWT with crypto for identity validation; Pydantic 2 for response schema/validation; Typer for typed command functions and declarative options |
 | Development | uv and committed lockfile; Ruff; ty with strict settings below; pytest, pytest-cov, pytest-socket |
 | Storage | No assessment database. Protected app-local OAuth credentials; versioned shared posting corpus with per-criterion expectations and sanitized transport recordings; developer evaluation reports |
 | Platform/type | Personal synchronous CLI on Linux/macOS; Windows support deferred because reference auth uses Unix file locking |
@@ -93,3 +93,14 @@ The owner approved the task list on 2026-11-06. Consistency analysis found no cr
 Owner scope refinement (2026-11-06): work-arrangement findings cover on-site/hybrid/remote, relevant office attendance and home-working schedules. Omit candidate residence/geographic eligibility, right-to-work/visa and time-zone requirements from findings, fit and uncertainty. Keep supplied HTML intact for future independent criteria.
 
 The user authorized developer-only encrypted VM registration transfer for live validation. `evaluations/auth_transfer.py` exports only the active job-scan registration, preserves the receiving VM host ID and removes the encrypted handoff after import; see the evaluation guide.
+
+## CLI maintenance decision — 2026-11-09
+
+The owner authorized replacing argparse with Typer to reduce manual parser/dispatch code
+and make commands and options clearer as the CLI grows. Define commands as typed functions
+and an auth command group. Preserve commands, options, exit codes, stdout/stderr separation,
+input validation before authentication, and the assessment pipeline. Framework-generated
+help/error wording may change. Disable completion setup options and pretty exception traces;
+no interactive workflow or report styling is added. Run required offline checks and CLI
+regressions; no new live evaluation is required for this interface-only change. This decision
+supersedes the original argparse choice; T034–T036 track the maintenance work.

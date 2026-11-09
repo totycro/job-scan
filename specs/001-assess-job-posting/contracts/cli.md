@@ -2,6 +2,13 @@
 
 **Status**: Interface adopted with plan approval on 2026-11-06. Commands below are implemented and verified; see [validation.md](../validation.md) for offline checks and accepted live results.
 
+## CLI framework revision — 2026-11-09
+
+Commands use Typer with typed parameters and declarative options. Help and argument-error
+wording follow the framework; malformed arguments produce a concise stderr diagnostic and
+exit 2. Existing command names, options, output streams and exit codes remain in force.
+No completion setup options, interactive prompts or report styling were added.
+
 ## Assessment
 
 ```text

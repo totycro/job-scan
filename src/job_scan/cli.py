@@ -1,17 +1,18 @@
 """Imperative shell: file loading, credentials, HTTP, and terminal output."""
 
-import argparse
 import hashlib
 import sys
 from pathlib import Path
+from typing import Annotated
 from urllib.parse import urlparse
 
 import httpx
 import jwt
+import typer
 
 from job_scan.ai import DEFAULT_MODEL, ResponsesClient
 from job_scan.auth import ChatGPTSession
-from job_scan.evidence import assess
+from job_scan.evidence import assess as assess_posting
 from job_scan.models import PostingInput
 from job_scan.report import render, safe
 
@@ -44,66 +45,92 @@ def load_posting(path: Path, source_url: str | None = None) -> PostingInput:
     )
 
 
-def parser() -> argparse.ArgumentParser:
-    root = argparse.ArgumentParser(prog="job-scan", description="Assess saved job-posting HTML.")
-    commands = root.add_subparsers(dest="command", required=True)
-    assessment = commands.add_parser("assess", help="Assess one saved HTML file")
-    assessment.add_argument("posting", type=Path)
-    assessment.add_argument("--source-url")
-    assessment.add_argument("--model", default=DEFAULT_MODEL)
-    commands.add_parser("models", help="List models available to the signed-in account")
-    auth = commands.add_parser("auth", help="ChatGPT sign-in and registrations")
-    actions = auth.add_subparsers(dest="action", required=True)
-    login = actions.add_parser("login")
-    login.add_argument("--account")
-    actions.add_parser("status")
-    use = actions.add_parser("use")
-    use.add_argument("registration")
-    actions.add_parser("logout")
-    return root
+app = typer.Typer(
+    help="Assess saved job-posting HTML.",
+    add_completion=False,
+    no_args_is_help=False,
+    pretty_exceptions_enable=False,
+)
+auth_app = typer.Typer(help="ChatGPT sign-in and registrations", no_args_is_help=False)
+app.add_typer(auth_app, name="auth")
+
+
+@app.command()
+def assess(
+    posting: Annotated[Path, typer.Argument(help="Saved UTF-8 posting HTML (up to 256 KiB).")],
+    source_url: Annotated[
+        str | None, typer.Option(help="HTTP(S) source URL for provenance; never fetched.")
+    ] = None,
+    model: Annotated[str, typer.Option(help="Account-available model to use.")] = DEFAULT_MODEL,
+) -> None:
+    """Assess one saved HTML file."""
+    source = load_posting(posting, source_url)
+    with ChatGPTSession() as session, ResponsesClient(session) as client:
+        result = client.assess_html(source.html, model)
+        print(render(assess_posting(source, result, client.returned_model or model)), end="")
+
+
+@app.command()
+def models() -> None:
+    """List models available to the signed-in account."""
+    with ChatGPTSession() as session, ResponsesClient(session) as client:
+        for model in client.models():
+            print(safe(f"{model.slug}\t{model.display_name}"))
+
+
+@auth_app.command()
+def login(
+    account: Annotated[str | None, typer.Option(help="Reuse an existing registration ID.")] = None,
+) -> None:
+    """Sign in and authorize ChatGPT plan access."""
+    with ChatGPTSession() as session:
+        session.login(account)
+        session.access_token()  # Identity-only sign-in cannot enable inference.
+        print("ChatGPT plan access authorized.")
+
+
+@auth_app.command()
+def status() -> None:
+    """Show saved registrations without refreshing credentials."""
+    with ChatGPTSession() as session:
+        print("\n".join(safe(s) for s in session.status()) or "No saved registrations.")
+
+
+@auth_app.command()
+def use(registration: Annotated[str, typer.Argument(help="Saved registration ID.")]) -> None:
+    """Select the active registration."""
+    with ChatGPTSession() as session:
+        session.select(registration)
+        print("Active registration selected.")
+
+
+@auth_app.command()
+def logout() -> None:
+    """Clear active credentials and attempt remote revocation."""
+    with ChatGPTSession() as session:
+        confirmed = session.sign_out()
+        print(
+            "Signed out locally. "
+            + (
+                "Remote revocation confirmed."
+                if confirmed
+                else "Remote revocation could not be confirmed."
+            )
+        )
 
 
 def main(argv: list[str] | None = None) -> int:
     try:
-        args = parser().parse_args(argv)
-        # Load and reject invalid inputs before opening auth/network resources.
-        source = load_posting(args.posting, args.source_url) if args.command == "assess" else None
-        with ChatGPTSession() as session:
-            if args.command == "auth":
-                if args.action == "login":
-                    session.login(args.account)
-                    session.access_token()  # Identity-only sign-in cannot enable inference.
-                    print("ChatGPT plan access authorized.")
-                elif args.action == "status":
-                    print("\n".join(safe(s) for s in session.status()) or "No saved registrations.")
-                elif args.action == "use":
-                    session.select(args.registration)
-                    print("Active registration selected.")
-                else:
-                    confirmed = session.sign_out()
-                    print(
-                        "Signed out locally. "
-                        + (
-                            "Remote revocation confirmed."
-                            if confirmed
-                            else "Remote revocation could not be confirmed."
-                        )
-                    )
-            else:
-                with ResponsesClient(session) as client:
-                    if args.command == "models":
-                        for model in client.models():
-                            print(safe(f"{model.slug}\t{model.display_name}"))
-                    elif source is not None:
-                        result = client.assess_html(source.html, args.model)
-                        print(
-                            render(assess(source, result, client.returned_model or args.model)),
-                            end="",
-                        )
-        return 0
+        result = app(args=argv, prog_name="job-scan", standalone_mode=False)
+        if result == 130:
+            print("Interrupted.", file=sys.stderr)
+        return result if isinstance(result, int) else 0
+    except typer.TyperException as exc:
+        print(safe(exc.format_message()), file=sys.stderr)
+        return exc.exit_code
     except SystemExit as exc:
         return int(exc.code) if isinstance(exc.code, int) else 2
-    except KeyboardInterrupt:
+    except KeyboardInterrupt, typer.Abort:
         print("Interrupted.", file=sys.stderr)
         return 130
     except InputError as exc:

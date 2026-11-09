@@ -5,7 +5,29 @@ Feature: `001-assess-job-posting`. Scope refinement: the owner excluded candidat
 right-to-work/visa eligibility and time-zone requirements from this work-arrangement criterion.
 The saved HTML remains intact; relevant office attendance and home-working schedules remain.
 
-## Deterministic checks
+## CLI maintenance validation — 2026-11-09
+
+The owner authorized a Typer migration for clearer command/option definitions and less
+manual parser/dispatch wiring. Typer 0.28.0 is locked; commands are typed functions with an
+auth group. Input loading still precedes session creation. Reports and the assessment
+pipeline are unchanged. Help uses Typer; safe argument diagnostics remain on stderr.
+
+The required locked install, Ruff lint/format, strict ty and installed CLI help all pass.
+The full socket-blocked suite passes **96 tests, no skips, 97.30% combined coverage**.
+Sixteen new regression cases cover malformed arguments, command/group/option help without
+opening auth resources, redirected help without ANSI escapes, and command interruption.
+The interruption test caught Typer returning 130 in non-standalone mode; the wrapper now
+propagates it with the existing diagnostic. Terminal help was inspected as well.
+
+Final convergence on 2026-11-09 found zero remaining findings across 11 requirements/success
+criteria, six acceptance scenarios, 15 plan decisions, six constitution principles and all
+36 tasks. No extension hooks are configured; no convergence tasks were appended.
+
+No fresh live evaluation was run: prompts, response schema, golden inputs/expectations,
+provider implementation and report rendering did not change. The accepted 2026-11-06 live
+run below remains evidence for assessment quality, not a live run of this CLI revision.
+
+## Deterministic checks (original increment)
 
 Final offline run after the scope refinement: **80 tests passed, no skips, 97.33%
 combined statement-and-branch coverage**. Authentication and transport are included; transport,
