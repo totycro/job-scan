@@ -1,0 +1,41 @@
+# Completed fictional example. Replace these preferences with your own.
+# Relevant enabled preference text is sent to the assessment model.
+schema_version = 1
+
+[dimensions.role_fit]
+importance = 3
+preferences = """
+I want a hands-on backend engineering role with ownership of system design.
+I prefer individual contributor work to people management.
+"""
+
+[dimensions.technology_fit]
+importance = 4
+preferences = """
+I know Python and SQL well and would enjoy learning Rust.
+I will not work in a role requiring PHP.
+"""
+
+[[dimensions.technology_fit.exceptions]]
+id = "avoid-php"
+kind = "deal_breaker"
+preference_quote = "I will not work in a role requiring PHP."
+
+[dimensions.field_interest]
+importance = 2
+preferences = """
+I find climate science software especially compelling, enough to accept weaknesses elsewhere.
+I am less interested in advertising technology.
+"""
+
+[[dimensions.field_interest.exceptions]]
+id = "climate-science"
+kind = "compelling_attraction"
+preference_quote = "I find climate science software especially compelling, enough to accept weaknesses elsewhere."
+
+[dimensions.company_affinity]
+importance = 2
+preferences = """
+I prefer employers that describe transparent engineering practices and protected learning time.
+I dislike companies that expect routine unpaid overtime.
+"""
