@@ -26,6 +26,7 @@ def test_recorded_personalized_assessment(
     signed_session: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
+    url_input: bool = False,
 ) -> None:
     entry = next(e for e in MANIFEST.required_cases if e.id == pair_id)
     assert entry.profile is not None
@@ -40,6 +41,7 @@ def test_recorded_personalized_assessment(
     if has_exceptions(profile.profile):
         bodies.append(exception_request_body(source.html, profile.profile, DEFAULT_MODEL))
     exchanges: list[dict[str, object]] = []
+    url = "https://jobs.example/job/42"
     for body in bodies:
         request = httpx.Request("POST", RESOURCE + "/responses", json=body)
         cassette = (
@@ -54,6 +56,12 @@ def test_recorded_personalized_assessment(
             )
         payload = json.loads(cassette.read_bytes())
         assert "actual-provider" in payload["provenance"]
+        if url_input and body is bodies[0]:
+            adapted = httpx.Request(
+                "POST", RESOURCE + "/responses", json=request_body(source.html, DEFAULT_MODEL, url)
+            )
+            # Reuse recorded source findings, not a purported live URL request recording.
+            payload["exchanges"][0]["request_sha256"] = hashlib.sha256(adapted.content).hexdigest()
         exchanges.extend(payload["exchanges"])
     replay = Replay(exchanges)
     real_client = httpx.Client
@@ -63,7 +71,10 @@ def test_recorded_personalized_assessment(
 
     monkeypatch.setattr(httpx, "Client", client)
     monkeypatch.setenv("XDG_CONFIG_HOME", str(signed_session))
-    assert main(["assess", str(posting), "--profile", str(profile_path)]) == 0
+    if url_input:
+        retrieved = source.model_copy(update={"path": None, "source_url": url, "final_url": url})
+        monkeypatch.setattr("job_scan.cli.retrieve_posting", lambda _url: retrieved)
+    assert main(["assess", url if url_input else str(posting), "--profile", str(profile_path)]) == 0
     captured = capsys.readouterr()
     assert not captured.err
     assert str(profile_path) in captured.out
@@ -118,3 +129,11 @@ def test_distinct_profiles_across_invocations(
     for pair_id in ["role-contrast-high", "role-contrast-low"]:
         with monkeypatch.context() as isolated:
             test_recorded_personalized_assessment(pair_id, signed_session, isolated, capsys)
+
+
+def test_recorded_url_personalized_assessment(
+    signed_session: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    test_recorded_personalized_assessment(
+        "opposing-same-dimension", signed_session, monkeypatch, capsys, url_input=True
+    )

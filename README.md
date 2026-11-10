@@ -1,13 +1,16 @@
 # job-scan
 
-A personal CLI that assesses work arrangements in saved job-posting HTML using ChatGPT.
+A personal CLI that assesses work arrangements from job-posting URLs or saved HTML using ChatGPT.
 It reports source facts, exact supporting excerpts and locations, preference-based fit,
 and missing or conflicting information. Remote is preferred; hybrid is acceptable. Candidate residence, right-to-work/visa and time-zone requirements belong outside this criterion.
 
-The first increment assesses one saved UTF-8 HTML file up to 256 KiB. It preserves
-HTML structure and sends the intact file to the signed-in account's model. An optional
-source URL records provenance and is never fetched. Company research, commute estimates,
-scores, application decisions, and saved-report management are outside this increment.
+Assess one public HTTP(S) URL, or one saved UTF-8 HTML file up to 256 KiB. Saved
+files are sent intact. For URL input, Chromium executes JavaScript and retrieves main-page,
+frame and open shadow-root content. It removes executable scripts and asset markup, retaining
+text, semantic structure, visibility context and structured posting data. Exact quotations and locations refer to
+that assembled evidence document. Reports include the submitted, final and frame URLs.
+With saved HTML, the optional `--source-url` records provenance and is never fetched. Company research, commute estimates, application decisions, and saved-report management
+are outside the current scope.
 
 ## Setup and use
 
@@ -21,8 +24,10 @@ Run from the repository root:
 
 ```bash
 uv sync --locked
+uv run --locked playwright install --with-deps chromium
 uv run --locked job-scan auth login
 uv run --locked job-scan models
+uv run --locked job-scan assess 'https://example.com/careers?job=42#selected'
 uv run --locked job-scan assess evaluations/cases/posting-01/posting.html
 uv run --locked job-scan assess posting.html --source-url https://example.com/job
 ```
@@ -33,6 +38,17 @@ available model. Unsupported models and exhausted plan limits produce explanator
 Credentials are stored privately under `$XDG_CONFIG_HOME/job-scan/` or `~/.config/job-scan/`.
 Use `auth status`, `auth use REGISTRATION_ID`, and `auth logout` to manage registrations.
 Status does not refresh credentials. Login waits in the foreground for up to 15 minutes.
+
+URL retrieval has a 60-second total budget, a 24-document limit and a 256 KiB assembled
+input limit. It waits at least five seconds for rendering and two seconds of stable content.
+Exceeding a limit or failing to load posting data fails without truncation. Browser requests use a public-address proxy;
+private/local network destinations are rejected. The browser uses a fresh context without
+saved sign-in cookies. Login, CAPTCHA solving and manual consent interaction are unsupported.
+When retrieval fails, save the posting as HTML and use the file command with `--source-url`.
+Do not combine a positional URL with `--source-url`. Validate your profile before fetching a URL.
+Chromium is needed only for URL input; matching binaries must be reinstalled after a Playwright
+upgrade. On Linux the installation command above also installs system libraries; on macOS,
+`uv run --locked playwright install chromium` is sufficient.
 
 Inference has a 180-second total deadline and 10-second connection timeout. Reports appear
 only after stream completion and schema/evidence validation. Missing arrangement details
@@ -110,3 +126,18 @@ exceptions or 540 seconds with them, excluding authentication. There is no autom
 or billing fallback. If no configured dimension can be rated, the report shows no numeric
 overall score. Confirmed opposing exceptions produce “conflicting exceptions” with evidence
 for both; unresolved declarations remain visible alongside any confirmed outcome.
+
+Live URL acquisition can be checked separately from inference:
+
+```bash
+uv run --locked python -m evaluations.url_input --urls-file .local/evaluations/url-input-source/urls.txt --output .local/evaluations/url-input
+```
+
+Create the ignored local UTF-8 input file with one public posting URL per line. The probe
+contacts those URLs and saves complete acquired evidence locally using numbered filenames.
+Keep real URLs and downloaded content under `.local/`; repository fixtures must be synthetic
+or anonymized and rephrased. A retrieved page still needs job-identity and substantive-content
+review. Tests use authored browser scenarios, with all browser HTTP routed to fixtures.
+Failed fetch/XHR requests, including incidental identity requests, conservatively fail retrieval.
+See [URL input validation](specs/003-job-posting-url-input/validation.md) for availability,
+verification results and remaining limits.

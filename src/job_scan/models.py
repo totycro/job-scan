@@ -14,8 +14,10 @@ class Model(BaseModel):
 
 
 class PostingInput(Model):
-    path: Path
+    path: Path | None
     source_url: str | None
+    final_url: str | None = None
+    frame_urls: list[str] = Field(default_factory=list)
     html: str
     sha256: str
 

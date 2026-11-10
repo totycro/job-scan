@@ -62,3 +62,49 @@ def test_auth_and_catalog(
     assert "test-model" in capsys.readouterr().out
     assert main(["auth", "logout"]) == 0
     assert main(["models"]) == 1
+
+
+@pytest.mark.parametrize("status", ["absent", "ambiguous"])
+def test_unusable_url_posting_has_no_report_and_explains_fallback(
+    status: str,
+    signed_session: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    import json
+
+    from job_scan.retrieval import Document, assemble_documents
+
+    url = "https://jobs.example/42"
+    source = assemble_documents(url, [Document(url, "<h1>Careers</h1>")])
+    monkeypatch.setattr("job_scan.cli.retrieve_posting", lambda _url: source)
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(signed_session))
+    real_client = httpx.Client
+
+    def handler(_request: httpx.Request) -> httpx.Response:
+        findings = {
+            "posting_status": status,
+            "posting_explanation": "The selected posting could not be identified.",
+            "arrangements": [],
+            "home_working": [],
+            "uncertainties": [],
+            "conflicts": [],
+        }
+        event = {
+            "type": "response.completed",
+            "response": {
+                "status": "completed",
+                "output": [{"content": [{"type": "output_text", "text": json.dumps(findings)}]}],
+            },
+        }
+        return httpx.Response(200, text="data: " + json.dumps(event) + "\n\n")
+
+    def client(**_kwargs: object) -> httpx.Client:
+        return real_client(transport=httpx.MockTransport(handler))
+
+    monkeypatch.setattr(httpx, "Client", client)
+    assert main(["assess", url]) == 1
+    captured = capsys.readouterr()
+    assert not captured.out
+    assert "selected posting could not be identified" in captured.err
+    assert "job-scan assess posting.html --source-url URL" in captured.err

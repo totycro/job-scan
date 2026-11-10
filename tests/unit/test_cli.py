@@ -191,3 +191,23 @@ def test_profile_read_permission_error(tmp_path: Path, monkeypatch: pytest.Monke
     with pytest.raises(InputError, match="unable to read") as failure:
         load_profile(path)
     assert "PRIVATE-PROFILE" not in str(failure.value)
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["assess", "https://example.com/job", "--source-url", "https://other.example/job"],
+        ["assess", "ftp://example.com/job"],
+        ["assess", "https://user:secret@example.com/job"],
+    ],
+)
+def test_invalid_url_arguments_before_acquisition(
+    argv: list[str], monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    def forbidden(*_args: object, **_kwargs: object) -> None:
+        pytest.fail("Invalid input started acquisition or authentication")
+
+    monkeypatch.setattr("job_scan.cli.retrieve_posting", forbidden)
+    monkeypatch.setattr("job_scan.cli.ChatGPTSession", forbidden)
+    assert main(argv) == 2
+    assert not capsys.readouterr().out

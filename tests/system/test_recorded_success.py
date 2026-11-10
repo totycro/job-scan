@@ -71,3 +71,45 @@ def test_recorded_assessment(
     else:
         assert not captured.out and captured.err
     assert not replay.exchanges
+
+
+def test_url_assessment_reuses_recorded_findings_with_retrieved_evidence(
+    signed_session: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Reuse an actual response; this is not a recording of a live URL assessment."""
+    from job_scan.retrieval import Document, assemble_documents
+
+    html = (ROOT / "evaluations/cases/posting-01/posting.html").read_text()
+    original = httpx.Request(
+        "POST", RESOURCE + "/responses", json=request_body(html, DEFAULT_MODEL)
+    )
+    cassette = (
+        ROOT
+        / "tests/recordings/inference"
+        / ("actual-" + hashlib.sha256(original.content).hexdigest() + ".json")
+    )
+    recorded = json.loads(cassette.read_text())["exchanges"][0]
+    url = "https://jobs.example/?job=42#selected"
+    source = assemble_documents(url, [Document("https://ats.example/job/42", html)])
+    monkeypatch.setattr("job_scan.cli.retrieve_posting", lambda _url: source)
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(signed_session))
+    real_client = httpx.Client
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content)
+        data = json.loads(payload["input"][0]["content"])
+        assert data == {"html": source.html, "target_url": url}
+        return httpx.Response(recorded["status"], text=recorded["body"])
+
+    def client(**_kwargs: object) -> httpx.Client:
+        return real_client(transport=httpx.MockTransport(handler))
+
+    monkeypatch.setattr(httpx, "Client", client)
+    assert main(["assess", url]) == 0
+    captured = capsys.readouterr()
+    assert not captured.err
+    assert f"URL: {url}" in captured.out
+    assert "Final page URL: https://ats.example/job/42" in captured.out
+    assert "Evidence:" in captured.out

@@ -14,9 +14,12 @@ def safe(text: str) -> str:
 
 def render(assessment: Assessment) -> str:
     result = assessment.findings
-    lines = [f"Source: {assessment.source.path}"]
+    lines = [f"Source: {assessment.source.path or 'retrieved HTML'}"]
     if assessment.source.source_url is not None:
         lines.append(f"URL: {assessment.source.source_url}")
+    if assessment.source.final_url is not None:
+        lines.append(f"Final page URL: {assessment.source.final_url}")
+    lines += [f"Frame URL: {url}" for url in assessment.source.frame_urls]
     lines += [f"Model: {assessment.model}", "", "Work arrangement:"]
     lines += [f"  {a.kind}: {a.context}" for a in result.arrangements] or ["  Not stated."]
     lines += ["", "Home-working schedule:"]

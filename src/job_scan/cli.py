@@ -13,12 +13,14 @@ lazy import jwt
 from job_scan import DEFAULT_MODEL
 lazy from job_scan.ai import ResponsesClient
 lazy from job_scan.auth import ChatGPTSession
+lazy from job_scan.evidence import AssessmentError
 lazy from job_scan.evidence import assess as assess_posting
 lazy from job_scan.models import PostingInput
 lazy from job_scan.profiles import ProfileError, ProfileInput, has_exceptions, parse_profile
 lazy from job_scan.rating_models import PassMetadata
 lazy from job_scan.ratings import assemble, build_dimensions
 lazy from job_scan.report import render, render_personalized, safe
+lazy from job_scan.retrieval import FALLBACK, RetrievalError, retrieve_posting, validate_url
 
 MAX_BYTES = 262144
 
@@ -68,7 +70,7 @@ def load_profile(path: Path) -> ProfileInput:
 
 
 app = typer.Typer(
-    help="Assess saved job-posting HTML.",
+    help="Assess job-posting URLs or saved HTML.",
     add_completion=False,
     no_args_is_help=False,
     pretty_exceptions_enable=False,
@@ -79,7 +81,7 @@ app.add_typer(auth_app, name="auth")
 
 @app.command()
 def assess(
-    posting: Annotated[Path, typer.Argument(help="Saved UTF-8 posting HTML (up to 256 KiB).")],
+    posting: Annotated[str, typer.Argument(help="Public HTTP(S) posting URL or saved UTF-8 HTML.")],
     source_url: Annotated[
         str | None, typer.Option(help="HTTP(S) source URL for provenance; never fetched.")
     ] = None,
@@ -88,11 +90,35 @@ def assess(
         Path | None, typer.Option(help="UTF-8 preference TOML (up to 64 KiB). ")
     ] = None,
 ) -> None:
-    """Assess one saved HTML file."""
-    source = load_posting(posting, source_url)
+    """Assess one posting from its URL or saved HTML."""
+    is_url = "://" in posting
+    if is_url:
+        if source_url is not None:
+            raise InputError(
+                "--source-url is only for saved HTML; the posting URL supplies provenance."
+            )
+        try:
+            validate_url(posting)
+        except ValueError as exc:
+            raise InputError(str(exc)) from None
     preferences = load_profile(profile) if profile is not None else None
+    source = retrieve_posting(posting) if is_url else load_posting(Path(posting), source_url)
+    try:
+        assess_source(source, model, preferences)
+    except AssessmentError as exc:
+        if is_url:
+            raise RetrievalError(f"{exc} {FALLBACK}") from None
+        raise
+
+
+def assess_source(source: PostingInput, model: str, preferences: ProfileInput | None) -> None:
+    """Use the same immutable evidence document for every inference pass."""
     with ChatGPTSession() as session, ResponsesClient(session) as client:
-        result = client.assess_html(source.html, model)
+        result = (
+            client.assess_html(source.html, model, target_url=source.source_url)
+            if source.final_url is not None
+            else client.assess_html(source.html, model)
+        )
         work = assess_posting(source, result, client.returned_model or model)
         if preferences is None:
             print(render(work), end="")
