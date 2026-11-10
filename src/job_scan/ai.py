@@ -319,7 +319,7 @@ class ResponsesClient:
                 completed = event.response
         if completed is None or completed.status != "completed":
             raise RequestError("ChatGPT stream ended without successful completion.")
-        parts = [p for item in completed.output for p in item.content]
+        parts = [*item.content for item in completed.output]
         if refused or any(p.type == "refusal" for p in parts):
             raise RequestError("ChatGPT declined to assess this posting.")
         text = "".join(p.text for p in parts if p.type == "output_text")

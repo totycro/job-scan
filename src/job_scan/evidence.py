@@ -27,9 +27,9 @@ def resolve(html: str, evidence: Evidence) -> ResolvedEvidence:
 
 
 def validate_evidence(html: str, result: WorkArrangementResult) -> list[ResolvedEvidence]:
-    evidence = [e for a in result.arrangements for e in a.evidence]
-    evidence += [e for schedule in result.home_working for e in schedule.evidence]
-    evidence += [e for conflict in result.conflicts for e in conflict.evidence]
+    evidence = [*a.evidence for a in result.arrangements]
+    evidence += [*schedule.evidence for schedule in result.home_working]
+    evidence += [*conflict.evidence for conflict in result.conflicts]
     for schedule in result.home_working:
         if schedule.days_text is not None and not any(
             schedule.days_text in e.quote for e in schedule.evidence

@@ -111,8 +111,8 @@ def build_dimensions(
         for judgment in fit.judgments:
             if judgment.preference_quote not in dimension.preferences:
                 raise ValueError("Preference excerpt does not match requested dimension prose.")
-        evidence = [e for f in fit.findings for e in f.evidence]
-        evidence += [e for c in fit.conflicts for e in c.evidence]
+        evidence = [*f.evidence for f in fit.findings]
+        evidence += [*c.evidence for c in fit.conflicts]
         outcomes.append(
             DimensionOutcome(
                 **fit.model_dump(),
@@ -127,9 +127,7 @@ def build_dimensions(
 def validate_exceptions(
     html: str, profile: ProfileInput, response: ExceptionResponse | None
 ) -> list[EvaluatedException]:
-    declarations = [
-        item for d in DIMENSIONS for item in profile.profile.dimensions[d.id].exceptions
-    ]
+    declarations = [*profile.profile.dimensions[d.id].exceptions for d in DIMENSIONS]
     results = response.exceptions if response is not None else []
     ids = [item.exception_id for item in results]
     if set(ids) != {d.id for d in declarations} or len(ids) != len(declarations):
