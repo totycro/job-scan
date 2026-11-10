@@ -10,6 +10,31 @@ from job_scan.models import Evidence
 from job_scan.retrieval import RetrievalError, acquire
 
 
+@pytest.fixture
+def virtual_settling_clock(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Advance Python's settling clock for pages with no delayed content.
+
+    Keep Chromium and its event loop on real time. The delayed-rendering cases
+    deliberately omit this fixture so they exercise the real settling window.
+    """
+    from job_scan import retrieval
+
+    class Clock:
+        elapsed = 0.0
+
+        def get_running_loop(self) -> Clock:
+            return self
+
+        def time(self) -> float:
+            return self.elapsed
+
+        async def sleep(self, delay: float) -> None:
+            self.elapsed += delay
+            await asyncio.sleep(0)
+
+    monkeypatch.setattr(retrieval, "asyncio", Clock())
+
+
 @pytest.mark.enable_socket
 @pytest.mark.parametrize("framed", [False, True])
 def test_rendered_selection_and_frame_evidence(framed: bool) -> None:
@@ -87,6 +112,7 @@ def test_unavailable_posting_is_not_assessed(status: int) -> None:
 
 
 @pytest.mark.enable_socket
+@pytest.mark.usefixtures("virtual_settling_clock")
 def test_structured_head_and_shadow_content_survive() -> None:
     async def scenario() -> None:
         async with async_playwright() as playwright:
@@ -117,6 +143,7 @@ def test_structured_head_and_shadow_content_survive() -> None:
 
 
 @pytest.mark.enable_socket
+@pytest.mark.usefixtures("virtual_settling_clock")
 @pytest.mark.parametrize(
     ("filename", "title", "sections"),
     [
@@ -155,6 +182,7 @@ def test_authored_pages_retain_job_identity_and_substantive_sections(
 
 
 @pytest.mark.enable_socket
+@pytest.mark.usefixtures("virtual_settling_clock")
 @pytest.mark.parametrize("aborted", [False, True])
 def test_incomplete_frame_fails_even_with_readable_main_job(aborted: bool) -> None:
     async def scenario() -> None:
@@ -210,6 +238,7 @@ def test_svg_text_and_accessible_labels_are_kept_as_evidence() -> None:
 
 
 @pytest.mark.enable_socket
+@pytest.mark.usefixtures("virtual_settling_clock")
 @pytest.mark.parametrize("empty_frame", [False, True])
 def test_missing_description_does_not_turn_into_an_uncertain_assessment(empty_frame: bool) -> None:
     async def scenario() -> None:
@@ -282,6 +311,7 @@ def test_hidden_alternative_job_claims_retain_visibility_context() -> None:
 
 
 @pytest.mark.enable_socket
+@pytest.mark.usefixtures("virtual_settling_clock")
 @pytest.mark.parametrize("aborted", [False, True])
 def test_failed_identity_request_also_prevents_assessment(aborted: bool) -> None:
     async def scenario() -> None:
