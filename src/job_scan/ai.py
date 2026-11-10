@@ -14,14 +14,13 @@ from typing import Self
 import httpx
 from pydantic import BaseModel, Field, ValidationError
 
+from job_scan import DEFAULT_MODEL as DEFAULT_MODEL
 from job_scan.auth import RESOURCE, ChatGPTSession
 from job_scan.criteria import DIMENSIONS
 from job_scan.criteria.work_arrangement import INSTRUCTIONS
 from job_scan.models import WorkArrangementResult
 from job_scan.profiles import Profile, exception_projection, fit_projection, has_exceptions
 from job_scan.rating_models import ExceptionResponse, FitResponse
-
-DEFAULT_MODEL = "gpt-6.1-sol"
 
 
 class RequestError(RuntimeError):

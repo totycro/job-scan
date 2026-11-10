@@ -6,18 +6,19 @@ from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlparse
 
-import httpx
-import jwt
 import typer
+lazy import httpx
+lazy import jwt
 
-from job_scan.ai import DEFAULT_MODEL, ResponsesClient
-from job_scan.auth import ChatGPTSession
-from job_scan.evidence import assess as assess_posting
-from job_scan.models import PostingInput
-from job_scan.profiles import ProfileError, ProfileInput, has_exceptions, parse_profile
-from job_scan.rating_models import PassMetadata
-from job_scan.ratings import assemble, build_dimensions
-from job_scan.report import render, render_personalized, safe
+from job_scan import DEFAULT_MODEL
+lazy from job_scan.ai import ResponsesClient
+lazy from job_scan.auth import ChatGPTSession
+lazy from job_scan.evidence import assess as assess_posting
+lazy from job_scan.models import PostingInput
+lazy from job_scan.profiles import ProfileError, ProfileInput, has_exceptions, parse_profile
+lazy from job_scan.rating_models import PassMetadata
+lazy from job_scan.ratings import assemble, build_dimensions
+lazy from job_scan.report import render, render_personalized, safe
 
 MAX_BYTES = 262144
 

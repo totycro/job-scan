@@ -2,9 +2,9 @@
 
 from decimal import ROUND_HALF_UP, Decimal
 
-from job_scan.criteria import DIMENSIONS
-from job_scan.models import Assessment
-from job_scan.rating_models import PersonalizedAssessment
+lazy from job_scan.criteria import DIMENSIONS
+lazy from job_scan.models import Assessment
+lazy from job_scan.rating_models import PersonalizedAssessment
 
 
 def safe(text: str) -> str:
