@@ -125,12 +125,17 @@ the current immutable full-suite run after recordings and offline checks pass. F
 and convergence remain pending until actual source and result reviews have been received.
 
 
-## Current accepted feature-002 suite
+## Accepted feature-002 suite before the Python 3.15 upgrade
 
 Run `b1d1383f7a6856baf98353aa9b9133bc0455ead4951eb5bf26d732eb31aa0486` contains 47 automatic passes and an
 explicit owner-approved full-suite review (`accepted=true`). It used `gpt-6.1-sol` with low
 reasoning throughout. All 298 socket-blocked tests pass at 98.04% coverage; 64 distinct
 request cassettes support the current replay suite. The accepted artifact is
 `.local/evaluations/reviewed.json`; `.local/evaluations/review.md` presents the original
-results for inspection. This acceptance is bound to current hashes and is not transferable
+results for inspection. This acceptance is bound to the original hashes and is not transferable
 to future code, input, prompt/schema, lockfile or model-configuration changes.
+
+The 2026-11-09 Python 3.15/dependency upgrade changed the lockfile, so this run's acceptance
+is historical. The upgraded environment passes all 298 offline tests at 98.04% coverage
+and corpus readiness for all 47 cases. No new live result review is claimed; see the
+[upgrade validation](../specs/002-personalized-job-ratings/quickstart.md#python-315-and-dependency-upgrade-2026-11-09).

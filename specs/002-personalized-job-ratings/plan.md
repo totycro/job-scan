@@ -16,7 +16,7 @@ Use one user-edited TOML file with explicit 1–5 weights and optional compellin
 
 | Item | Design choice |
 | --- | --- |
-| Language/version | Existing Python 3.14 minor range and `.python-version`; officially supported execution is `uv run --locked` |
+| Language/version | Python `>=3.15.2,<3.16` with exact 3.15.2 pin in `.python-version` (upgraded with owner approval on 2026-11-09); officially supported execution is `uv run --locked` |
 | Primary dependencies | Keep `httpx==0.28.1`, `pyjwt[crypto]==2.15.1`, `pydantic==2.14.3`, `typer==0.28.0`; no additions; standard-library `tomllib`, `hashlib`, and `decimal` |
 | Development | Keep exact Ruff, ty, pytest, pytest-cov, pytest-socket pins and committed `uv.lock` |
 | Storage | One explicitly selected local profile; existing private OAuth registration storage; fictional golden profiles and sanitized recordings in the repository; ignored developer evaluation reports; no assessment database |

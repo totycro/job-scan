@@ -11,7 +11,11 @@ scores, application decisions, and saved-report management are outside this incr
 
 ## Setup and use
 
-Requires Python 3.14, uv, and Linux/macOS.
+Requires Python 3.15.2, uv, and Linux/macOS. `.python-version` pins the stable patch
+release so an older uv interpreter catalog cannot silently select a release candidate.
+Use a current uv release (validated with uv 0.13.7). Update standalone uv with
+`uv self update`; for package-manager installations, upgrade uv with the same package
+manager used to install it.
 
 Run from the repository root:
 

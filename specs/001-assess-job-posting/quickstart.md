@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-Python 3.14, uv, a terminal on Linux/macOS, and a browser on the host for ChatGPT sign-in. Live runs require account eligibility and granted plan permission; they use subscription allowance. Ordinary tests need neither a real account nor network access.
+Python 3.15.2 (pinned in `.python-version`), a current uv release (validated with 0.13.7), a terminal on Linux/macOS, and a browser on the host for ChatGPT sign-in. Live runs require account eligibility and granted plan permission; they use subscription allowance. Ordinary tests need neither a real account nor network access.
 
 ## Install and deterministic checks (after implementation)
 

@@ -15,7 +15,7 @@ Build a Python CLI that reads one HTML file, asks ChatGPT for evidence-backed wo
 
 | Item | Design choice |
 | --- | --- |
-| Language/version | Python 3.14; pin the minor in `.python-version` and project metadata |
+| Language/version | Python 3.15.2 pinned in `.python-version`; project metadata allows `>=3.15.2,<3.16` (upgraded with owner approval on 2026-11-09) |
 | Dependencies | HTTPX for OAuth/streaming; PyJWT with crypto for identity validation; Pydantic 2 for response schema/validation; Typer for typed command functions and declarative options |
 | Development | uv and committed lockfile; Ruff; ty with strict settings below; pytest, pytest-cov, pytest-socket |
 | Storage | No assessment database. Protected app-local OAuth credentials; versioned shared posting corpus with per-criterion expectations and sanitized transport recordings; developer evaluation reports |
@@ -54,7 +54,7 @@ Adapt only generic OAuth and stream handling from the reference, with its source
 ## Verification
 
 - Prefer TDD for evidence validation, preference mapping, and failures, using owner-reviewed expectations first.
-- Ruff: `select = [E,F,W,I,UP,B,SIM,C4,ANN,S,RET,ARG,PTH,RUF]`, Python 3.14 target, 100-character lines, plus format checking. Allow `S101` only in tests; any other narrow suppression must explain the boundary it addresses.
+- Ruff: `select = [E,F,W,I,UP,B,SIM,C4,ANN,S,RET,ARG,PTH,RUF]`, Python 3.15 target, 100-character lines, plus format checking. Allow `S101` only in tests; any other narrow suppression must explain the boundary it addresses.
 - ty: check `src`, `tests`, and `evaluations`; set `[tool.ty.rules] all = "error"`, `[tool.ty.analysis] strict-generic-narrowing = true` and `strict-equality-semantics = true`, and `[tool.ty.terminal] error-on-warning = true`. Ruff's annotation rules require complete function annotations. Decode unknown JSON into validated models; no global unresolved-import or Any suppression. Pin ty in the lockfile. See [ty configuration](https://docs.astral.sh/ty/reference/configuration/).
 - Coverage target: at least **90% combined statement-and-branch coverage** over all application modules, including auth/transport, measured with branch coverage enabled. This is not a separate 90% branch-only threshold.
 - Small system suite calls the real `main(argv)` with real file loading, prompt construction, auth session logic, SSE parsing, validation, preferences, and rendering. Replay sanitized recorded HTTP responses through HTTPX's transport boundary; seed a synthetic unexpired session. Match method, URL, and request-body hash; unmatched requests fail. Replay transport and network blocking remain test-only. One subprocess smoke test checks the installed command's `--help`.

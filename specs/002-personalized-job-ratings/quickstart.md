@@ -4,7 +4,7 @@
 
 ## Prerequisites and setup
 
-Use the repository's Python 3.14 environment on Linux/macOS, uv, and its committed lockfile. Run from the repository root. A live model run additionally requires the existing authorized ChatGPT registration with plan allowance; offline validation does not.
+Use the repository's Python 3.15.2 environment (pinned in `.python-version`) on Linux/macOS, a current uv release (validated with 0.13.7), and its committed lockfile. Run from the repository root. A live model run additionally requires the existing authorized ChatGPT registration with plan allowance; offline validation does not.
 
 ```bash
 uv sync --locked
@@ -188,7 +188,7 @@ unchanged after assessment, blank dimensions are not configured, and a provenanc
 no network request. `.local/evaluations/quickstart-smoke.json` records these checks.
 
 
-## Current accepted validation
+## Accepted validation before the Python 3.15 upgrade
 
 - Immutable run: `b1d1383f7a6856baf98353aa9b9133bc0455ead4951eb5bf26d732eb31aa0486`.
 - Configuration: requested and returned `gpt-6.1-sol`; low reasoning on every stage.
@@ -227,8 +227,34 @@ with actual owner semantic review, independent criterion policies, exact locked 
 and strict verified tooling, preserved CLI behavior, and manually authored golden inputs with
 current bound live/replay acceptance. No constitutional violation or amendment remains.
 
-Accepted run `b1d1383f7a6856baf98353aa9b9133bc0455ead4951eb5bf26d732eb31aa0486` is still bound to the current
+At feature completion, accepted run `b1d1383f7a6856baf98353aa9b9133bc0455ead4951eb5bf26d732eb31aa0486` was bound to the then-current
 application/evaluation/configuration/input hashes. `reviewed.json` has `accepted=true`, all
 47 cases pass automatically and have actual owner approval, and all 298 offline tests pass
 at 98.04% combined coverage. Only documentation/progress records changed after acceptance;
 no extra inference was needed. The implementation is ready for repository review.
+
+## Python 3.15 and dependency upgrade (2026-11-09)
+
+The owner requested Python 3.15 and updates to all dependencies. The runtime is now
+Python 3.15.2, pinned to that exact patch in `.python-version`, with a minimum of 3.15.2
+in the 3.15-only project range and a Python 3.15 Ruff target. The explicit patch prevents
+older uv catalogs from selecting 3.15.0rc3 for a bare `3.15` request; those installations
+must update uv or provide the stable interpreter. PyPI checks found all
+direct/build/development pins current except `ty`, upgraded from 0.0.98 to 0.0.99.
+`uv lock --upgrade` with uv 0.13.7 refreshed all transitive dependencies and Python-specific
+wheels; no other package version changed. Exact pins and strict settings are retained.
+
+Validation: `uv sync --locked`, Ruff lint/format, strict ty, and installed CLI help passed.
+All **298 socket-blocked tests passed**, with **98.04% combined statement/branch coverage**
+(target 90%). `uv pip list --outdated --exclude-editable` returned no outdated packages.
+Offline corpus readiness reported no issues for all 47 cases in
+`.local/evaluations/python315-readiness.json`; its exit 1 and `accepted=false` are expected
+for readiness without live inference or owner result review.
+
+Convergence for this maintenance change confirms that the runtime pin, project range,
+Ruff target, lockfile and current setup guides agree. No application, prompt, schema,
+input or assessment behavior changed; constitution I–VI and the exact-pin/locked workflow
+remain satisfied. No new feature tasks or full live LLM evaluation are required for this
+environment-only change under the constitution's impact-appropriate validation policy.
+The earlier live acceptance remains historical: the changed lockfile invalidates its
+binding to the current environment, and no fresh live acceptance is claimed.
