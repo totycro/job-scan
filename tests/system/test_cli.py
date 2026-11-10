@@ -10,11 +10,13 @@ from tests.conftest import Replay
 
 
 @pytest.mark.parametrize("cassette", ["usage-limit", "incomplete", "invalid-evidence"])
+@pytest.mark.parametrize("verbose", [False, True])
 def test_failed_inference(
     signed_session: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
     cassette: str,
+    verbose: bool,
 ) -> None:
     replay = Replay.load(Path("tests/recordings/inference") / f"{cassette}.json")
     real_client = httpx.Client
@@ -26,10 +28,12 @@ def test_failed_inference(
     monkeypatch.setenv("XDG_CONFIG_HOME", str(signed_session))
     path = signed_session / "job.html"
     path.write_text("<h1>Engineer</h1><p>Fully remote</p>")
-    assert main(["assess", str(path)]) == 1
+    assert main(["assess", str(path), *(["-v"] if verbose else [])]) == 1
     captured = capsys.readouterr()
     assert not captured.out
     assert captured.err
+    assert ("Assessing work arrangement..." in captured.err) == verbose
+    assert "Assessment complete." not in captured.err
     assert not replay.exchanges
 
 

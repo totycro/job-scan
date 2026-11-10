@@ -89,6 +89,9 @@ def assess(
     profile: Annotated[
         Path | None, typer.Option(help="UTF-8 preference TOML (up to 64 KiB). ")
     ] = None,
+    verbose: Annotated[
+        bool, typer.Option("--verbose", "-v", help="Show assessment progress on stderr.")
+    ] = False,
 ) -> None:
     """Assess one posting from its URL or saved HTML."""
     is_url = "://" in posting
@@ -101,19 +104,33 @@ def assess(
             validate_url(posting)
         except ValueError as exc:
             raise InputError(str(exc)) from None
+    if profile is not None:
+        progress("Loading preferences...", verbose)
     preferences = load_profile(profile) if profile is not None else None
+    progress("Retrieving posting in browser..." if is_url else "Loading saved posting...", verbose)
     source = retrieve_posting(posting) if is_url else load_posting(Path(posting), source_url)
     try:
-        assess_source(source, model, preferences)
+        assess_source(source, model, preferences, verbose)
     except AssessmentError as exc:
         if is_url:
             raise RetrievalError(f"{exc} {FALLBACK}") from None
         raise
+    progress("Assessment complete.", verbose)
 
 
-def assess_source(source: PostingInput, model: str, preferences: ProfileInput | None) -> None:
+def progress(message: str, verbose: bool) -> None:
+    """Emit fixed stage messages immediately, without source or credential data."""
+    if verbose:
+        print(message, file=sys.stderr, flush=True)
+
+
+def assess_source(
+    source: PostingInput, model: str, preferences: ProfileInput | None, verbose: bool = False
+) -> None:
     """Use the same immutable evidence document for every inference pass."""
+    progress("Opening authentication session...", verbose)
     with ChatGPTSession() as session, ResponsesClient(session) as client:
+        progress("Assessing work arrangement...", verbose)
         result = (
             client.assess_html(source.html, model, target_url=source.source_url)
             if source.final_url is not None
@@ -130,6 +147,7 @@ def assess_source(source: PostingInput, model: str, preferences: ProfileInput | 
                 returned_model=client.returned_model,
             )
         ]
+        progress("Assessing preference fit...", verbose)
         fits = client.assess_fit(source.html, preferences.profile, model)
         passes.append(
             PassMetadata(stage="fit", requested_model=model, returned_model=client.returned_model)
@@ -137,6 +155,7 @@ def assess_source(source: PostingInput, model: str, preferences: ProfileInput | 
         build_dimensions(work, preferences, fits)
         exceptions = None
         if has_exceptions(preferences.profile):
+            progress("Checking exceptional preferences...", verbose)
             exceptions = client.assess_exceptions(source.html, preferences.profile, model)
             passes.append(
                 PassMetadata(

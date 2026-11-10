@@ -27,6 +27,7 @@ def test_recorded_personalized_assessment(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
     url_input: bool = False,
+    verbose_flag: str | None = None,
 ) -> None:
     entry = next(e for e in MANIFEST.required_cases if e.id == pair_id)
     assert entry.profile is not None
@@ -74,9 +75,27 @@ def test_recorded_personalized_assessment(
     if url_input:
         retrieved = source.model_copy(update={"path": None, "source_url": url, "final_url": url})
         monkeypatch.setattr("job_scan.cli.retrieve_posting", lambda _url: retrieved)
-    assert main(["assess", url if url_input else str(posting), "--profile", str(profile_path)]) == 0
+    args = ["assess", url if url_input else str(posting), "--profile", str(profile_path)]
+    if verbose_flag is not None:
+        args.append(verbose_flag)
+    assert main(args) == 0
     captured = capsys.readouterr()
-    assert not captured.err
+    if verbose_flag is not None:
+        stages = [
+            "Loading preferences...",
+            "Retrieving posting in browser..." if url_input else "Loading saved posting...",
+            "Opening authentication session...",
+            "Assessing work arrangement...",
+            "Assessing preference fit...",
+        ]
+        if has_exceptions(profile.profile):
+            stages.append("Checking exceptional preferences...")
+        stages.append("Assessment complete.")
+        assert captured.err.splitlines() == stages
+        assert source.html not in captured.err
+        assert str(profile_path) not in captured.err
+    else:
+        assert not captured.err
     assert str(profile_path) in captured.out
     for label in [
         "Work arrangement",
@@ -136,4 +155,21 @@ def test_recorded_url_personalized_assessment(
 ) -> None:
     test_recorded_personalized_assessment(
         "opposing-same-dimension", signed_session, monkeypatch, capsys, url_input=True
+    )
+
+
+@pytest.mark.parametrize("flag", ["-v", "--verbose"])
+def test_verbose_personalized_assessment(
+    flag: str,
+    signed_session: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    test_recorded_personalized_assessment(
+        "opposing-same-dimension",
+        signed_session,
+        monkeypatch,
+        capsys,
+        url_input=flag == "-v",
+        verbose_flag=flag,
     )

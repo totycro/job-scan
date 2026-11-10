@@ -74,7 +74,7 @@ def test_invalid_arguments_do_not_open_session(
     ("argv", "expected"),
     [
         (["--help"], ["assess", "models", "auth"]),
-        (["assess", "--help"], ["POSTING", "--source-url", "--model"]),
+        (["assess", "--help"], ["POSTING", "--source-url", "--model", "--verbose", "-v"]),
         (["auth", "--help"], ["login", "status", "use", "logout"]),
         (["auth", "login", "--help"], ["--account"]),
         (["auth", "use", "--help"], ["REGISTRATION"]),

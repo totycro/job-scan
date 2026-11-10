@@ -95,6 +95,16 @@ cp examples/preferences.toml .local/preferences.toml
 uv run --locked job-scan assess posting.html --profile .local/preferences.toml
 ```
 
+Add `-v` or `--verbose` to `assess` to show progress while loading the posting and
+waiting for each assessment pass:
+
+```bash
+uv run --locked job-scan assess posting.html --profile .local/preferences.toml -v
+```
+
+Progress appears immediately on stderr; the report is written to stdout. Without
+the flag, assessment stays quiet until the report or an error is ready.
+
 The starter is intentionally incomplete. Enter your own prose for at least one dimension:
 role fit (responsibilities/seniority), technology fit (known versus desired, avoided or
 willing-to-learn technologies), field interest (business domain), and company affinity
