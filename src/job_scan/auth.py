@@ -176,7 +176,9 @@ class ChatGPTSession:
             )
             self.pending = p
             self.login_error = None
-            challenge = base64.urlsafe_b64encode(hashlib.sha256(p.verifier.encode()).digest())
+            challenge = base64.urlsafe_b64encode(
+                hashlib.sha256(p.verifier.encode()).digest(), padded=False
+            )
             params = {
                 "client_id": client_id or "dynamic_agent_client",
                 "ext_agent_host_id": data.host_id,
@@ -187,7 +189,7 @@ class ChatGPTSession:
                 "state": p.state,
                 "nonce": p.nonce,
                 "code_challenge_method": "S256",
-                "code_challenge": challenge.decode().rstrip("="),
+                "code_challenge": challenge.decode("ascii"),
             }
             if client_id is None:
                 params["agent_name_hint"] = "job-scan"
